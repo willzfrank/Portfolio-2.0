@@ -13,7 +13,7 @@ body {
   font-weight: 500;
   font-style: normal;
   font-stretch: normal;
-  /* overflow-x: hidden; */
+  overflow-x: hidden;
   background: rgb(240, 241, 242);
   /* padding: 54px 0; */
   width: 95%;
@@ -28,7 +28,7 @@ body {
 }
 
 .right {
-  transform: translateX(100%);
+  transform: translateX(110%);
   /* right: 0; */
   transition: transform 300ms ease-out;
 }
