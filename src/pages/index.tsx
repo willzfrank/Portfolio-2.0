@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import { Navbar } from '@/components/navbar';
 import Header from '@/components/header/Header';
+import AboutComponent from '@/components/about/About';
 
 export default function Home() {
   return (
@@ -21,6 +22,7 @@ export default function Home() {
       </Head>
       <Navbar />
       <Header />
+      <AboutComponent />
     </>
   );
 }
