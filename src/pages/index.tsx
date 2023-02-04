@@ -2,6 +2,7 @@ import Head from 'next/head';
 import { Navbar } from '@/components/navbar';
 import Header from '@/components/header/Header';
 import AboutComponent from '@/components/about/About';
+import Works from '@/components/works/Works';
 
 export default function Home() {
   return (
@@ -23,6 +24,7 @@ export default function Home() {
       <Navbar />
       <Header />
       <AboutComponent />
+      <Works />
     </>
   );
 }
