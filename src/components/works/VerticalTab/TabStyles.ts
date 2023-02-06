@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 export const Tab = styled.div`
   float: left;
@@ -24,11 +24,13 @@ export const TabButton = styled.button`
   &.active {
     li {
       opacity: 1;
+      transition: opacity 0.4s ease-in-out;
     }
   }
   &:not(.active) {
     li {
       opacity: 0.5;
+      transition: opacity 0.4s ease-in-out;
     }
   }
 
@@ -50,29 +52,41 @@ export const TabButton = styled.button`
 `;
 
 export const TabContent = styled.div`
-  margin-top: 4em;
+  /* margin-top: 4em; */
   float: left;
   padding: 0px 12px;
   width: 50%;
   height: 550px;
-  border: 2px solid red;
-  /* clip-path: inset(0px 100% 0px 0px); */
+
+  .imgimg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
 `;
 
 export const TabImage = styled.div`
-  transition: clip-path 0.6s cubic-bezier(0.87, 0, 0.13, 1) 0s;
   height: 100%;
   width: 100%;
 
   .tab_img {
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
+    /* height: 100%;
+    width: 100%; */
+    object-fit: contain;
     object-position: 50% 50%;
     transform: scale(1.4);
     overflow-clip-margin: content-box;
     overflow: clip;
-    transition: transform 4s cubic-bezier(0.16, 1, 0.3, 1) 0s;
+    transition: slideIn 1s ease;
+    @keyframes slideIn {
+      from {
+        transform: translateX(-100%);
+      }
+      to {
+        transform: translateX(0);
+      }
+    }
   }
 `;
 

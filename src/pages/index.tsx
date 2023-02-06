@@ -3,6 +3,8 @@ import { Navbar } from '@/components/navbar';
 import Header from '@/components/header/Header';
 import AboutComponent from '@/components/about/About';
 import Works from '@/components/works/Works';
+import ContinuousScrollingText from '@/components/chat/Chat';
+import Footer from '@/components/footer/Footer';
 
 export default function Home() {
   return (
@@ -14,6 +16,7 @@ export default function Home() {
           content="Personal portfolio of Godswill Francis"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"></link>
         <link
           rel="icon"
           type="image/png"
@@ -24,7 +27,9 @@ export default function Home() {
       <Navbar />
       <Header />
       <AboutComponent />
-      <Works />
+      {/* <Works /> */}
+      {/* <ContinuousScrollingText /> */}
+      <Footer />
     </>
   );
 }
