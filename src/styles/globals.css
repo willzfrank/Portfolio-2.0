@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=League+Spartan&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display+SC&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display+SC:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 
 * {
@@ -45,6 +45,9 @@ body {
   opacity: 0.5;
 }
 
+.mb-1 {
+  margin-bottom: 0.4em;
+}
 h1,
 h2,
 h3,
