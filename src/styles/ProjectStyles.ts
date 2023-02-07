@@ -127,10 +127,11 @@ export const ProjectContent1 = styled.section`
 
   .project_imgContainer {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: center;
     gap: 100px;
-    background-color: wheat;
+    background-color: #DCDCDC;
 
     .coverImg {
       transition: all 2s cubic-bezier(0.16, 1, 0.3, 1);
