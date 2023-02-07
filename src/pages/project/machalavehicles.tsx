@@ -20,10 +20,10 @@ const Artsy = (props: Props) => {
   return (
     <div>
       <Head>
-        <title>Godswill Francis &trade; | Artsy</title>
+        <title>Godswill Francis &trade; | Machala Vehicles</title>
         <meta
           name="description"
-          content="This page is about the Artsy project by Godswill Francis"
+          content="This page is about the Machala Vehicles project by Godswill Francis"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link
