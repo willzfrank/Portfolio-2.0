@@ -20,10 +20,10 @@ const Artsy = (props: Props) => {
   return (
     <div>
       <Head>
-        <title>Godswill Francis &trade; | Machala Vehicles</title>
+        <title>Godswill Francis &trade; | Vsonet Education</title>
         <meta
           name="description"
-          content="This page is about the Machala Vehicles project by Godswill Francis"
+          content="This page is about the Vsonet Education project by Godswill Francis"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link
@@ -41,19 +41,19 @@ const Artsy = (props: Props) => {
         <Navbar />
         <ProjectHeaderTitle>
           <div className="projectheader_title">
-            <h6>WEB DESIGN</h6>
-            <h1>MACHALA VEHICLES</h1>
+            <h6>TECH TRAINING PLATFORM</h6>
+            <h1>VSONET EDUCATION</h1>
           </div>
         </ProjectHeaderTitle>
         <ProjectContributors>
           <div className="section slimmer flex between mobile-block mobile-collapse ">
             <div className="column">
               <h3>Project Timeline</h3>
-              <p>August 2022-September 2022</p>
+              <p>November 2021-January 2022</p>
             </div>
             <div className="column">
               <h3>Project Type</h3>
-              <p>Automobile Web design</p>
+              <p>Tech Education</p>
             </div>
             <div className="column">
               <h3>Contributers</h3>
@@ -65,7 +65,15 @@ const Artsy = (props: Props) => {
 
                 <li className="contributer">
                   <p className="mb-1 ">Idea </p>
-                  NIIT
+
+                  <Link
+                    href="https://github.com/Emmagist"
+                    className="link"
+                    target="_blank"
+                    rel="noopener nofollow"
+                  >
+                    Ogundipe Olusegun
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -84,16 +92,17 @@ const Artsy = (props: Props) => {
           </div>
         </ProjectContributors>
         <ProjectContent>
-          <div className="project_linkcontainer between flex">
+          <div className="flex between project_linkcontainer">
             <div className="project_contentLink">
               <Link
-                href="https://lexusniitdemo.vercel.app/index.html"
+                href="https://vsoneteducationdemo.netlify.app/"
                 className="link"
                 target="_blank"
               >
                 <Dashspan></Dashspan>
                 <span>CHECK OUT THE WEBSITE</span>
               </Link>
+
               <svg
                 width="28"
                 height="28"
@@ -107,16 +116,16 @@ const Artsy = (props: Props) => {
                 />
               </svg>
             </div>
-
             <div className="project_contentLink">
               <Link
-                href="https://github.com/willzfrank/Lexus-Demo-"
+                href="https://github.com/willzfrank/Vsonet_Education"
                 className="link"
                 target="_blank"
               >
                 {/* <Dashspan></Dashspan> */}
-                <span>CHECK OUT THE SOURCE CODE</span>
+                <span>CHECK OUT THE SOURCE CODE </span>
               </Link>
+
               <svg
                 width="28"
                 height="28"
@@ -134,62 +143,54 @@ const Artsy = (props: Props) => {
 
           <ProjectContent1>
             <p>
-              Machala Vehicles is an ambitious personal project that is on a
-              mission to revolutionize the car industry. With a focus on the
-              latest and greatest vehicles, including modern, exotic, and
-              electric cars, this project aims to bring the thrill of
-              cutting-edge automotive technology to a wider audience. The goal
-              is to create an unforgettable and immersive car-buying experience
-              that truly showcases the power, elegance, and innovation of these
-              remarkable machines. So, buckle up and get ready for a ride of a
-              lifetime, as Machala Vehicles takes you on a journey to discover
-              the very best in modern driving.
+              The idea of this cutting-edge platform was designed to unleash the
+              full potential of students and aspiring developers. With
+              mentorship, training, and bootcamps at your fingertips, {`it's`}{' '}
+              the ultimate launchpad for your tech career. So, are you ready to
+              start learning like a pro?
             </p>
             <p>
-              Just around August 2022, NIIT pulled out a wild card and assigned
-              me and my team the task of building an automobile website with a
-              twist - not only was I tasked with promoting the latest and
-              greatest vehicles, but also with showing off my website design
-              skills. And let me tell you, I was more than ready to take on this
-              challenge! With excitement in my heart and determination in my
-              bones, I threw myself into the project and learned as I went
-              along. It was a wild ride, full of laughs, challenges, and a whole
-              lot of car-filled fun.
+              Attention, tech lovers! Late November 2021 was a wild ride for the
+              Vsonet crew. They knew it was time to revamp their website and who
+              did they call? The one, the only - yours truly! I was challenged
+              to create a website so gorgeous, it would make their customers do
+              a double-take. And let me tell ya, I brought my A-game with some
+              serious CSS animation magic! 😎
             </p>
             <p>
-              The biggest challenge in building the automobile website was
-              finding the perfect design, but I was up for it! I scoured the
-              internet, hitting up all the hottest spots like YouTube, Dribbble,
-              and Figma, searching for design inspiration. I was like a kid in a
-              candy store, soaking up all the creativity and taking notes on the
-              coolest trends. It was a blast and I was more than ready to put my
-              new-found design skills to the test. And let me tell you, the
-              results were simply breathtaking.
+              When it comes to company websites, perfection is key. And{' '}
+              {`that's `}
+              exactly what I was striving for with the Vsonet project. From
+              optimization and SEO to customer satisfaction, I left no stone
+              unturned. But my biggest challenge was bringing the unique design
+              of CSS cards to life, based on a Figma design. But with
+              determination and teamwork, we conquered that hurdle and delivered
+              a website that exceeded expectations.
             </p>
 
             <div className="project_imgContainer sea">
               <Image
-                src="/MachalaVehicles __ A NIIT demo car website.png"
+                src="/Vsonet Education (3).png"
                 alt=""
-                width={450}
-                height={900}
-                className="coverImg"
+                width={1200}
+                height={500}
+                className="coverImg vsonetImg"
               />
 
               <Image
-                src="/Popular __ Machala Vehicles.png"
+                src="/Vsonet Education.png"
                 alt=""
-                width={450}
-                height={900}
-                className="coverImg"
+                width={1200}
+                height={500}
+                className="coverImg vsonetImg"
               />
 
               <Image
-                src="/About us __ Mavhala Vehicles.png"
+                src="/Vsonet Education (2).png"
                 alt=""
-                width={500}
-                height={300}
-                className="coverImg"
+                width={1200}
+                height={500}
+                className="coverImg vsonetImg"
               />
             </div>
           </ProjectContent1>

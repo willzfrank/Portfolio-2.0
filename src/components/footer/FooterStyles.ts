@@ -10,6 +10,11 @@ export const FooterContainer = styled.footer`
   padding-top: 3.3333333333333335rem;
   padding-bottom: 0.7222222222222222rem;
 
+  @media screen and (max-width: 768px) {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
   .footer_bottom {
     border-top: 1px solid rgb(199, 199, 199);
     padding-top: 1.3333333333333335rem;

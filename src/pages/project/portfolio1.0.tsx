@@ -20,10 +20,10 @@ const Artsy = (props: Props) => {
   return (
     <div>
       <Head>
-        <title>Godswill Francis &trade; | Machala Vehicles</title>
+        <title>Godswill Francis &trade; | Portfolio 1.0</title>
         <meta
           name="description"
-          content="This page is about the Machala Vehicles project by Godswill Francis"
+          content="This page is about the Portfolio 1.0 project by Godswill Francis"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link
@@ -41,31 +41,34 @@ const Artsy = (props: Props) => {
         <Navbar />
         <ProjectHeaderTitle>
           <div className="projectheader_title">
-            <h6>WEB DESIGN</h6>
-            <h1>MACHALA VEHICLES</h1>
+            <h6>PORTFOLIO PAGE</h6>
+            <h1>PORTFOLIO 1.0</h1>
           </div>
         </ProjectHeaderTitle>
         <ProjectContributors>
           <div className="section slimmer flex between mobile-block mobile-collapse ">
             <div className="column">
               <h3>Project Timeline</h3>
-              <p>August 2022-September 2022</p>
+              <p>January 2022-Febuary 2022</p>
             </div>
             <div className="column">
               <h3>Project Type</h3>
-              <p>Automobile Web design</p>
+              <p>Portfolio Page</p>
             </div>
             <div className="column">
               <h3>Contributers</h3>
               <ul>
                 <li className="contributer">
-                  <p className="mb-1 ">Lead Designer</p>
-                  @willzfrank
-                </li>
+                  <p className="mb-1 ">Backend Developer </p>
 
-                <li className="contributer">
-                  <p className="mb-1 ">Idea </p>
-                  NIIT
+                  <Link
+                    href="https://github.com/Emmagist"
+                    className="link"
+                    target="_blank"
+                    rel="noopener nofollow"
+                  >
+                    Ogundipe Olusegun
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -84,16 +87,17 @@ const Artsy = (props: Props) => {
           </div>
         </ProjectContributors>
         <ProjectContent>
-          <div className="project_linkcontainer between flex">
+          <div className="project_linkcontainer flex between">
             <div className="project_contentLink">
               <Link
-                href="https://lexusniitdemo.vercel.app/index.html"
+                href="https://willzfrank.netlify.app/"
                 className="link"
                 target="_blank"
               >
                 <Dashspan></Dashspan>
                 <span>CHECK OUT THE WEBSITE</span>
               </Link>
+
               <svg
                 width="28"
                 height="28"
@@ -110,13 +114,14 @@ const Artsy = (props: Props) => {
 
             <div className="project_contentLink">
               <Link
-                href="https://github.com/willzfrank/Lexus-Demo-"
+                href="https://github.com/willzfrank/Portfolio-1.0"
                 className="link"
                 target="_blank"
               >
                 {/* <Dashspan></Dashspan> */}
                 <span>CHECK OUT THE SOURCE CODE</span>
               </Link>
+
               <svg
                 width="28"
                 height="28"
@@ -134,66 +139,70 @@ const Artsy = (props: Props) => {
 
           <ProjectContent1>
             <p>
-              Machala Vehicles is an ambitious personal project that is on a
-              mission to revolutionize the car industry. With a focus on the
-              latest and greatest vehicles, including modern, exotic, and
-              electric cars, this project aims to bring the thrill of
-              cutting-edge automotive technology to a wider audience. The goal
-              is to create an unforgettable and immersive car-buying experience
-              that truly showcases the power, elegance, and innovation of these
-              remarkable machines. So, buckle up and get ready for a ride of a
-              lifetime, as Machala Vehicles takes you on a journey to discover
-              the very best in modern driving.
+              Ready to see the OG of portfolios? Introducing Portfolio 1.0! This
+              baby was my debut portfolio in the world of digital
+              self-promotion. Built with a touch of vanilla JS and a dash of PHP
+              magic, it was the perfect showcase for my mad skills. Get ready
+              for some portfolio greatness!
             </p>
             <p>
-              Just around August 2022, NIIT pulled out a wild card and assigned
-              me and my team the task of building an automobile website with a
-              twist - not only was I tasked with promoting the latest and
-              greatest vehicles, but also with showing off my website design
-              skills. And let me tell you, I was more than ready to take on this
-              challenge! With excitement in my heart and determination in my
-              bones, I threw myself into the project and learned as I went
-              along. It was a wild ride, full of laughs, challenges, and a whole
-              lot of car-filled fun.
+              January 2022 was a game-changer! {`That's`} when I had the
+              brilliant idea to create Portfolio 1.0, the ultimate platform that
+              speaks volumes about my skills and talents. This bad boy was
+              designed with the latest and greatest of that era, so get ready to
+              be wowed!
             </p>
             <p>
-              The biggest challenge in building the automobile website was
-              finding the perfect design, but I was up for it! I scoured the
-              internet, hitting up all the hottest spots like YouTube, Dribbble,
-              and Figma, searching for design inspiration. I was like a kid in a
-              candy store, soaking up all the creativity and taking notes on the
-              coolest trends. It was a blast and I was more than ready to put my
-              new-found design skills to the test. And let me tell you, the
-              results were simply breathtaking.
+              {' '}
+              My greatest challenge was when I was faced with the daunting task
+              of adding a backend to Portfolio 1.0, I knew I needed backup.{' '}
+              {`That's`} when the amazing Backend developer{' '}
+              <Link
+                href="https://github.com/Emmagist"
+                className="link"
+                target="_blank"
+                rel="noopener nofollow"
+              >
+                Ogundipe Olusegun
+              </Link>{' '}
+              swooshed in and worked his PHP magic to make the web application a
+              true work of art! Together, we were unstoppable.
             </p>
 
-            <div className="project_imgContainer sea">
+            <div className="project_imgContainer">
               <Image
-                src="/MachalaVehicles __ A NIIT demo car website.png"
+                src="/Willz Frank.png"
                 alt=""
-                width={450}
-                height={900}
+                width={700}
+                height={400}
                 className="coverImg"
               />
 
               <Image
-                src="/Popular __ Machala Vehicles.png"
-                alt=""
-                width={450}
-                height={900}
-                className="coverImg"
-              />
-
-              <Image
-                src="/About us __ Mavhala Vehicles.png"
+                src="/Willz Frank (2).png"
                 alt=""
                 width={500}
-                height={300}
+                height={700}
+                className="coverImg"
+              />
+
+              <Image
+                src="/Willz Frank (1).png"
+                alt=""
+                width={600}
+                height={700}
+                className="coverImg"
+              />
+
+              <Image
+                src="/Willz Frankblack.png"
+                alt=""
+                width={600}
+                height={700}
                 className="coverImg"
               />
             </div>
           </ProjectContent1>
-
           <div className="project_homeLink">
             <Link href="/projects" className="link" target="_blank">
               <LongerDashspan></LongerDashspan>

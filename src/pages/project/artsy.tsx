@@ -100,28 +100,54 @@ const Artsy = (props: Props) => {
           </div>
         </ProjectContributors>
         <ProjectContent>
-          <div className="project_contentLink">
-            <Link
-              href="https://artsy-swart.vercel.app/"
-              className="link"
-              target="_blank"
-            >
-              <Dashspan></Dashspan>
-              <span>CHECK OUT THE WEBSITE</span>
-            </Link>
+          <div className="project_linkcontainer flex between">
+            <div className="project_contentLink">
+              <Link
+                href="https://artsy-swart.vercel.app/"
+                className="link"
+                target="_blank"
+              >
+                <Dashspan></Dashspan>
+                <span>CHECK OUT THE WEBSITE</span>
+              </Link>
 
-            <svg
-              width="28"
-              height="28"
-              viewBox="0 0 28 28"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M7.63668 21.2132L17.9887 10.8611L17.9887 20.3646L20.3646 20.3646V6.78819H6.78816L6.78816 9.16407L16.2917 9.16407L5.93963 19.5161L7.63668 21.2132Z"
-                fill="black"
-              />
-            </svg>
+              <svg
+                width="28"
+                height="28"
+                viewBox="0 0 28 28"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M7.63668 21.2132L17.9887 10.8611L17.9887 20.3646L20.3646 20.3646V6.78819H6.78816L6.78816 9.16407L16.2917 9.16407L5.93963 19.5161L7.63668 21.2132Z"
+                  fill="black"
+                />
+              </svg>
+            </div>
+
+            <div className="project_contentLink">
+              <Link
+                href="https://github.com/willzfrank/ARTSY"
+                className="link"
+                target="_blank"
+              >
+                {/* <Dashspan></Dashspan> */}
+                <span>CHECK OUT THE SOURCE CODE</span>
+              </Link>
+
+              <svg
+                width="28"
+                height="28"
+                viewBox="0 0 28 28"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M7.63668 21.2132L17.9887 10.8611L17.9887 20.3646L20.3646 20.3646V6.78819H6.78816L6.78816 9.16407L16.2917 9.16407L5.93963 19.5161L7.63668 21.2132Z"
+                  fill="black"
+                />
+              </svg>
+            </div>
           </div>
 
           <ProjectContent1>
@@ -154,7 +180,7 @@ const Artsy = (props: Props) => {
               both the Marketplace page and the Article page.
             </p>
 
-            <div className="project_imgContainer">
+            <div className="project_imgContainer sea">
               <Image
                 src="/HOMEPAGE.png"
                 alt=""
@@ -180,7 +206,6 @@ const Artsy = (props: Props) => {
               />
             </div>
           </ProjectContent1>
-
           <div className="project_homeLink">
             <Link href="/projects" className="link" target="_blank">
               <LongerDashspan></LongerDashspan>
