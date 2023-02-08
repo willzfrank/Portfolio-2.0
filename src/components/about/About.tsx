@@ -18,12 +18,12 @@ const AboutComponent: React.FC<Props> = () => {
         , and with three years of software development experience under my belt,{' '}
         {`I've`} become a master of crafting quirky and efficient solutions for
         a variety of projects.
-        {/* {`I'm`} passionate about using technology for good and always on the
+        {`I'm`} passionate about using technology for good and always on the
         hunt for new and innovative ways to solve problems. My expertise in
         Javascript and its frameworks means that I can consistently deliver
         high-quality software that blows my clients away. I have a gift for
         turning complex ideas into simple and stylish solutions, and {`I'm`}{' '}
-        always working on getting even better. */}
+        always working on getting even better.
       </p>
 
       <MoreBtn>

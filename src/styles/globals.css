@@ -72,6 +72,9 @@ ul {
   padding: 2em 0px;
 }
 
+.muted {
+  color: rgb(89, 89, 89);
+}
 .no-border {
   border-top: none;
 }

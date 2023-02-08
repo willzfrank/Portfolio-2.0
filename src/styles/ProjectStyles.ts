@@ -81,6 +81,7 @@ export const ProjectContributors = styled.section`
 export const ProjectContent = styled.section`
   .project_linkcontainer {
     align-items: center;
+    width: 50%;
 
     @media screen and (max-width: 768px) {
       width: 100%;
