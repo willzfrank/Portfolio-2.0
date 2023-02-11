@@ -12,6 +12,7 @@
 body {
   font-family: 'League Spartan', sans-serif;
   font-weight: 500;
+  color: rgb(50, 50, 50);
   font-style: normal;
   font-stretch: normal;
   overflow-x: hidden;
@@ -23,9 +24,17 @@ body {
   scroll-behavior: smooth;
 }
 
+.mobile_tab {
+  display: none;
+}
+
 @media screen and (max-width: 768px) {
   body {
     width: 100%;
+  }
+
+  .mobile_tab {
+    display: block;
   }
 }
 

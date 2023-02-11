@@ -6,6 +6,7 @@ import {
   WorkContentText,
   WorkBox,
 } from './WorkStyles';
+import Fade from 'react-reveal/Fade';
 
 type Props = {};
 
@@ -13,7 +14,11 @@ const Works = (props: Props) => {
   return (
     <WorkBox>
       <WorkContentBox>
-        <WorkContentTitle id="projects-h2">Selected works</WorkContentTitle>
+        <WorkContentTitle>
+          <Fade up cascade>
+            Selected works
+          </Fade>
+        </WorkContentTitle>
         <WorkContentText
           className="mt-4 max-40 medium animate__fadeIn"
           id="projects-desc"

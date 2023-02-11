@@ -16,7 +16,10 @@ export default function Home() {
           content="Personal portfolio of Godswill Francis"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"></link>
+        <link
+          rel="stylesheet"
+          href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"
+        ></link>
         <link
           rel="icon"
           type="image/png"
@@ -27,8 +30,7 @@ export default function Home() {
       <Navbar />
       <Header />
       <AboutComponent />
-      {/* <Works /> */}
-      {/* <ContinuousScrollingText /> */}
+      <Works />
       <Footer />
     </>
   );

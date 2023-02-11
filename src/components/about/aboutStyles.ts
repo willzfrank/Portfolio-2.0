@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const AboutBox = styled.section`
-  padding: 6em 0;
+  padding: 4em 0;
   border-top: 1px solid #c7c7c7;
   font-size: 2em;
   line-height: 1.6em;

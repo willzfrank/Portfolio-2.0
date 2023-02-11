@@ -55,10 +55,11 @@ export const FooterButton = styled.button`
   border-width: 0.05rem;
   transition: all 0.5s cubic-bezier(1, 0, 0, 1);
   font-size: 0.8rem;
-  padding: 0.6rem 1.6rem;
+  padding: 1rem 2rem;
   letter-spacing: -0.005rem;
   border-radius: 2.7rem;
   cursor: pointer;
+  font-weight: bold;
 
   &:hover {
     background: #000;

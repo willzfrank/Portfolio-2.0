@@ -1,10 +1,20 @@
 import styled, { keyframes } from 'styled-components';
 
+export const TabContainer = styled.section`
+  /* margin-bottom: 30em; */
+
+  @media screen and (max-width: 768px) {
+    display: none;
+    margin-bottom: 0;
+  }
+`;
 export const Tab = styled.div`
   float: left;
   width: 50%;
   height: 500px;
   margin-top: 4em;
+  margin-bottom: 6em;
+  /* border: 2px solid red; */
 `;
 
 export const TabButton = styled.button`
@@ -43,11 +53,27 @@ export const TabButton = styled.button`
     padding: 3em 0px;
     border-bottom: 1px solid rgb(199, 199, 199);
     list-style-type: none;
-  }
 
-  .project:hover {
-    border-bottom: 3px solid rgb(199, 199, 199);
-    transition: 0.5s;
+    svg {
+      animation: float 2s ease-in-out infinite;
+
+      @keyframes float {
+        0% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+        100% {
+          transform: translateY(0);
+        }
+      }
+    }
+
+    .project:hover {
+      border-bottom: 3px solid rgb(199, 199, 199);
+      transition: 0.5s;
+    }
   }
 `;
 
@@ -69,16 +95,23 @@ export const TabContent = styled.div`
 export const TabImage = styled.div`
   height: 100%;
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   .tab_img {
-    /* height: 100%;
-    width: 100%; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     object-fit: contain;
     object-position: 50% 50%;
-    transform: scale(1.4);
-    overflow-clip-margin: content-box;
-    overflow: clip;
     transition: slideIn 1s ease;
+
+    &:hover {
+      transform: scale(1.4);
+      transition: 1s ease-in-out;
+    }
     @keyframes slideIn {
       from {
         transform: translateX(-100%);

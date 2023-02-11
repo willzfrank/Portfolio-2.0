@@ -67,7 +67,7 @@ export const SkillsContainer = styled.section`
 `;
 
 export const SkillsList = styled.ul`
-  margin: 2em 0;
+  margin: 2em 3rem;
 
   list-style-type: none;
   display: flex;
