@@ -28,7 +28,7 @@ export default function Home() {
         />
       </Head>
       <Navbar />
-      <div className="main">
+      <div className="overflow_hidden">
         <Header />
         <AboutComponent />
         <Works />

@@ -32,73 +32,75 @@ const project = (props: Props) => {
         />
       </Head>
       <Navbar />
-      <ContactContainer>
-        <div className="contact_container2">
-          <div className="contact_title">
-            <h6>ACHIEVEMENTS</h6>
+      <div className="overflow_hidden">
+        <ContactContainer>
+          <div className="contact_container2">
+            <div className="contact_title">
+              <h6>ACHIEVEMENTS</h6>
+            </div>
+            <div className="contact_content">
+              <h2>
+                PROJECTS
+                <span> - Frontend </span>
+              </h2>
+              <h5>
+                With an eye for the small details that make a big impact, I pour
+                all of my passion into my work to craft exceptional UI
+                experiences. Each project I undertake is distinct and
+                custom-made with its own distinct personality. Please take a
+                look at some of my achievements below:
+              </h5>
+            </div>
           </div>
-          <div className="contact_content">
-            <h2>
-              PROJECTS
-              <span> - Frontend </span>
-            </h2>
-            <h5>
-              With an eye for the small details that make a big impact, I pour
-              all of my passion into my work to craft exceptional UI
-              experiences. Each project I undertake is distinct and custom-made
-              with its own distinct personality. Please take a look at some of
-              my achievements below:
-            </h5>
-          </div>
-        </div>
-      </ContactContainer>
-      <ExperienceContainer className="projectlist_container">
-        <ExperienceList>
-          <Link className="link" href="/project/vsonet">
-            <li>
-              <div>
-                <p className="project_title">VSONET EDUCATION</p>
-              </div>
-              <ExperienceDate>
-                <p>PERSONAL PROJECT</p>
-              </ExperienceDate>
-            </li>
-          </Link>
+        </ContactContainer>
+        <ExperienceContainer className="projectlist_container">
+          <ExperienceList>
+            <Link className="link" href="/project/vsonet">
+              <li>
+                <div>
+                  <p className="project_title">VSONET EDUCATION</p>
+                </div>
+                <ExperienceDate>
+                  <p>PERSONAL PROJECT</p>
+                </ExperienceDate>
+              </li>
+            </Link>
 
-          <Link className="link" href="/project/machalavehicles">
-            <li>
-              <div>
-                <p className="project_title">MACHALA VEHICLES</p>
-              </div>
-              <ExperienceDate>
-                <p>PERSONAL PROJECT</p>
-              </ExperienceDate>
-            </li>
-          </Link>
-          <Link className="link" href="/project/portfolio1.0">
-            <li>
-              <div>
-                <p className="project_title">PORTFOLIO 1.0</p>
-              </div>
-              <ExperienceDate>
-                <p>PERSONAL PORTFOLIO</p>
-              </ExperienceDate>
-            </li>
-          </Link>
-          <Link className="link" href="/project/artsy">
-            <li>
-              <div>
-                <p className="project_title">ARTSY</p>
-              </div>
-              <ExperienceDate>
-                <p>PHOTOGRAPHY E-COMMERCE</p>
-              </ExperienceDate>
-            </li>
-          </Link>
-        </ExperienceList>
-      </ExperienceContainer>
-      <Marquee />
-      <Footer />
+            <Link className="link" href="/project/machalavehicles">
+              <li>
+                <div>
+                  <p className="project_title">MACHALA VEHICLES</p>
+                </div>
+                <ExperienceDate>
+                  <p>PERSONAL PROJECT</p>
+                </ExperienceDate>
+              </li>
+            </Link>
+            <Link className="link" href="/project/portfolio1.0">
+              <li>
+                <div>
+                  <p className="project_title">PORTFOLIO 1.0</p>
+                </div>
+                <ExperienceDate>
+                  <p>PERSONAL PORTFOLIO</p>
+                </ExperienceDate>
+              </li>
+            </Link>
+            <Link className="link" href="/project/artsy">
+              <li>
+                <div>
+                  <p className="project_title">ARTSY</p>
+                </div>
+                <ExperienceDate>
+                  <p>PHOTOGRAPHY E-COMMERCE</p>
+                </ExperienceDate>
+              </li>
+            </Link>
+          </ExperienceList>
+        </ExperienceContainer>
+        <Marquee />
+        <Footer />
+      </div>
     </>
   );
 };
