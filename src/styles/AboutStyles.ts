@@ -71,6 +71,7 @@ export const SkillsList = styled.ul`
   overflow-wrap: break-word;
   padding: 1rem 0;
   font-family: 'Rubik Moonrocks', cursive;
+  
   @keyframes marquee {
     from {
       transform: translate(0, 0);
