@@ -32,7 +32,7 @@ export default function Home() {
       <Header />
       <AboutComponent />
       <Works />
-      {/* <Marquee /> */}
+      <Marquee />
       <Footer />
     </>
   );

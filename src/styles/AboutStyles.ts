@@ -66,12 +66,54 @@ export const SkillsContainer = styled.section`
   }
 `;
 
+// export const SkillsList = styled.ul`
+//   overflow: hidden;
+//   overflow-wrap: break-word;
+//   padding: 1rem 0;
+//   font-family: 'Rubik Moonrocks', cursive;
+
+//   @keyframes marquee {
+//     from {
+//       transform: translate(0, 0);
+//     }
+//     to {
+//       transform: translate(-3700px, 0);
+//     }
+//   }
+//   color: #e5e5e5;
+//   font-size: 5.555555555555555rem;
+//   line-height: 6.333333333333333rem;
+//   margin-right: 0.8888888888888888rem;
+//   text-transform: uppercase;
+//   display: inline-block;
+//   white-space: nowrap;
+//   animation: marquee 25s linear infinite;
+//   @media screen and (max-width: 768px) {
+//     animation: marquee 25s linear infinite;
+//     @keyframes marquee {
+//       from {
+//         transform: translate(0, 0);
+//       }
+//       to {
+//         transform: translate(-4700px, 0);
+//       }
+//     }
+//   }
+// `;
+
 export const SkillsList = styled.ul`
   overflow: hidden;
   overflow-wrap: break-word;
   padding: 1rem 0;
   font-family: 'Rubik Moonrocks', cursive;
-  
+  color: #e5e5e5;
+  font-size: 5.56rem;
+  line-height: 6.33rem;
+  margin-right: 0.89rem;
+  text-transform: uppercase;
+  display: inline-block;
+  white-space: nowrap;
+
   @keyframes marquee {
     from {
       transform: translate(0, 0);
@@ -80,14 +122,9 @@ export const SkillsList = styled.ul`
       transform: translate(-3700px, 0);
     }
   }
-  color: #e5e5e5;
-  font-size: 5.555555555555555rem;
-  line-height: 6.333333333333333rem;
-  margin-right: 0.8888888888888888rem;
-  text-transform: uppercase;
-  display: inline-block;
-  white-space: nowrap;
+
   animation: marquee 25s linear infinite;
+
   @media screen and (max-width: 768px) {
     animation: marquee 25s linear infinite;
     @keyframes marquee {
@@ -100,7 +137,6 @@ export const SkillsList = styled.ul`
     }
   }
 `;
-
 export const ExperienceContainer = styled.section`
   padding: 6em 0px;
   border-top: 1px solid rgb(199, 199, 199);
