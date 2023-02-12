@@ -10,7 +10,7 @@ export const HeaderTitle = styled.h1`
   padding: 4rem 0;
 
   @media screen and (max-width: 768px) {
-    font-size: 3.7em;
+    font-size: 3.2em;
     line-height: 1.2em;
     padding: 1.5rem 0.5rem;
   }

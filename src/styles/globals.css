@@ -26,8 +26,6 @@ body {
 }
 
 .main {
-  border: 2px solid red;
-  padding: 1rem;
   overflow: hidden;
 }
 
@@ -51,6 +49,9 @@ body {
   transition: transform 300ms ease-out;
 }
 
+.sticky {
+  background-color: #f4f3f3;
+}
 .left {
   /* right: 100%; */
   transform: translateX(0);

@@ -125,8 +125,6 @@ export const SkillsList = styled.ul`
   }
 
   @media screen and (max-width: 768px) {
-    line-height: 2rem;
-    border: 2px solid red;
     animation: marquee 25s linear infinite;
     @keyframes marquee {
       from {

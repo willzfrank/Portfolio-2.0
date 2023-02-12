@@ -1,22 +1,22 @@
 import styled from 'styled-components';
 
 export const NavbarContainer = styled.nav`
-  transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-  pointer-events: all;
   font-family: 'Playfair Display SC', serif;
   position: relative;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  transition: all 0.3s ease-in-out;
 
   .bottom {
     position: absolute;
     bottom: 1.6em;
   }
-
   .secondary {
     color: rgb(0, 0, 0);
     text-decoration: none;
     cursor: pointer;
   }
-
   .text-animate {
     width: fit-content;
     display: inline-block;
@@ -35,10 +35,10 @@ export const NavbarTitle = styled.h1`
   word-break: break-word;
   hyphens: auto;
   overflow: hidden;
-
   @media screen and (max-width: 768px) {
     display: flex;
     width: max-content;
+    padding-left: 0.5rem;
   }
 `;
 
@@ -54,7 +54,6 @@ export const Dashspan = styled.span`
   position: relative;
   display: inline-block;
   transition: width 1.5s ease 0s;
-
   &::after {
     content: '';
     height: 1px;
@@ -80,7 +79,6 @@ export const NavbarBtn = styled.button`
   font-size: 1em;
   cursor: pointer;
   padding-right: 1em;
-
   @media screen and (min-width: 768px) {
     display: none !important;
   }
@@ -93,12 +91,10 @@ export const NavbarListContainer = styled.ul`
     align-items: center;
     gap: 2px;
   }
-
   .link:first-of-type {
     margin-left: 0;
     color: rgb(89, 89, 89);
   }
-
   .link:nth-child(2),
   .link:nth-child(3) {
     display: inline-block;
@@ -121,7 +117,6 @@ export const MobileNavbarList = styled.ul`
   flex-direction: column;
   height: 100%;
   font-size: 2em;
-
   li {
     padding: 1em 0;
     color: #ccc !important;
@@ -131,7 +126,7 @@ export const MobileNavbarList = styled.ul`
 export const MobileNavbar = styled.div`
   display: none;
   z-index: 999;
-  position: absolute;
+  position: fixed;
   display: flex;
   width: 100%;
   height: 100vh;
@@ -140,7 +135,6 @@ export const MobileNavbar = styled.div`
   top: 0;
   /* right: 0%; */
   padding: 1.6em;
-  transition: 0.6s cubic-bezier(0.87, 0, 0.13, 1);
   color: #ccc;
 
   .mobile-secondary {

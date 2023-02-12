@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React from 'react';
 import {
   NavbarContainer,
@@ -23,8 +24,29 @@ const Navbar = (props: Props) => {
     setIsOpen(!isOpen);
   };
 
+  const [sticky, setSticky] = React.useState(false);
+  const router = useRouter();
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      if (window.pageYOffset > 0) {
+        setSticky(true);
+      } else {
+        setSticky(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [router]);
+
   return (
-    <NavbarContainer>
+    <NavbarContainer
+      className={`navbar ${sticky ? 'sticky' : ''}`}
+      style={{ transition: 'background-color 0.3s ease-in-out' }}
+    >
       <div
         className="section slimmer no-border flex between center"
         data-scroll-section

@@ -14,7 +14,6 @@ export const Tab = styled.div`
   height: 500px;
   margin-top: 4em;
   margin-bottom: 6em;
-  /* border: 2px solid red; */
 `;
 
 export const TabButton = styled.button`
