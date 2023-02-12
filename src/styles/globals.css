@@ -28,6 +28,7 @@ body {
 .main {
   border: 2px solid red;
   padding: 1rem;
+  overflow: hidden;
 }
 
 .mobile_tab {
