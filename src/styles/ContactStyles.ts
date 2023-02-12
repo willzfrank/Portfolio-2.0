@@ -6,6 +6,7 @@ export const ContactContainer = styled.section`
   margin-top: 5rem;
   padding-bottom: 6.6rem;
   margin-bottom: 0rem;
+  overflow: hidden;
 
   @media screen and (max-width: 768px) {
     padding-bottom: 2rem;
