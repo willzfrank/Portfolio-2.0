@@ -10,14 +10,8 @@ import {
   TitleText,
   TabContainer,
 } from './TabStyles';
-import Fade from 'react-reveal/Fade';
 
-
-import {
-  ExperienceContainer,
-  ExperienceList,
-  ExperienceDate,
-} from '@/styles/AboutStyles';
+import { ExperienceList, ExperienceDate } from '@/styles/AboutStyles';
 
 const VerticalTabs = () => {
   const [activeTab, setActiveTab] = useState<string>('London');
@@ -39,45 +33,35 @@ const VerticalTabs = () => {
             onClick={() => openCity('London')}
             id="defaultOpen"
           >
-            <Fade up cascade>
-              <li
-                className="project"
-                data-thumbnail="/assets/img/2021/shopify-blog-thumb.png"
-              >
-                <Num id="project-01-num">01</Num>
-                <Link href="/project/artsy" className="link">
-                  <TitleText id="project-01-title" title="Artsy">
-                    Artsy
-                  </TitleText>
-                </Link>
-                <TitleText id="project-01-type">
-                  Photography - Ecommerce, Typescript, NextJs
+            <li className="project">
+              <Num id="project-01-num">01</Num>
+              <Link href="/project/artsy" className="link">
+                <TitleText id="project-01-title" title="Artsy">
+                  Artsy
                 </TitleText>
-                <Link href="https://artsy-swart.vercel.app/" className="link">
-                  <svg
-                    width="28"
-                    height="28"
-                    viewBox="0 0 28 28"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M7.63668 21.2132L17.9887 10.8611L17.9887 20.3646L20.3646 20.3646V6.78819H6.78816L6.78816 9.16407L16.2917 9.16407L5.93963 19.5161L7.63668 21.2132Z"
-                      fill="black"
-                    />
-                  </svg>
-                </Link>
-              </li>
-            </Fade>
+              </Link>
+              <TitleText>Photography - Ecommerce, Typescript, NextJs</TitleText>
+              <Link href="https://artsy-swart.vercel.app/" className="link">
+                <svg
+                  width="28"
+                  height="28"
+                  viewBox="0 0 28 28"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M7.63668 21.2132L17.9887 10.8611L17.9887 20.3646L20.3646 20.3646V6.78819H6.78816L6.78816 9.16407L16.2917 9.16407L5.93963 19.5161L7.63668 21.2132Z"
+                    fill="black"
+                  />
+                </svg>
+              </Link>
+            </li>
           </TabButton>
           <TabButton
             className={activeTab === 'Paris' ? 'active ' : ''}
             onClick={() => openCity('Paris')}
           >
-            <li
-              className="project"
-              data-thumbnail="/assets/img/2021/shopify-blog-thumb.png"
-            >
+            <li className="project">
               <Num id="project-01-num">02</Num>
               <Link
                 href="/project/machalavehicles"
@@ -115,10 +99,7 @@ const VerticalTabs = () => {
             className={activeTab === 'Tokyo' ? 'active' : ''}
             onClick={() => openCity('Tokyo')}
           >
-            <li
-              className="project"
-              data-thumbnail="/assets/img/2021/shopify-blog-thumb.png"
-            >
+            <li className="project">
               <Num id="project-01-num">03</Num>
               <Link href="/project/vsonet" className="link" target="_blank">
                 <TitleText id="project-01-title" title="Vsonet Education">

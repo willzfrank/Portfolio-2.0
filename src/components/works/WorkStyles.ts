@@ -5,7 +5,7 @@ export const WorkContentBox = styled.div`
 
   @media screen and (max-width: 768px) {
     max-width: 100%;
-    padding: 0 1rem;
+    padding: 0 0.5rem;
   }
 `;
 
@@ -13,7 +13,8 @@ export const WorkContentTitle = styled.h2`
   font-size: 4em;
 
   @media screen and (max-width: 768px) {
-    font-size: 3em;
+    font-size: 2em;
+    font-weight: normal;
   }
 `;
 
@@ -25,12 +26,17 @@ export const WorkContentText = styled.p`
   margin-top: 1.6em;
 
   @media screen and (max-width: 768px) {
-    margin-top: 1em;
+    margin-top: 0.8em;
     width: 100%;
+    font-size: 1.1em;
   }
 `;
 
 export const WorkBox = styled.section`
-  padding: 8em 0px;
+  padding: 4rem 0;
   border-top: 1px solid rgb(199, 199, 199);
+
+  @media screen and (max-width: 768px) {
+    padding: 1.5rem 0.5rem;
+  }
 `;

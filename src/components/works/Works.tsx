@@ -1,4 +1,4 @@
-import React from 'react';
+import Link from 'next/link';
 import VerticalTabs from './VerticalTab/Tab';
 import {
   WorkContentBox,
@@ -6,27 +6,15 @@ import {
   WorkContentText,
   WorkBox,
 } from './WorkStyles';
-import Fade from 'react-reveal/Fade';
 
-type Props = {};
-
-const Works = (props: Props) => {
+const Works = () => {
   return (
     <WorkBox>
       <WorkContentBox>
-        <WorkContentTitle>
-          <Fade up cascade>
-            Selected works
-          </Fade>
-        </WorkContentTitle>
-        <WorkContentText
-          className="mt-4 max-40 medium animate__fadeIn"
-          id="projects-desc"
-          data-scroll
-          data-scroll-call="animate-in+projects-desc"
-        >
+        <WorkContentTitle>Selected works</WorkContentTitle>
+        <WorkContentText>
           Here are some of my best projects. For a complete list, visit the{' '}
-          <a href="/projects">Projects page</a>.
+          <Link href="/projects">Projects page</Link>.
         </WorkContentText>
       </WorkContentBox>
       <VerticalTabs />

@@ -7,10 +7,11 @@ export const HeaderTitle = styled.h1`
   hyphens: auto;
   overflow: hidden;
   margin-bottom: 0.4em;
+  padding: 4rem 0;
 
   @media screen and (max-width: 768px) {
-    font-size: 3.73em;
-    line-height: 1.1em;
-    padding: 0 10px;
+    font-size: 3.7em;
+    line-height: 1.2em;
+    padding: 1.5rem 0.5rem;
   }
 `;
