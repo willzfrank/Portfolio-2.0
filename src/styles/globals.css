@@ -25,6 +25,11 @@ body {
   scroll-behavior: smooth;
 }
 
+.main {
+  border: 2px solid red;
+  padding: 1rem;
+}
+
 .mobile_tab {
   display: none;
 }

@@ -113,6 +113,7 @@ export const SkillsList = styled.ul`
   text-transform: uppercase;
   display: inline-block;
   white-space: nowrap;
+  animation: marquee 25s linear infinite;
 
   @keyframes marquee {
     from {
@@ -123,9 +124,9 @@ export const SkillsList = styled.ul`
     }
   }
 
-  animation: marquee 25s linear infinite;
-
   @media screen and (max-width: 768px) {
+    line-height: 2rem;
+    border: 2px solid red;
     animation: marquee 25s linear infinite;
     @keyframes marquee {
       from {

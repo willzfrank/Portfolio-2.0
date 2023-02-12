@@ -28,12 +28,14 @@ export default function Home() {
           href="/favicon_io (2)/favicon-32x32.png"
         />
       </Head>
-      <Navbar />
-      <Header />
-      <AboutComponent />
-      <Works />
-      <Marquee />
-      <Footer />
+      <div className="main">
+        <Navbar />
+        <Header />
+        <AboutComponent />
+        <Works />
+        <Marquee />
+        <Footer />
+      </div>
     </>
   );
 }
