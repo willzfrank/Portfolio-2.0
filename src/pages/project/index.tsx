@@ -5,15 +5,11 @@ import React from 'react';
 import { ContactContainer, ContactSocials } from '@/styles/ContactStyles';
 import Link from 'next/link';
 import {
-  AboutContainer,
-  Thumbnail,
-  AboutHeaderContent,
   ExperienceContainer,
   ExperienceList,
   ExperienceDate,
-  SkillsContainer,
-  SkillsList,
 } from '@/styles/AboutStyles';
+import Marquee from '@/components/marquee/Marquee';
 
 type Props = {};
 
@@ -56,12 +52,12 @@ const project = (props: Props) => {
           </div>
         </div>
       </ContactContainer>
-      <ExperienceContainer>
+      <ExperienceContainer className="projectlist_container">
         <ExperienceList>
           <Link className="link" href="/project/vsonet">
             <li>
               <div>
-                <p>VSONET EDUCATION</p>
+                <p className="project_title">VSONET EDUCATION</p>
               </div>
               <ExperienceDate>
                 <p>PERSONAL PROJECT</p>
@@ -72,33 +68,36 @@ const project = (props: Props) => {
           <Link className="link" href="/project/machalavehicles">
             <li>
               <div>
-                <p>MACHALA VEHICLES</p>
+                <p className="project_title">MACHALA VEHICLES</p>
               </div>
               <ExperienceDate>
                 <p>PERSONAL PROJECT</p>
               </ExperienceDate>
             </li>
           </Link>
-
-          <li>
-            <div>
-              <p>PORTFOLIO 1.0</p>
-            </div>
-            <ExperienceDate>
-              <p>PERSONAL PORTFOLIO</p>
-            </ExperienceDate>
-          </li>
-
-          <li>
-            <div>
-              <p>ARTSY</p>
-            </div>
-            <ExperienceDate>
-              <p>PHOTOGRAPHY E-COMMERCE</p>
-            </ExperienceDate>
-          </li>
+          <Link className="link" href="/project/portfolio1.0">
+            <li>
+              <div>
+                <p className="project_title">PORTFOLIO 1.0</p>
+              </div>
+              <ExperienceDate>
+                <p>PERSONAL PORTFOLIO</p>
+              </ExperienceDate>
+            </li>
+          </Link>
+          <Link className="link" href="/project/artsy">
+            <li>
+              <div>
+                <p className="project_title">ARTSY</p>
+              </div>
+              <ExperienceDate>
+                <p>PHOTOGRAPHY E-COMMERCE</p>
+              </ExperienceDate>
+            </li>
+          </Link>
         </ExperienceList>
       </ExperienceContainer>
+      <Marquee />
       <Footer />
     </>
   );

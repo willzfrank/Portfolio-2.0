@@ -7,12 +7,23 @@ export const ContactContainer = styled.section`
   padding-bottom: 6.6rem;
   margin-bottom: 0rem;
 
+  @media screen and (max-width: 768px) {
+    padding-bottom: 2rem;
+    padding-top: 0;
+    margin-top: 2rem;
+  }
+
   .contact_container2 {
     margin-right: auto;
     margin-left: auto;
     display: flex;
     justify-content: space-between;
     padding: 0px 1.66667rem;
+
+    @media screen and (max-width: 768px) {
+      flex-direction: column;
+      padding: 0 0.5rem;
+    }
 
     .contact_title {
       width: calc(16.6667%);
@@ -23,6 +34,13 @@ export const ContactContainer = styled.section`
       padding-top: 0rem;
       padding-bottom: 0.5rem;
       transition: all 1s ease-in-out 0s;
+
+      @media screen and (max-width: 768px) {
+        width: 100%;
+        max-width: 100%;
+        flex: 0 0 100%;
+        padding: 0 0.5rem;
+      }
 
       h6 {
         font-size: 0.8888888888888888rem;
@@ -41,6 +59,14 @@ export const ContactContainer = styled.section`
       padding-right: 0.83333rem;
       padding-top: 0rem;
       padding-bottom: 1.16rem;
+
+      @media screen and (max-width: 768px) {
+        width: 100%;
+        max-width: 100%;
+        flex: 0 0 100%;
+        padding: 0 0.5rem;
+        font-size: 13px;
+      }
       button {
         padding: 1rem 2rem;
         border-radius: 2.7rem;

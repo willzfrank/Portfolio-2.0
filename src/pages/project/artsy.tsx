@@ -13,6 +13,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
 import Footer from '@/components/footer/Footer';
+import Marquee from '@/components/marquee/Marquee';
 
 type Props = {};
 
@@ -180,13 +181,13 @@ const Artsy = (props: Props) => {
               both the Marketplace page and the Article page.
             </p>
 
-            <div className="project_imgContainer sea">
+            <div className="project_imgContainer artsy">
               <Image
                 src="/HOMEPAGE.png"
                 alt=""
-                width={300}
+                width={500}
                 height={900}
-                className="coverImg"
+                className="coverImg artsyImage"
               />
 
               <Image
@@ -194,7 +195,7 @@ const Artsy = (props: Props) => {
                 alt=""
                 width={300}
                 height={900}
-                className="coverImg"
+                className="coverImg artsyImage"
               />
 
               <Image
@@ -202,7 +203,7 @@ const Artsy = (props: Props) => {
                 alt=""
                 width={300}
                 height={300}
-                className="coverImg"
+                className="coverImg artsyImage"
               />
             </div>
           </ProjectContent1>
@@ -213,6 +214,7 @@ const Artsy = (props: Props) => {
             </Link>
           </div>
         </ProjectContent>
+        <Marquee />
         <Footer />
       </ProjectHeader>
     </div>

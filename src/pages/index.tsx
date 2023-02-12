@@ -3,7 +3,6 @@ import { Navbar } from '@/components/navbar';
 import Header from '@/components/header/Header';
 import AboutComponent from '@/components/about/About';
 import Works from '@/components/works/Works';
-import ContinuousScrollingText from '@/components/chat/Chat';
 import Footer from '@/components/footer/Footer';
 import Marquee from '@/components/marquee/Marquee';
 

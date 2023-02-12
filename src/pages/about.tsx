@@ -52,16 +52,14 @@ function about({}: Props) {
         <AboutHeaderContent>
           <div className="content">
             <p className="large">
-              Get ready to unleash the beauty of tech with yours truly,
-              Godswill! {`I'm`} a frontend dev who knows how to turn user
-              experiences into awe-inspiring works of art. From big screens to
-              mobiles, {`I've`} been perfecting the art of merging tech and
-              beauty for the past 3 years. With my creative skills and
-              self-taught spirit, {`I've`} collaborated with startups, agencies,
-              and even gone rogue. But now, {`I'm`} based in Lagos, spreading my
-              tech magic to the team at Santoms. So if {`you're`} ready to level
-              up your user experiences, {`let's`} join forces and make magic
-              happen!
+              Unleash {`tech's`} beauty with me, Godswill Francis - a frontend
+              dev who transforms user experiences into stunning works of art.
+              With 3 years of experience merging tech and beauty, {`I've`} honed
+              my skills in UI development with a keen eye for detail. Skilled in
+              React, Typescript and NextJs, {`I've`} worked with various
+              companies in different industries, delivering scalable solutions
+              while prioritizing user experience. {`Let's`} create something
+              amazing together!
             </p>
           </div>
           <div

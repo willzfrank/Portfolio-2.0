@@ -184,6 +184,14 @@ export const ExperienceList = styled.ul`
     padding-top: 2.4em;
     font-size: 1.2em;
     border-bottom: 1px solid rgb(199, 199, 199);
+    line-height: 1.9rem;
+
+    .project_title {
+      font-weight: bold;
+    }
+    @media screen and (max-width: 768px) {
+      gap: 8rem;
+    }
   }
 `;
 

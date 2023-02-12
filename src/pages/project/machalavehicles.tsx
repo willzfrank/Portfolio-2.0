@@ -13,6 +13,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
 import Footer from '@/components/footer/Footer';
+import Marquee from '@/components/marquee/Marquee';
 
 type Props = {};
 
@@ -201,6 +202,8 @@ const Artsy = (props: Props) => {
             </Link>
           </div>
         </ProjectContent>
+        <Marquee />
+
         <Footer />
       </ProjectHeader>
     </div>

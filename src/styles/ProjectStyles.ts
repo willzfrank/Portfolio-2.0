@@ -6,6 +6,10 @@ export const ProjectHeaderTitle = styled.div`
   height: 86vh;
   position: relative;
 
+  @media screen and (max-width: 768px) {
+    height: 85vh;
+  }
+
   .projectheader_title {
     position: absolute;
     bottom: 0;
@@ -163,6 +167,10 @@ export const ProjectContent1 = styled.section`
 
   .sea {
     background-color: #dcdcdc !important;
+  }
+
+  .artsy {
+    background-color: white !important;
   }
 
   .project_imgContainer {

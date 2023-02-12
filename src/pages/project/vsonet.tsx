@@ -13,6 +13,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
 import Footer from '@/components/footer/Footer';
+import Marquee from '@/components/marquee/Marquee';
 
 type Props = {};
 
@@ -168,7 +169,7 @@ const Artsy = (props: Props) => {
               a website that exceeded expectations.
             </p>
 
-            <div className="project_imgContainer sea">
+            <div className="project_imgContainer artsy">
               <Image
                 src="/Vsonet Education (3).png"
                 alt=""
@@ -202,6 +203,7 @@ const Artsy = (props: Props) => {
             </Link>
           </div>
         </ProjectContent>
+        <Marquee />
         <Footer />
       </ProjectHeader>
     </div>

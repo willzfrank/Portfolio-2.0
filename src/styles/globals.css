@@ -132,4 +132,8 @@ ul {
   .mobile-hide {
     display: none !important;
   }
+
+  .projectlist_container {
+    padding: 0px !important;
+  }
 }

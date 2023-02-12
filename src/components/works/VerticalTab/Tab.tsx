@@ -63,11 +63,7 @@ const VerticalTabs = () => {
           >
             <li className="project">
               <Num id="project-01-num">02</Num>
-              <Link
-                href="/project/machalavehicles"
-                className="link"
-                target="_blank"
-              >
+              <Link href="/project/machalavehicles" className="link">
                 <TitleText id="project-01-title" title="Machala Vehicles">
                   Machala Vehicles
                 </TitleText>
@@ -101,7 +97,7 @@ const VerticalTabs = () => {
           >
             <li className="project">
               <Num id="project-01-num">03</Num>
-              <Link href="/project/vsonet" className="link" target="_blank">
+              <Link href="/project/vsonet" className="link">
                 <TitleText id="project-01-title" title="Vsonet Education">
                   Vsonet Education
                 </TitleText>
@@ -207,11 +203,7 @@ const VerticalTabs = () => {
           </li>
 
           <li>
-            <Link
-              href="/project/machalavehicles"
-              className="link"
-              target="_blank"
-            >
+            <Link href="/project/machalavehicles" className="link">
               <TitleText id="project-01-title" title="Machala Vehicles">
                 Machala Vehicles
               </TitleText>
@@ -239,7 +231,7 @@ const VerticalTabs = () => {
           </li>
 
           <li>
-            <Link href="/project/vsonet" className="link" target="_blank">
+            <Link href="/project/vsonet" className="link">
               <TitleText id="project-01-title" title="Vsonet Education">
                 Vsonet Education
               </TitleText>
@@ -269,7 +261,6 @@ const VerticalTabs = () => {
         <Link
           className="link resume"
           href="../../public/Godswill Udoh FrontendDeveloper.pdf"
-          target="_blank"
           download
         ></Link>
       </div>
