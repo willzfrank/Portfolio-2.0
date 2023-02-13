@@ -15,7 +15,7 @@ type Props = {};
 
 const project = (props: Props) => {
   return (
-    <>
+    <div className="w95">
       <Head>
         <title>Godswill Francis &trade; | Project</title>
         <meta name="description" content="Project page of Godswill Francis" />
@@ -101,7 +101,7 @@ const project = (props: Props) => {
         <Marquee />
         <Footer />
       </div>
-    </>
+    </div>
   );
 };
 

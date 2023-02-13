@@ -19,7 +19,7 @@ type Props = {};
 
 const Artsy = (props: Props) => {
   return (
-    <div>
+    <div className="w95">
       <Head>
         <title>Godswill Francis &trade; | Artsy</title>
         <meta

@@ -19,7 +19,7 @@ type Props = {};
 
 function about({}: Props) {
   return (
-    <div>
+    <div className="w95">
       <Head>
         <title>Godswill Francis &trade; | About</title>
         <meta name="description" content="about page of Godswill Francis" />
@@ -248,7 +248,7 @@ function about({}: Props) {
           <p>Download Resume</p>
         </Link>
       </ExperienceContainer>
-      <SkillsContainer className='about_skills_container'>
+      <SkillsContainer className="about_skills_container">
         <h2>Skills</h2>
         <div className="skills">
           <span>Javascript</span>

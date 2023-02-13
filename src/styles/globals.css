@@ -3,6 +3,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Rubik+Moonrocks&display=swap');
 
+@font-face {
+  font-family: 'MyFont';
+  src: url('../../public/Ogg-Font/Ogg-Font/OggBold.ttf') format('truetype');
+}
+
 * {
   box-sizing: border-box;
   padding: 0;
@@ -19,12 +24,15 @@ body {
   overflow-x: hidden;
   background: rgb(240, 241, 242);
   /* padding: 54px 0; */
-  width: 95%;
+  /* width: 95%; */
   /* max-width: 1600px; */
-  margin: auto;
   scroll-behavior: smooth;
 }
 
+.w95 {
+  width: 95%;
+  margin: auto;
+}
 .overflow_hidden {
   overflow: hidden;
 }

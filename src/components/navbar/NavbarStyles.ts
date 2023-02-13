@@ -7,6 +7,7 @@ export const NavbarContainer = styled.nav`
   top: 0;
   z-index: 10;
   transition: all 0.3s ease-in-out;
+  width: 95%;
 
   .bottom {
     position: absolute;
