@@ -15,7 +15,7 @@ type Props = {};
 
 const project = (props: Props) => {
   return (
-    <div className="w95">
+    <div>
       <Head>
         <title>Godswill Francis &trade; | Project</title>
         <meta name="description" content="Project page of Godswill Francis" />
@@ -32,7 +32,7 @@ const project = (props: Props) => {
         />
       </Head>
       <Navbar />
-      <div className="overflow_hidden">
+      <div className="overflow_hidden w95">
         <ContactContainer>
           <div className="contact_container2">
             <div className="contact_title">

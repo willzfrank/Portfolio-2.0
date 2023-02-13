@@ -19,7 +19,7 @@ type Props = {};
 
 const Artsy = (props: Props) => {
   return (
-    <div className="w95">
+    <div>
       <Head>
         <title>Godswill Francis &trade; | Vsonet Education</title>
         <meta
@@ -38,8 +38,9 @@ const Artsy = (props: Props) => {
           href="/favicon_io (2)/favicon-32x32.png"
         />
       </Head>
-      <ProjectHeader>
-        <Navbar />
+      <Navbar />
+
+      <ProjectHeader className="w95">
         <ProjectHeaderTitle>
           <div className="projectheader_title">
             <h6>TECH TRAINING PLATFORM</h6>

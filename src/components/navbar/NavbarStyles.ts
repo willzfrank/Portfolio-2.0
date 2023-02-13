@@ -7,7 +7,11 @@ export const NavbarContainer = styled.nav`
   top: 0;
   z-index: 10;
   transition: all 0.3s ease-in-out;
-  width: 95%;
+  padding: 0 1rem;
+
+  @media screen and (max-width: 768px) {
+    padding: 0;
+  }
 
   .bottom {
     position: absolute;

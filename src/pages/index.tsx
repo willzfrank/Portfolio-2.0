@@ -44,8 +44,8 @@ export default function Home() {
               href="/favicon_io (2)/favicon-32x32.png"
             />
           </Head>
+          <Navbar />
           <div className="w95">
-            <Navbar />
             <div className="overflow_hidden">
               <Header />
               <AboutComponent />
