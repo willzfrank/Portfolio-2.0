@@ -50,6 +50,8 @@ function about({}: Props) {
           </div>
         </Thumbnail>
         <AboutHeaderContent>
+          <h6>ABOUT ME</h6>
+
           <div className="content">
             <p className="large">
               Unleash {`tech's`} beauty with me, Godswill Francis - a frontend
@@ -246,20 +248,26 @@ function about({}: Props) {
           <p>Download Resume</p>
         </Link>
       </ExperienceContainer>
-      <SkillsContainer>
+      <SkillsContainer className='about_skills_container'>
         <h2>Skills</h2>
         <div className="skills">
-          <SkillsList>
-            <li>Javascript</li>
-            <li>ReactJS</li>
-            <li>NextJS</li>
-            <li>TypeScript</li>
-            <li>Material UI</li>
-            <li>Tailwind CSS</li>
-            <li>Git</li>
-            <li>Styled-Components</li>
-            <li></li>
-          </SkillsList>
+          <span>Javascript</span>
+          <span>ReactJS</span>
+          <span>NextJS</span>
+          <span>TypeScript</span>
+          <span>Material UI</span>
+          <span>Tailwind CSS</span>
+          <span>Git</span>
+          <span>Styled-Components</span>
+          <span>HTML5</span>
+          <span>SASS</span>
+          <span>SCSS</span>
+          <span>CSS3</span>
+          <span>Responsive Design</span>
+          <span>Performance Optimization</span>
+          <span>Agile Development</span>
+          <span>REST</span>
+          <span>GRAPH QL</span>
         </div>
       </SkillsContainer>
       <Footer />

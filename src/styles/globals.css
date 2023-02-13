@@ -120,6 +120,9 @@ ul {
   flex-grow: 1;
 }
 
+.about_skills_container {
+  padding: 2em 0.5rem !important;
+}
 /* MEDIA QUERIES */
 
 @media only screen and (min-width: 768px) {
