@@ -17,14 +17,14 @@ export const countAnimation = keyframes`
     transform: scale(1);
   }
   to {
-    transform: scale(1.6);
+    transform: scale(1.3);
   }
 `;
 
 export const Count = styled.div.attrs<CountProps>(({ count }) => ({
   count,
 }))<CountProps>`
-  font-size: 7vw;
+  font-size: 8vw;
   line-height: 1.2;
   transform-origin: center;
   transform: scale(1);
