@@ -241,7 +241,7 @@ function about({}: Props) {
           </ExperienceList>
           <Link
             className="link resume"
-            href="../../public/Godswill Udoh FrontendDeveloper.pdf"
+            href="/Godswill Francis Udoh Frontend Developer .pdf"
             target="_blank"
             download
           >
