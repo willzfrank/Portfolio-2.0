@@ -14,7 +14,10 @@ const Works = () => {
         <WorkContentTitle>Selected works</WorkContentTitle>
         <WorkContentText>
           Here are some of my best projects. For a complete list, visit the{' '}
-          <Link href="/project">Projects page</Link>.
+          <Link href="/project" className="project_link">
+            Projects page
+          </Link>
+          .
         </WorkContentText>
       </WorkContentBox>
       <VerticalTabs />

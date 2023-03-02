@@ -47,5 +47,6 @@ export const MoreBtn = styled.div`
 
   .morebtn {
     text-decoration: none;
+    color: #eee;
   }
 `;

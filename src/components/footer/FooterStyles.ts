@@ -62,8 +62,9 @@ export const FooterButton = styled.button`
   font-weight: bold;
 
   &:hover {
-    background: #000;
-    color: #fff;
+    /* background: #000; */
+    background-color: rgb(231, 250, 236);
+
     transition: all 1s ease-in-out 0s;
   }
 

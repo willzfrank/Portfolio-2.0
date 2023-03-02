@@ -8,7 +8,7 @@ const Pointer = () => {
   React.useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       setMouseX(e.clientX);
-      setMouseY(e.clientY);
+      setMouseY(e.pageY);
     };
 
     document.addEventListener('mousemove', handleMouseMove);

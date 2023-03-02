@@ -2,10 +2,7 @@ import styled from 'styled-components';
 
 export const NavbarContainer = styled.nav`
   font-family: 'Playfair Display SC', serif;
-  position: relative;
-  position: sticky;
-  top: 0;
-  z-index: 10;
+
   transition: all 0.3s ease-in-out;
   padding: 0 1rem;
 
@@ -18,7 +15,9 @@ export const NavbarContainer = styled.nav`
     bottom: 1.6em;
   }
   .secondary {
-    color: rgb(0, 0, 0);
+    /* color: rgb(0, 0, 0); */
+    color: rgb(231, 250, 236) !important;
+
     text-decoration: none;
     cursor: pointer;
   }
@@ -66,7 +65,8 @@ export const Dashspan = styled.span`
     position: absolute;
     top: -5px;
     left: 5px;
-    background: rgb(0, 0, 0);
+    /* background: rgb(0, 0, 0); */
+    background-color: rgb(231, 250, 236);
   }
 `;
 
@@ -74,7 +74,9 @@ export const CloseNavbarBtn = styled.button`
   transition: all 1s ease-in-out 0s;
   border: none;
   font-size: 1em;
-  color: #ccc !important;
+  /* color: #ccc !important; */
+  color: rgb(231, 250, 236) !important;
+
   cursor: pointer;
   background-color: black;
 `;
@@ -83,7 +85,10 @@ export const NavbarBtn = styled.button`
   border: none;
   font-size: 1em;
   cursor: pointer;
+  color: inherit;
   padding-right: 1em;
+  background-color: #222222;
+
   @media screen and (min-width: 768px) {
     display: none !important;
   }
@@ -98,13 +103,15 @@ export const NavbarListContainer = styled.ul`
   }
   .link:first-of-type {
     margin-left: 0;
-    color: rgb(89, 89, 89);
+    /* color: rgb(89, 89, 89); */
+    color: rgb(231, 250, 236);
   }
   .link:nth-child(2),
   .link:nth-child(3) {
     display: inline-block;
     margin-left: 2em;
-    color: rgb(89, 89, 89);
+    /* color: rgb(89, 89, 89); */
+    color: rgb(231, 250, 236);
   }
 `;
 
@@ -124,7 +131,8 @@ export const MobileNavbarList = styled.ul`
   font-size: 2em;
   li {
     padding: 1em 0;
-    color: #ccc !important;
+    /* color: #ccc !important; */
+    color: rgb(231, 250, 236) !important;
   }
 `;
 
@@ -140,10 +148,13 @@ export const MobileNavbar = styled.div`
   top: 0;
   /* right: 0%; */
   padding: 1.6em;
-  color: #ccc;
+  /* color: #ccc; */
+  color: rgb(231, 250, 236);
 
   .mobile-secondary {
-    color: #ccc;
+    /* color: #ccc; */
+    color: rgb(231, 250, 236);
+
     text-decoration: none;
     cursor: pointer;
   }

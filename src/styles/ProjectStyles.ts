@@ -113,6 +113,23 @@ export const ProjectContent = styled.section`
     @media screen and (max-width: 768px) {
       padding: 0 1rem;
     }
+
+    svg {
+      animation: float 2s ease-in-out infinite;
+      color: #dbdada !important;
+
+      @keyframes float {
+        0% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+        100% {
+          transform: translateY(0);
+        }
+      }
+    }
   }
   .project_homeLink {
     display: flex;
@@ -146,7 +163,8 @@ export const Dashspan = styled.span`
     position: absolute;
     top: -5px;
     left: 5px;
-    background: rgb(0, 0, 0);
+    /* background: rgb(0, 0, 0); */
+    background-color: white;
   }
 `;
 
@@ -228,7 +246,8 @@ export const LongerDashspan = styled.span`
     position: absolute;
     top: -15px;
     left: 5px;
-    background: rgb(0, 0, 0);
+    /* background: rgb(0, 0, 0); */
+    background: rgb(231, 250, 236);
 
     @media screen and (max-width: 768px) {
       top: -10px;

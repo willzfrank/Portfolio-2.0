@@ -96,7 +96,7 @@ function about({}: Props) {
             <li>
               <div>
                 <p>Senior Frontend Developer</p>
-                <p className="muted">Santoms</p>
+                <p className="small">Santoms</p>
               </div>
               <ExperienceDate>
                 <p className="mr-2">
@@ -113,7 +113,7 @@ function about({}: Props) {
                 >
                   <path
                     d="M1.98887e-06 29.25L39.65 29.25L21.45 47.45L26 52L52 26L26 -2.27299e-06L21.45 4.55L39.65 22.75L2.55712e-06 22.75L1.98887e-06 29.25Z"
-                    fill="black"
+                    fill="white"
                   />
                 </svg>
 
@@ -124,7 +124,7 @@ function about({}: Props) {
             <li>
               <div>
                 <p>React Developer</p>
-                <p className="muted">Ullweb Technologies</p>
+                <p className="small">Ullweb Technologies</p>
               </div>
               <ExperienceDate>
                 <p className="mr-2">
@@ -141,7 +141,7 @@ function about({}: Props) {
                 >
                   <path
                     d="M1.98887e-06 29.25L39.65 29.25L21.45 47.45L26 52L52 26L26 -2.27299e-06L21.45 4.55L39.65 22.75L2.55712e-06 22.75L1.98887e-06 29.25Z"
-                    fill="black"
+                    fill="white"
                   />
                 </svg>
 
@@ -152,7 +152,7 @@ function about({}: Props) {
             <li>
               <div>
                 <p>Frontend Developer</p>
-                <p className="muted"> Yetti Technologies</p>
+                <p className="small"> Yetti Technologies</p>
               </div>
               <ExperienceDate>
                 <p className="mr-2">
@@ -169,7 +169,7 @@ function about({}: Props) {
                 >
                   <path
                     d="M1.98887e-06 29.25L39.65 29.25L21.45 47.45L26 52L52 26L26 -2.27299e-06L21.45 4.55L39.65 22.75L2.55712e-06 22.75L1.98887e-06 29.25Z"
-                    fill="black"
+                    fill="white"
                   />
                 </svg>
 
@@ -182,7 +182,7 @@ function about({}: Props) {
             <li>
               <div>
                 <p>Frontend Developer</p>
-                <p className="muted">Vsonet Group</p>
+                <p className="small">Vsonet Group</p>
               </div>
               <ExperienceDate>
                 <p className="mr-2">
@@ -199,7 +199,7 @@ function about({}: Props) {
                 >
                   <path
                     d="M1.98887e-06 29.25L39.65 29.25L21.45 47.45L26 52L52 26L26 -2.27299e-06L21.45 4.55L39.65 22.75L2.55712e-06 22.75L1.98887e-06 29.25Z"
-                    fill="black"
+                    fill="white"
                   />
                 </svg>
 
@@ -212,7 +212,7 @@ function about({}: Props) {
             <li>
               <div>
                 <p>Frontend Developer Intern</p>
-                <p className="muted">Side Hustle</p>
+                <p className="small">Side Hustle</p>
               </div>
               <ExperienceDate>
                 <p className="mr-2">
@@ -229,7 +229,7 @@ function about({}: Props) {
                 >
                   <path
                     d="M1.98887e-06 29.25L39.65 29.25L21.45 47.45L26 52L52 26L26 -2.27299e-06L21.45 4.55L39.65 22.75L2.55712e-06 22.75L1.98887e-06 29.25Z"
-                    fill="black"
+                    fill="white"
                   />
                 </svg>
 
@@ -268,6 +268,8 @@ function about({}: Props) {
             <span>Agile Development</span>
             <span>REST</span>
             <span>GRAPH QL</span>
+            <span>React Native</span>
+            <span>Flutter </span>
           </div>
         </SkillsContainer>
         <Footer />

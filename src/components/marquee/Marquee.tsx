@@ -10,7 +10,8 @@ const Marquee = () => {
       <span> • </span> HTML 5 <span> • </span> SASS <span> • </span> SCSS{' '}
       <span> • </span> CSS3 <span> • </span> Responsive Design <span> • </span>{' '}
       Performance Optimization <span> • </span> Agile Development{' '}
-      <span> • </span> REST <span> • </span> GRAPH QL
+      <span> • </span> REST <span> • </span> GRAPH QL <span> • </span> React
+      Native <span> • </span> Flutter
     </SkillsList>
   );
 };

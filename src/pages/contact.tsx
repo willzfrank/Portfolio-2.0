@@ -49,6 +49,9 @@ const contact = (props: Props) => {
                     href="mailto:willzudoh4@gmail.com"
                     target="_blank"
                     className="link"
+                    style={{
+                      color: 'rgb(50, 50, 50)',
+                    }}
                   >
                     SEND AN EMAIL
                   </Link>

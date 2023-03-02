@@ -162,7 +162,7 @@ export const SkillsList = styled.ul`
       transform: translate(0, 0);
     }
     to {
-      transform: translate(-9050px, 0);
+      transform: translate(-11050px, 0);
     }
   }
 
@@ -174,7 +174,7 @@ export const SkillsList = styled.ul`
         transform: translate(0, 0);
       }
       to {
-        transform: translate(-10900px, 0);
+        transform: translate(-12900px, 0);
       }
     }
   }
@@ -236,8 +236,11 @@ export const ExperienceList = styled.ul`
     width: 100%;
   }
 
-  .muted {
+  .small {
     margin-top: 0.8em;
+    color: rgb(240, 241, 242);
+    font-size: 1.2rem;
+    font-style: italic;
 
     @media screen and (max-width: 768px) {
       margin-top: 0.4em;

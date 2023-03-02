@@ -55,6 +55,7 @@ export const TabButton = styled.button`
 
     svg {
       animation: float 2s ease-in-out infinite;
+      color: #dbdada !important;
 
       @keyframes float {
         0% {
@@ -137,4 +138,5 @@ export const TitleText = styled.p`
   word-break: break-word;
   hyphens: auto;
   font-family: 'Montserrat', sans-serif;
+  color: rgb(231, 250, 236);
 `;

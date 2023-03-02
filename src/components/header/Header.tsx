@@ -11,7 +11,7 @@ const Header = () => {
         data-scroll
         data-scroll-call="text-animate+index-h1"
       >
-        I’m Francis, <br /> a Frontend Developer based in Lagos, Nigeria
+        I’m Godswill, <br /> a Frontend Developer based in Lagos, Nigeria
         &#127758;
       </HeaderTitle>
     </motion.header>

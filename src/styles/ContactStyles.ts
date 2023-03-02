@@ -47,7 +47,8 @@ export const ContactContainer = styled.section`
         line-height: 1.2222222222222223rem;
         letter-spacing: 0rem;
         font-weight: normal;
-        color: rgb(50, 50, 50);
+        /* color: rgb(50, 50, 50); */
+        color: #dbdada;
       }
     }
 
@@ -74,7 +75,9 @@ export const ContactContainer = styled.section`
         font-weight: bold;
 
         &:hover {
-          background: #000;
+          /* background: #000; */
+          background: rgb(231, 250, 236);
+
           cursor: pointer;
           color: #fff;
           transition: all 1s ease-in-out 0s;
@@ -99,7 +102,7 @@ export const ContactContainer = styled.section`
         font-size: 3rem;
         line-height: 3.4rem;
         letter-spacing: -0.17rem;
-        color: rgb(50, 50, 50);
+        /* color: rgb(50, 50, 50); */
         word-wrap: break-word;
         span {
           font-weight: normal;

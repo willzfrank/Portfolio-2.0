@@ -46,7 +46,12 @@ const Navbar = () => {
   }, [router]);
 
   return (
-    <motion.div variants={navVariants} initial="hidden" whileInView="show">
+    <motion.div
+      variants={navVariants}
+      initial="hidden"
+      whileInView="show"
+      className="nav_sticky"
+    >
       <NavbarContainer
         className={`navbar ${sticky ? 'sticky' : ''}`}
         style={{ transition: 'background-color 0.3s ease-in-out' }}
