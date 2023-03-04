@@ -24,7 +24,7 @@ export const HeaderTitle = styled.h1`
   } */
 
   @media only screen and (min-width: 320px) and (max-width: 430px) {
-    font-size: 7.5vh !important;
+    font-size: 7vh !important;
     line-height: 1.3;
     padding: 1.5rem 0.5rem;
   }
