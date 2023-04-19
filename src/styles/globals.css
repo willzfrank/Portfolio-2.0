@@ -47,7 +47,7 @@ body {
   margin: auto;
 }
 .overflow_hidden {
-  overflow: hidden;
+  overflow: hidden !important;
 }
 
 .mobile_tab {
