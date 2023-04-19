@@ -202,8 +202,11 @@ const Artsy = (props: Props) => {
             </Link>
           </div>
         </ProjectContent>
-        <Marquee />
-
+        <div className="w95">
+          <div className="overflow_hidden">
+            <Marquee />
+          </div>
+        </div>
         <Footer />
       </ProjectHeader>
     </div>
