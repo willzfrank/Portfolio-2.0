@@ -56,7 +56,7 @@ function about({}: Props) {
               <p className="large">
                 Unleash {`tech's`} beauty with me, Godswill Francis - a frontend
                 dev who transforms user experiences into stunning works of art.
-                With 3 years of experience merging tech and beauty, {`I've`}{' '}
+                With 4 years of experience merging tech and beauty, {`I've`}{' '}
                 honed my skills in UI development with a keen eye for detail.
                 Skilled in React, Typescript and NextJs, {`I've`} worked with
                 various companies in different industries, delivering scalable
