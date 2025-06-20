@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 export const AboutContainer = styled.section`
   width: 99.5%;
@@ -30,7 +30,7 @@ export const AboutContainer = styled.section`
       display: block;
     }
   }
-`;
+`
 
 export const Thumbnail = styled.div`
   max-width: 540px;
@@ -69,7 +69,7 @@ export const Thumbnail = styled.div`
       }
     }
   }
-`;
+`
 
 export const AboutHeaderContent = styled.div`
   display: flex;
@@ -108,7 +108,7 @@ export const AboutHeaderContent = styled.div`
       font-size: 1.1em;
     }
   }
-`;
+`
 
 export const SkillsContainer = styled.section`
   padding: 6em 0px;
@@ -141,7 +141,7 @@ export const SkillsContainer = styled.section`
       font-size: 2.7em;
     }
   }
-`;
+`
 
 export const SkillsList = styled.ul`
   overflow: hidden;
@@ -155,30 +155,30 @@ export const SkillsList = styled.ul`
   text-transform: uppercase;
   display: inline-block;
   white-space: nowrap;
-  animation: marquee 25s linear infinite;
+  animation: marquee 30s linear infinite;
 
   @keyframes marquee {
     from {
       transform: translate(0, 0);
     }
     to {
-      transform: translate(-11050px, 0);
+      transform: translate(-13500px, 0);
     }
   }
 
   @media screen and (max-width: 768px) {
     margin: 1rem 0;
-    animation: marquee 30s linear infinite;
+    animation: marquee 35s linear infinite;
     @keyframes marquee {
       from {
         transform: translate(0, 0);
       }
       to {
-        transform: translate(-12900px, 0);
+        transform: translate(-15500px, 0);
       }
     }
   }
-`;
+`
 export const ExperienceContainer = styled.section`
   padding: 6em 0px;
   border-top: 1px solid rgb(199, 199, 199);
@@ -219,7 +219,7 @@ export const ExperienceContainer = styled.section`
       font-size: 2.7em;
     }
   }
-`;
+`
 
 export const ExperienceList = styled.ul`
   font-size: 1.2em;
@@ -269,11 +269,11 @@ export const ExperienceList = styled.ul`
       font-weight: bold;
     }
   }
-`;
+`
 
 export const ExperienceDate = styled.div`
   align-items: center;
   transition: all 1s ease-in-out 0s;
   display: flex;
   gap: 0.8em;
-`;
+`

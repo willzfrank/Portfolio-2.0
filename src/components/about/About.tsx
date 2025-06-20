@@ -7,13 +7,14 @@ const AboutComponent: React.FC = () => {
       <div>
         <AboutTitle>About</AboutTitle>
         <span>
-          With 4 years of software development experience, I am part of the
-          amazing team at Sterling Bank Plc and a master of crafting efficient and
-          creative solutions. Passionate about using tech for good, I am
-          constantly seeking innovative problem-solving methods. Expert in
-          Javascript and its frameworks, I deliver high-quality software that
-          impresses clients. I have a talent for simplifying complex ideas and
-          strive to continuously improve.
+          With 5 years of software development experience, I am now working with
+          Polar Frequency, having previously been part of the amazing team at
+          Sterling Bank Plc. I am a master of crafting efficient and creative
+          solutions. Passionate about using tech for good, I am constantly
+          seeking innovative problem-solving methods. Expert in React, Next.js,
+          TypeScript, Node.js, and modern web technologies, I deliver
+          high-quality software that impresses clients. I have a talent for
+          simplifying complex ideas and strive to continuously improve.
         </span>
       </div>
 

@@ -1,19 +1,22 @@
-import Footer from '@/components/footer/Footer';
-import { Navbar } from '@/components/navbar';
-import Head from 'next/head';
-import React from 'react';
-import { ContactContainer, ContactSocials } from '@/styles/ContactStyles';
-import Link from 'next/link';
-import Marquee from '@/components/marquee/Marquee';
+import Footer from '@/components/footer/Footer'
+import { Navbar } from '@/components/navbar'
+import Head from 'next/head'
+import React from 'react'
+import { ContactContainer, ContactSocials } from '@/styles/ContactStyles'
+import Link from 'next/link'
+import Marquee from '@/components/marquee/Marquee'
 
-type Props = {};
+type Props = {}
 
 const contact = (props: Props) => {
   return (
     <>
       <Head>
         <title>Godswill Francis &trade; | Contact</title>
-        <meta name="description" content="Contact page of Godswill Francis" />
+        <meta
+          name="description"
+          content="Get in touch with Godswill Francis for collaboration opportunities, freelance projects, or to discuss your next web development idea. Available for exciting projects!"
+        />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link
           rel="stylesheet"
@@ -25,6 +28,23 @@ const contact = (props: Props) => {
           sizes="32x32"
           href="/favicon_io (2)/favicon-32x32.png"
         />
+        {/* Open Graph Meta Tags */}
+        <meta property="og:title" content="Godswill Francis ™ | Contact" />
+        <meta
+          property="og:description"
+          content="Get in touch with Godswill Francis for collaboration opportunities, freelance projects, or to discuss your next web development idea."
+        />
+        <meta property="og:image" content="/profile.jpeg" />
+        <meta property="og:url" content="https://yourwebsite.com/contact" />
+        <meta property="og:type" content="website" />
+        {/* Twitter Card Meta Tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Godswill Francis ™ | Contact" />
+        <meta
+          name="twitter:description"
+          content="Get in touch with Godswill Francis for collaboration opportunities, freelance projects, or to discuss your next web development idea."
+        />
+        <meta name="twitter:image" content="/profile.jpeg" />
       </Head>
       <Navbar />
       <div className="w95">
@@ -94,7 +114,7 @@ const contact = (props: Props) => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default contact;
+export default contact

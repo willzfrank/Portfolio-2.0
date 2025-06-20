@@ -1,0 +1,24 @@
+{
+  "name": "Godswill Francis - Frontend Developer Portfolio",
+  "short_name": "Godswill Francis",
+  "description": "Personal portfolio of Godswill Francis - Frontend Developer specializing in React, TypeScript, Next.js, Python, Docker, AWS, and Azure DevOps",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "/favicon_io (2)/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon_io (2)/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["business", "productivity", "utilities"],
+  "lang": "en",
+  "dir": "ltr"
+}

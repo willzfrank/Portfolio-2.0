@@ -198,9 +198,47 @@ export const ProjectContent1 = styled.section`
     justify-content: center;
     gap: 100px;
     background-color: #252a2f;
+    padding: 2rem;
+    border-radius: 8px;
+    margin-top: 2rem;
 
-    @media screen and (max-width: 768px) {
-      gap: 20px !important;
+    .project-preview {
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
+      transition: transform 0.3s ease;
+
+      &:hover {
+        transform: translateY(-5px);
+      }
+
+      .project-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+        color: white;
+        padding: 1rem;
+        transform: translateY(100%);
+        transition: transform 0.3s ease;
+
+        h3 {
+          margin: 0 0 0.5rem 0;
+          font-size: 1.2rem;
+          font-weight: 600;
+        }
+
+        p {
+          margin: 0;
+          font-size: 0.9rem;
+          opacity: 0.9;
+        }
+      }
+
+      &:hover .project-overlay {
+        transform: translateY(0);
+      }
     }
 
     .coverImg {

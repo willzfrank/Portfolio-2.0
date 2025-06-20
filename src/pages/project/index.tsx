@@ -1,24 +1,30 @@
-import Footer from '@/components/footer/Footer';
-import { Navbar } from '@/components/navbar';
-import Head from 'next/head';
-import React from 'react';
-import { ContactContainer, ContactSocials } from '@/styles/ContactStyles';
-import Link from 'next/link';
+import { Navbar } from '@/components/navbar'
+import React from 'react'
 import {
-  ExperienceContainer,
-  ExperienceList,
-  ExperienceDate,
-} from '@/styles/AboutStyles';
-import Marquee from '@/components/marquee/Marquee';
+  ProjectHeader,
+  ProjectHeaderTitle,
+  ProjectContributors,
+  ProjectContent,
+  Dashspan,
+  ProjectContent1,
+  LongerDashspan,
+} from '@/styles/ProjectStyles'
+import Head from 'next/head'
+import Link from 'next/link'
+import Image from 'next/image'
+import Footer from '@/components/footer/Footer'
+import Marquee from '@/components/marquee/Marquee'
+import { projects } from '@/data/projects'
 
-type Props = {};
-
-const project = (props: Props) => {
+const ProjectsPage = () => {
   return (
     <div>
       <Head>
-        <title>Godswill Francis &trade; | Project</title>
-        <meta name="description" content="Project page of Godswill Francis" />
+        <title>Godswill Francis &trade; | Projects</title>
+        <meta
+          name="description"
+          content="Explore the portfolio of projects by Godswill Francis - Web Design, AI, HR, and Technology solutions"
+        />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link
           rel="stylesheet"
@@ -30,79 +36,119 @@ const project = (props: Props) => {
           sizes="32x32"
           href="/favicon_io (2)/favicon-32x32.png"
         />
+        {/* Open Graph Meta Tags */}
+        <meta property="og:title" content="Godswill Francis ™ | Projects" />
+        <meta
+          property="og:description"
+          content="Explore the portfolio of projects by Godswill Francis - Web Design, AI, HR, and Technology solutions"
+        />
+        <meta property="og:image" content="/profile.jpeg" />
+        <meta property="og:url" content="https://yourwebsite.com/project" />
+        <meta property="og:type" content="website" />
+        {/* Twitter Card Meta Tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Godswill Francis ™ | Projects" />
+        <meta
+          name="twitter:description"
+          content="Explore the portfolio of projects by Godswill Francis - Web Design, AI, HR, and Technology solutions"
+        />
+        <meta name="twitter:image" content="/profile.jpeg" />
       </Head>
       <Navbar />
-      <div className="overflow_hidden w95">
-        <ContactContainer>
-          <div className="contact_container2">
-            <div className="contact_title">
-              <h6>ACHIEVEMENTS</h6>
+      <ProjectHeader className="w95">
+        <ProjectHeaderTitle>
+          <div className="projectheader_title">
+            <h6>PORTFOLIO</h6>
+            <h1>PROJECTS</h1>
+          </div>
+        </ProjectHeaderTitle>
+        <ProjectContributors>
+          <div className="section slimmer flex between mobile-block mobile-collapse ">
+            <div className="column">
+              <h3>Total Projects</h3>
+              <p>{projects.length}</p>
             </div>
-            <div className="contact_content">
-              <h2>
-                PROJECTS
-                <span> - Frontend </span>
-              </h2>
-              <h5>
-                With an eye for the small details that make a big impact, I pour
-                all of my passion into my work to craft exceptional UI
-                experiences. Each project I undertake is distinct and
-                custom-made with its own distinct personality. Please take a
-                look at some of my achievements below:
-              </h5>
+            <div className="column">
+              <h3>Categories</h3>
+              <p>Web Design, AI, HR, E-commerce, Tech</p>
+            </div>
+            <div className="column">
+              <h3>Technologies</h3>
+              <p>React, Next.js, TypeScript, AI/ML, Python</p>
+            </div>
+            <div className="column">
+              <h3>Experience</h3>
+              <p>2+ Years</p>
             </div>
           </div>
-        </ContactContainer>
-        <ExperienceContainer className="projectlist_container">
-          <ExperienceList>
-            <Link className="link" href="/project/vsonet">
-              <li>
-                <div>
-                  <p className="project_title">VSONET EDUCATION</p>
-                </div>
-                <ExperienceDate>
-                  <p>PERSONAL PROJECT</p>
-                </ExperienceDate>
-              </li>
-            </Link>
+        </ProjectContributors>
+        <ProjectContent>
+          <div className="project_linkcontainer flex between">
+            <div className="project_contentLink">
+              <Link href="/" className="link">
+                <Dashspan></Dashspan>
+                <span
+                  style={{
+                    color: 'white',
+                  }}
+                >
+                  BACK TO HOME
+                </span>
+              </Link>
 
-            <Link className="link" href="/project/machalavehicles">
-              <li>
-                <div>
-                  <p className="project_title">MACHALA VEHICLES</p>
+              <svg
+                width="28"
+                height="28"
+                viewBox="0 0 28 28"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M7.63668 21.2132L17.9887 10.8611L17.9887 20.3646L20.3646 20.3646V6.78819H6.78816L6.78816 9.16407L16.2917 9.16407L5.93963 19.5161L7.63668 21.2132Z"
+                  fill="white"
+                />
+              </svg>
+            </div>
+          </div>
+
+          <ProjectContent1>
+            <p>
+              Welcome to my project portfolio! Here you'll find a collection of
+              my work across various domains including web design, artificial
+              intelligence, human resources, and technology solutions.
+            </p>
+            <p>
+              Each project represents a unique challenge and learning
+              opportunity, showcasing my skills in frontend development, AI/ML
+              integration, and user experience design.
+            </p>
+
+            <div className="project_imgContainer">
+              {projects.map((project, index) => (
+                <div key={project.id} className="project-preview">
+                  <Link href={`/project/${project.slug}`}>
+                    <Image
+                      src={project.image}
+                      alt={`${project.title} preview`}
+                      width={400}
+                      height={300}
+                      className="coverImg"
+                    />
+                    <div className="project-overlay">
+                      <h3>{project.title}</h3>
+                      <p>{project.type}</p>
+                    </div>
+                  </Link>
                 </div>
-                <ExperienceDate>
-                  <p>PERSONAL PROJECT</p>
-                </ExperienceDate>
-              </li>
-            </Link>
-            <Link className="link" href="/project/portfolio1.0">
-              <li>
-                <div>
-                  <p className="project_title">PORTFOLIO 1.0</p>
-                </div>
-                <ExperienceDate>
-                  <p>PERSONAL PORTFOLIO</p>
-                </ExperienceDate>
-              </li>
-            </Link>
-            <Link className="link" href="/project/artsy">
-              <li>
-                <div>
-                  <p className="project_title">ARTSY</p>
-                </div>
-                <ExperienceDate>
-                  <p>PHOTOGRAPHY E-COMMERCE</p>
-                </ExperienceDate>
-              </li>
-            </Link>
-          </ExperienceList>
-        </ExperienceContainer>
-        <Marquee />
-        <Footer />
-      </div>
+              ))}
+            </div>
+          </ProjectContent1>
+        </ProjectContent>
+      </ProjectHeader>
+      <Marquee />
+      <Footer />
     </div>
-  );
-};
+  )
+}
 
-export default project;
+export default ProjectsPage
