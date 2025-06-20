@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://yourwebsite.com/sitemap.xml
+
+# Disallow admin or private areas (if any)
+Disallow: /api/
+Disallow: /_next/
+Disallow: /admin/ 
