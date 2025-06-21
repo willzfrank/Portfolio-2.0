@@ -140,7 +140,7 @@ function about({}: Props) {
 
                 <p className="ml-2">Present</p>
               </ExperienceDate>
-            </li>
+          </li>
             <li>
               <div>
                 <p>Senior Frontend Developer</p>

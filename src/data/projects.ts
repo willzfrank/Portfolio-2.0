@@ -174,70 +174,70 @@ The project focuses on creating an intuitive interface that makes learning acces
       },
     ],
   },
-  {
-    id: '04',
-    title: 'GoghR',
-    slug: 'goghr',
-    type: 'AI-Powered HR Platform',
-    technologies: ['React', 'Node.js', 'AI/ML', 'Python', 'MongoDB'],
-    timeline: 'March 2023-April 2023',
-    description:
-      'An innovative AI-powered human resources platform that revolutionizes recruitment and employee management.',
-    longDescription: `GoghR is a cutting-edge AI-powered human resources platform that revolutionizes the way companies approach recruitment, employee management, and organizational development. The platform leverages advanced machine learning algorithms to streamline HR processes and improve decision-making.
+  //   {
+  //     id: '04',
+  //     title: 'GoghR',
+  //     slug: 'goghr',
+  //     type: 'AI-Powered HR Platform',
+  //     technologies: ['React', 'Node.js', 'AI/ML', 'Python', 'MongoDB'],
+  //     timeline: 'March 2023-April 2023',
+  //     description:
+  //       'An innovative AI-powered human resources platform that revolutionizes recruitment and employee management.',
+  //     longDescription: `GoghR is a cutting-edge AI-powered human resources platform that revolutionizes the way companies approach recruitment, employee management, and organizational development. The platform leverages advanced machine learning algorithms to streamline HR processes and improve decision-making.
 
-The system features intelligent candidate screening, automated interview scheduling, performance analytics, and predictive workforce planning. By combining artificial intelligence with human expertise, GoghR helps organizations build stronger, more diverse teams while reducing bias in hiring processes.
+  // The system features intelligent candidate screening, automated interview scheduling, performance analytics, and predictive workforce planning. By combining artificial intelligence with human expertise, GoghR helps organizations build stronger, more diverse teams while reducing bias in hiring processes.
 
-Key features include AI-driven resume parsing, skill gap analysis, employee engagement monitoring, and predictive turnover analysis. The platform also provides comprehensive reporting and analytics to help HR professionals make data-driven decisions.`,
-    liveUrl: 'https://goghr-demo.vercel.app/',
-    githubUrl: 'https://github.com/willzfrank/goghr',
-    image: '/Willz Frank.png',
-    category: 'ai',
-    contributors: [
-      {
-        role: 'Lead AI Engineer',
-        name: 'Godswill Francis',
-      },
-      {
-        role: 'UX Designer',
-        name: 'Sarah Chen',
-        link: 'https://www.behance.net/sarahchen',
-      },
-      {
-        role: 'Backend Developer',
-        name: 'Alex Rodriguez',
-        link: 'https://github.com/alexrodriguez',
-      },
-    ],
-    contributions: [
-      'AI/ML algorithm development',
-      'Frontend architecture',
-      'API integration',
-      'User experience design',
-    ],
-    images: [
-      {
-        src: '/Willz Frank.png',
-        alt: 'GoghR Dashboard',
-        width: 500,
-        height: 500,
-        className: 'coverImg',
-      },
-      {
-        src: '/Willz Frank (1).png',
-        alt: 'GoghR Candidate Screening',
-        width: 500,
-        height: 500,
-        className: 'coverImg',
-      },
-      {
-        src: '/Willz Frank (2).png',
-        alt: 'GoghR Analytics',
-        width: 500,
-        height: 500,
-        className: 'coverImg',
-      },
-    ],
-  },
+  // Key features include AI-driven resume parsing, skill gap analysis, employee engagement monitoring, and predictive turnover analysis. The platform also provides comprehensive reporting and analytics to help HR professionals make data-driven decisions.`,
+  //     liveUrl: 'https://goghr-demo.vercel.app/',
+  //     githubUrl: 'https://github.com/willzfrank/goghr',
+  //     image: '/Willz Frank.png',
+  //     category: 'ai',
+  //     contributors: [
+  //       {
+  //         role: 'Lead AI Engineer',
+  //         name: 'Godswill Francis',
+  //       },
+  //       {
+  //         role: 'UX Designer',
+  //         name: 'Sarah Chen',
+  //         link: 'https://www.behance.net/sarahchen',
+  //       },
+  //       {
+  //         role: 'Backend Developer',
+  //         name: 'Alex Rodriguez',
+  //         link: 'https://github.com/alexrodriguez',
+  //       },
+  //     ],
+  //     contributions: [
+  //       'AI/ML algorithm development',
+  //       'Frontend architecture',
+  //       'API integration',
+  //       'User experience design',
+  //     ],
+  //     images: [
+  //       {
+  //         src: '/Willz Frank.png',
+  //         alt: 'GoghR Dashboard',
+  //         width: 500,
+  //         height: 500,
+  //         className: 'coverImg',
+  //       },
+  //       {
+  //         src: '/Willz Frank (1).png',
+  //         alt: 'GoghR Candidate Screening',
+  //         width: 500,
+  //         height: 500,
+  //         className: 'coverImg',
+  //       },
+  //       {
+  //         src: '/Willz Frank (2).png',
+  //         alt: 'GoghR Analytics',
+  //         width: 500,
+  //         height: 500,
+  //         className: 'coverImg',
+  //       },
+  //     ],
+  //   },
 ]
 
 export const getProjectBySlug = (slug: string): Project | undefined => {
