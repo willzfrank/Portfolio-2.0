@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { getServerClient, isSupabaseConfigured } from '@/lib/supabaseAdmin'
+import { rateLimited } from '@/lib/rateLimit'
 
 export default async function handler(
   req: NextApiRequest,
@@ -10,6 +11,11 @@ export default async function handler(
     return res.status(405).end()
   }
   if (!isSupabaseConfigured()) return res.status(204).end()
+  // Don't count local development.
+  if (/^(localhost|127\.0\.0\.1|\[::1\])(:|$)/.test(req.headers.host ?? '')) {
+    return res.status(204).end()
+  }
+  if (rateLimited(req, 'track', 120, 60 * 1000)) return res.status(429).end()
   const { visitorId, path, referrer } = req.body ?? {}
   if (
     typeof visitorId !== 'string' ||

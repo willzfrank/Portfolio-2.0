@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { getServerClient, isSupabaseConfigured } from '@/lib/supabaseAdmin'
+import { rateLimited } from '@/lib/rateLimit'
 
 export default async function handler(
   req: NextApiRequest,
@@ -11,6 +12,9 @@ export default async function handler(
   }
   if (!isSupabaseConfigured()) {
     return res.status(503).json({ error: 'Messaging is unavailable' })
+  }
+  if (rateLimited(req, 'contact', 5, 60 * 60 * 1000)) {
+    return res.status(429).json({ error: 'Too many messages, try again later' })
   }
   const { name, email, message, website } = req.body ?? {}
   if (website) return res.status(200).json({ ok: true }) // honeypot
@@ -25,7 +29,16 @@ export default async function handler(
   ) {
     return res.status(400).json({ error: 'Please fill in all fields' })
   }
-  const { error } = await getServerClient()
+  const db = getServerClient()
+  // Global backstop across serverless instances.
+  const { count } = await db
+    .from('messages')
+    .select('id', { count: 'exact', head: true })
+    .gte('created_at', new Date(Date.now() - 60 * 60 * 1000).toISOString())
+  if ((count ?? 0) >= 30) {
+    return res.status(429).json({ error: 'Too many messages, try again later' })
+  }
+  const { error } = await db
     .from('messages')
     .insert({ name: name.trim(), email: email.trim(), message: message.trim() })
   if (error) return res.status(500).json({ error: 'Could not send message' })

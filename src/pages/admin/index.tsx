@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import styled, { keyframes, css } from 'styled-components'
 import type { Session } from '@supabase/supabase-js'
 import { getBrowserClient } from '@/lib/supabaseClient'
-import { openPresence } from '@/lib/presence'
+import { markOwnerBrowser, openPresence } from '@/lib/presence'
 
 /* ---------- types ---------- */
 interface Img {
@@ -102,7 +102,7 @@ const uploadImage = async (token: string, file: File) => {
     token,
     'upload',
     'POST',
-    { filename: file.name, contentType: file.type }
+    { filename: file.name, contentType: file.type, size: file.size }
   )
   const { error } = await getBrowserClient()
     .storage.from('portfolio')
@@ -153,11 +153,13 @@ export default function Admin() {
     const supabase = getBrowserClient()
     supabase.auth.getSession().then(({ data }) => {
       setSession(data.session)
+      if (data.session) markOwnerBrowser()
       setReady(true)
     })
-    const { data: sub } = supabase.auth.onAuthStateChange((_e, s) =>
+    const { data: sub } = supabase.auth.onAuthStateChange((_e, s) => {
       setSession(s)
-    )
+      if (s) markOwnerBrowser()
+    })
     return () => sub.subscription.unsubscribe()
   }, [])
 

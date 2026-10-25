@@ -1,6 +1,7 @@
 import { withAdmin } from '@/lib/adminAuth'
 import { getServerClient } from '@/lib/supabaseAdmin'
 import { pickProjectFields } from '@/lib/projectInput'
+import { revalidateSite } from '@/lib/revalidate'
 
 export default withAdmin(async (req, res) => {
   const db = getServerClient()
@@ -24,6 +25,7 @@ export default withAdmin(async (req, res) => {
       .select()
       .single()
     if (error) return res.status(400).json({ error: error.message })
+    await revalidateSite(res, [data.slug])
     return res.status(201).json(data)
   }
 

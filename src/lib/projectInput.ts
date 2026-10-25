@@ -1,3 +1,6 @@
+// Would collide with real routes under /project.
+const RESERVED_SLUGS = ['index']
+
 const CATEGORIES = ['web-design', 'ai', 'hr', 'ecommerce', 'tech']
 
 const str = (v: unknown) => (typeof v === 'string' ? v.trim() : undefined)
@@ -49,6 +52,8 @@ export const pickProjectFields = (
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/^-+|-+$/g, '')
   }
+  if (typeof fields.slug === 'string' && RESERVED_SLUGS.includes(fields.slug))
+    return { error: `"${fields.slug}" is a reserved URL, pick another slug` }
   if (requireAll && (!fields.title || !fields.slug))
     return { error: 'Title and slug are required' }
   return { fields }

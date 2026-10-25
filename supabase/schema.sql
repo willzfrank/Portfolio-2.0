@@ -52,6 +52,9 @@ create policy "public read site content" on site_content
 -- messages: no policies => only the service role can read/write.
 
 -- Public bucket for project images.
-insert into storage.buckets (id, name, public)
-values ('portfolio', 'portfolio', true)
-on conflict (id) do nothing;
+insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+values ('portfolio', 'portfolio', true, 5242880,
+  array['image/jpeg','image/png','image/webp','image/gif','image/avif'])
+on conflict (id) do update
+  set file_size_limit = excluded.file_size_limit,
+      allowed_mime_types = excluded.allowed_mime_types;

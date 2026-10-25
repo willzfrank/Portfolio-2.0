@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/router'
 import { Toast, Dot } from './presenceStyles'
-import { getVisitorId, openPresence } from '@/lib/presence'
+import { getVisitorId, isOwnerBrowser, openPresence } from '@/lib/presence'
 
 interface Item {
   id: number
@@ -20,7 +20,7 @@ const PresenceToast: React.FC = () => {
 
   // Presence tracking
   useEffect(() => {
-    if (!process.env.NEXT_PUBLIC_SUPABASE_URL) return
+    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || isOwnerBrowser()) return
     const close = openPresence(getVisitorId(), ({ type, count }) => {
       if (type === 'sync') return
       const id = nextId.current++
@@ -40,6 +40,7 @@ const PresenceToast: React.FC = () => {
 
   // Page view analytics
   useEffect(() => {
+    if (isOwnerBrowser()) return
     const track = (path: string) => {
       fetch('/api/track', {
         method: 'POST',
