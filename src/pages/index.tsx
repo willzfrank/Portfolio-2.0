@@ -45,10 +45,6 @@ export default function Home({
               content="width=device-width, initial-scale=1"
             />
             <link
-              rel="stylesheet"
-              href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"
-            ></link>
-            <link
               rel="icon"
               type="image/png"
               sizes="32x32"

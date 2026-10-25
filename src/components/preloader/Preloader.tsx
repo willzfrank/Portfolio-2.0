@@ -19,7 +19,7 @@ const GREETINGS = ['Hello', 'Ndewo', 'Bonjour', 'Hola', 'Ciao', 'Hallo']
 const NAME = 'GODSWILL FRANCIS'.split('')
 const STRIPS = 7
 const GREETING_MS = 600
-const COUNT_SECONDS = 7
+const COUNT_SECONDS = 2.4
 const EASE = [0.76, 0, 0.24, 1] as const
 
 const SEEN_KEY = 'pf_preloader_seen'
@@ -28,7 +28,7 @@ let playedThisPageLoad = false
 export const hasPreloaderPlayed = () => playedThisPageLoad
 
 const FONT_WAIT_MAX_MS = 1500
-const LOAD_WAIT_MAX_MS = 6000
+const LOAD_WAIT_MAX_MS = 1500
 
 const withTimeout = (p: Promise<unknown>, ms: number) =>
   Promise.race([p, new Promise((r) => setTimeout(r, ms))])
@@ -119,7 +119,7 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete, onLeaving }) => {
       onUpdate: (v) => setCount(Math.round(v)),
       onComplete: () =>
         pageLoaded().then(
-          () => !cancelled && setTimeout(() => setLeaving(true), 800)
+          () => !cancelled && setTimeout(() => setLeaving(true), 300)
         ),
     })
     return () => {

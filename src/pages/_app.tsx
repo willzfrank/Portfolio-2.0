@@ -1,4 +1,5 @@
 import Cursor from '@/components/cursor/Cursor';
+import RouteProgress from '@/components/scroll/RouteProgress';
 import SmoothScroll from '@/components/scroll/SmoothScroll';
 import PresenceToast from '@/components/presence/PresenceToast';
 import AnalyticsTracker from '@/components/analytics/AnalyticsTracker';
@@ -15,6 +16,7 @@ const App = ({ Component, pageProps }: AppProps) => {
       {!isAdmin && <Cursor />}
       {!isAdmin && <PresenceToast />}
       {!isAdmin && <AnalyticsTracker />}
+      <RouteProgress />
       {!isAdmin && <SmoothScroll />}
       {!isAdmin && <div className="grain" aria-hidden />}
       <Component {...pageProps} />

@@ -9,6 +9,7 @@ const TYPES: Record<string, string> = {
   'image/webp': 'webp',
   'image/gif': 'gif',
   'image/avif': 'avif',
+  'application/pdf': 'pdf',
 }
 
 /**
@@ -25,10 +26,10 @@ export default withAdmin(async (req, res) => {
   if (typeof filename !== 'string' || !ext) {
     return res
       .status(400)
-      .json({ error: 'Use a JPG, PNG, WebP, GIF or AVIF image' })
+      .json({ error: 'Use a JPG, PNG, WebP, GIF or AVIF image, or a PDF' })
   }
   if (typeof size === 'number' && size > MAX_UPLOAD_BYTES) {
-    return res.status(400).json({ error: 'Images must be 5 MB or smaller' })
+    return res.status(400).json({ error: 'Files must be 5 MB or smaller' })
   }
   const base = filename
     .toLowerCase()
@@ -36,7 +37,8 @@ export default withAdmin(async (req, res) => {
     .replace(/[^a-z0-9]+/g, '-')
     .slice(0, 60)
   // Extension comes from the validated type, not the user's file name.
-  const path = `projects/${Date.now()}-${base}.${ext}`
+  const dir = ext === 'pdf' ? 'resume' : 'projects'
+  const path = `${dir}/${Date.now()}-${base}.${ext}`
   const db = getServerClient()
   const { data, error } = await db.storage
     .from(BUCKET)

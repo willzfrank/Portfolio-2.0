@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { gsap } from '@/lib/gsap';
 import { track } from '@/lib/analytics';
 
-const SRC = '/profile.jpeg';
+const SRC = '/profile-hero.jpeg';
 /** Where the crop is anchored vertically (0 = top). Shared with the CSS lens image. */
 const FOCUS_Y = 0.22;
 /** Sparse -> dense. */

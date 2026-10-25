@@ -39,6 +39,8 @@ Requires Node 24.x (pinned in `package.json` for Vercel).
 | `NEXT_PUBLIC_SUPABASE_URL` | Supabase → Project Settings → API | Public |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Same page (publishable key) | Public |
 | `SUPABASE_SERVICE_ROLE_KEY` | Same page (secret key) | **Server only.** Never prefix with `NEXT_PUBLIC_` |
+| `RESEND_API_KEY` | resend.com → API Keys | Optional. Emails you a note for each new visit from outside Nigeria |
+| `NOTIFY_EMAIL` | You choose | Optional. Recipient for those emails (defaults to willzudoh4@gmail.com) |
 | `ADMIN_EMAILS` | You choose | Comma-separated. Only these Supabase Auth users can use `/admin` |
 
 Locally these go in `.env.local` (git-ignored). On Vercel, add them under **Project → Settings →

@@ -652,12 +652,33 @@ function ProjectForm({
 function Content({ token }: { token: string }) {
   const [about, setAbout] = useState('')
   const [status, setStatus] = useState('')
+  const [resumeUrl, setResumeUrl] = useState('')
+  const [resumeStatus, setResumeStatus] = useState('')
 
   useEffect(() => {
-    api(token, 'content').then((rows: { key: string; value: { text?: string } }[]) => {
-      setAbout(rows.find((r) => r.key === 'about')?.value.text ?? '')
-    })
+    api(token, 'content').then(
+      (rows: { key: string; value: { text?: string; url?: string } }[]) => {
+        setAbout(rows.find((r) => r.key === 'about')?.value.text ?? '')
+        setResumeUrl(rows.find((r) => r.key === 'resume')?.value.url ?? '')
+      }
+    )
   }, [token])
+
+  const uploadResume = async (file: File) => {
+    if (file.type !== 'application/pdf') {
+      setResumeStatus('Please choose a PDF.')
+      return
+    }
+    setResumeStatus('Uploading…')
+    try {
+      const { url } = await uploadImage(token, file)
+      await api(token, 'content', 'PUT', { key: 'resume', value: { url } })
+      setResumeUrl(url)
+      setResumeStatus('✓ Resume updated. The site uses it within a minute.')
+    } catch (err) {
+      setResumeStatus((err as Error).message)
+    }
+  }
 
   const save = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -678,6 +699,31 @@ function Content({ token }: { token: string }) {
         </InputGroup>
         <PrimaryButton type="submit" style={{ alignSelf: 'flex-start' }}>Save</PrimaryButton>
         {status && <StatusText>{status}</StatusText>}
+      </FormCard>
+      <FormCard style={{ marginTop: '1.5rem' }}>
+        <SectionTitle>Resume (PDF)</SectionTitle>
+        <StatusText>
+          {resumeUrl ? (
+            <>
+              Current:{' '}
+              <a href={resumeUrl} target="_blank" rel="noopener noreferrer">
+                view uploaded resume
+              </a>
+            </>
+          ) : (
+            'Using the default resume bundled with the site.'
+          )}
+        </StatusText>
+        <input
+          type="file"
+          accept="application/pdf"
+          onChange={(e) => {
+            const f = e.target.files?.[0]
+            if (f) uploadResume(f)
+            e.target.value = ''
+          }}
+        />
+        {resumeStatus && <StatusText>{resumeStatus}</StatusText>}
       </FormCard>
     </FadeIn>
   )
