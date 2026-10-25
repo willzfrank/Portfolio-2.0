@@ -12,6 +12,7 @@ const RouteProgress = () => {
     let raf = 0
     let hide = 0
     let value = 0
+    let failsafe = 0
 
     const set = (v: number, opacity = 1) => {
       el.style.transform = `scaleX(${v})`
@@ -32,9 +33,13 @@ const RouteProgress = () => {
       void el.offsetWidth
       el.style.transition = 'opacity 0.3s ease'
       document.body.classList.add('is-routing')
+      // If no completion event ever arrives, hand control back after 12s.
+      clearTimeout(failsafe)
+      failsafe = window.setTimeout(done, 12000)
       raf = requestAnimationFrame(tick)
     }
     const done = () => {
+      clearTimeout(failsafe)
       cancelAnimationFrame(raf)
       document.body.classList.remove('is-routing')
       el.style.transition = 'transform 0.2s ease, opacity 0.3s ease 0.2s'
@@ -51,6 +56,7 @@ const RouteProgress = () => {
     return () => {
       cancelAnimationFrame(raf)
       clearTimeout(hide)
+      clearTimeout(failsafe)
       document.body.classList.remove('is-routing')
       router.events.off('routeChangeStart', start)
       router.events.off('routeChangeComplete', done)
