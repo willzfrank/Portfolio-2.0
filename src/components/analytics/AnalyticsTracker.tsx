@@ -1,6 +1,5 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { useConsent } from '@/lib/consent'
 import { analyticsAllowed, createTracker } from '@/lib/analytics'
 
 const cleanPath = (url: string) => url.split(/[?#]/)[0] || '/'
@@ -8,10 +7,9 @@ const cleanPath = (url: string) => url.split(/[?#]/)[0] || '/'
 /** Mounts the anonymous analytics tracker and reports every page view. */
 const AnalyticsTracker = () => {
   const router = useRouter()
-  const { consent } = useConsent()
 
   useEffect(() => {
-    if (consent !== 'granted' || !process.env.NEXT_PUBLIC_SUPABASE_URL || !analyticsAllowed()) return
+    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !analyticsAllowed()) return
     const tracker = createTracker()
     const visit = (url: string) => {
       tracker.pageView(cleanPath(url))
@@ -25,7 +23,7 @@ const AnalyticsTracker = () => {
       tracker.destroy()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [consent])
+  }, [])
 
   return null
 }

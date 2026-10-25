@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/router'
 import { AnimatePresence } from 'framer-motion'
 import { Stack, Toast, Dot } from './presenceStyles'
-import { useConsent } from '@/lib/consent'
 import { getVisitorId, isOwnerBrowser, openPresence } from '@/lib/presence'
 
 interface Item {
@@ -30,11 +29,10 @@ const PresenceToast: React.FC = () => {
   const nextId = useRef(0)
   const timers = useRef(new Map<number, ReturnType<typeof setTimeout>>())
   const router = useRouter()
-  const { consent } = useConsent()
 
   // Presence tracking
   useEffect(() => {
-    if (consent !== 'granted' || !process.env.NEXT_PUBLIC_SUPABASE_URL || isOwnerBrowser()) return
+    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || isOwnerBrowser()) return
 
     const expire = (id: number) => {
       clearTimeout(timers.current.get(id))
@@ -80,7 +78,7 @@ const PresenceToast: React.FC = () => {
       timers.current.clear()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [consent])
+  }, [])
 
   return (
     <Stack aria-live="polite">

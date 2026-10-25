@@ -57,7 +57,7 @@ export default function AnalyticsPanel({ token }: Props) {
     setLoading(true)
     setError('')
     try {
-      const res = await fetch(`/api/admin/analytics?days=${days}`, {
+      const res = await fetch(`/api/admin/analytics?days=${days}&tz=${encodeURIComponent(Intl.DateTimeFormat().resolvedOptions().timeZone)}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       const json = await res.json()

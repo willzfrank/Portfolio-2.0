@@ -94,6 +94,26 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         )
       }
 
+      // If the visit's first request was lost, still record a basic session row.
+      if (!b.ses) {
+        await db.from('sessions').upsert(
+          {
+            id: sid,
+            visitor_id: vid,
+            started_at: now,
+            last_seen_at: now,
+            country: str(req.headers['x-vercel-ip-country'], 8),
+            region: decode(req.headers['x-vercel-ip-country-region']),
+            city: decode(req.headers['x-vercel-ip-city']),
+            device: ua.device,
+            browser: ua.browser,
+            os: ua.os,
+            landing_path: path,
+          },
+          { onConflict: 'id', ignoreDuplicates: true }
+        )
+      }
+
       await db.from('page_views').upsert(
         {
           view_id: view,
@@ -114,7 +134,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const d = int(b.upd.d, 0, 60 * 60 * 1000)
       const sc = int(b.upd.s, 0, 100)
       if (view && d !== null && sc !== null) {
-        await db.from('page_views').update({ duration_ms: d, max_scroll: sc }).eq('view_id', view)
+        // Only ever raise the totals so a late, older update cannot overwrite a newer one.
+        await db.from('page_views').update({ duration_ms: d }).eq('view_id', view).lt('duration_ms', d)
+        await db.from('page_views').update({ max_scroll: sc }).eq('view_id', view).lt('max_scroll', sc)
         await db.from('sessions').update({ last_seen_at: now }).eq('id', sid)
       }
     }
