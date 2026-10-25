@@ -1,7 +1,6 @@
 import Cursor from '@/components/cursor/Cursor';
 import SmoothScroll from '@/components/scroll/SmoothScroll';
 import PresenceToast from '@/components/presence/PresenceToast';
-import ConsentBanner from '@/components/consent/ConsentBanner';
 import AnalyticsTracker from '@/components/analytics/AnalyticsTracker';
 import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
@@ -16,7 +15,6 @@ const App = ({ Component, pageProps }: AppProps) => {
       {!isAdmin && <Cursor />}
       {!isAdmin && <PresenceToast />}
       {!isAdmin && <AnalyticsTracker />}
-      {!isAdmin && <ConsentBanner />}
       {!isAdmin && <SmoothScroll />}
       {!isAdmin && <div className="grain" aria-hidden />}
       <Component {...pageProps} />

@@ -113,7 +113,8 @@ const INTENT_POINTS: Record<string, number> = {
 export const buildReport = (
   data: { sessions: SessionRow[]; views: ViewRow[]; events: EventRow[] },
   days: number,
-  now = new Date()
+  now = new Date(),
+  adminTz = 'UTC'
 ): Report => {
   const { sessions, views, events } = data
 
@@ -207,10 +208,16 @@ export const buildReport = (
   }
 
   /* ----- daily ----- */
-  const dayKey = (iso: string) => iso.slice(0, 10)
+  let fmt: Intl.DateTimeFormat
+  try {
+    fmt = new Intl.DateTimeFormat('en-CA', { timeZone: adminTz, year: 'numeric', month: '2-digit', day: '2-digit' })
+  } catch {
+    fmt = new Intl.DateTimeFormat('en-CA', { timeZone: 'UTC', year: 'numeric', month: '2-digit', day: '2-digit' })
+  }
+  const dayKey = (iso: string) => fmt.format(new Date(iso))
   const daily: Report['daily'] = []
   for (let i = days - 1; i >= 0; i--) {
-    const d = new Date(now.getTime() - i * 86400000).toISOString().slice(0, 10)
+    const d = dayKey(new Date(now.getTime() - i * 86400000).toISOString())
     daily.push({ date: d, sessions: 0, views: 0 })
   }
   const dayIdx = new Map(daily.map((d, i) => [d.date, i]))

@@ -54,7 +54,7 @@ messages sent from the contact form.
 
 ## Analytics
 
-Anonymous, cookie-less analytics (no IP addresses stored; Do Not Track is respected; opt-in via a consent banner, so nothing is measured or stored until the visitor accepts). Run these in the
+Anonymous, cookie-less analytics (no IP addresses stored; Do Not Track is respected). Run these in the
 Supabase SQL editor, in order: `supabase/analytics.sql`, then `supabase/analytics-v2.sql`.
 
 The admin **Analytics** tab shows live visitors, hot leads, per-project engagement (time, scroll depth,
