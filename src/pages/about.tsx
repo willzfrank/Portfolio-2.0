@@ -1,360 +1,153 @@
-import { Navbar } from '@/components/navbar'
-import Image from 'next/image'
 import React from 'react'
-import {
-  AboutContainer,
-  Thumbnail,
-  AboutHeaderContent,
-  ExperienceContainer,
-  ExperienceList,
-  ExperienceDate,
-  SkillsContainer,
-  SkillsList,
-} from '@/styles/AboutStyles'
-import Link from 'next/link'
-import Footer from '@/components/footer/Footer'
-import Head from 'next/head'
+import Image from 'next/image'
+import { gsap } from '@/lib/gsap'
+import { useReveal, scrollWords, fadeUp, drawRule } from '@/lib/useReveal'
+import PageShell from '@/components/page/PageShell'
+import PageHero from '@/components/page/PageHero'
+import { Section, SectionLabel, LinkOut } from '@/components/page/pageStyles'
+import { BioGrid, ExpList, SkillGrid } from '@/components/about/aboutPageStyles'
 
-type Props = {}
+const EXPERIENCE = [
+  { role: 'Senior Frontend Developer', company: 'Polar Frequency', when: 'Dec 2024 — Present' },
+  { role: 'Senior Frontend Developer', company: 'Sterling Bank', when: 'Jun 2023 — Aug 2025' },
+  { role: 'Senior Frontend Developer', company: 'Santoms', when: 'Dec 2022 — Present' },
+  { role: 'React Developer', company: 'Ullweb Technologies', when: 'Sep 2022 — Present' },
+  { role: 'Frontend Developer', company: 'Yetti Technologies', when: 'Dec 2021 — Aug 2022' },
+  { role: 'Frontend Developer', company: 'Vsonet Group', when: 'Jan 2020 — Feb 2021' },
+  { role: 'Frontend Developer Intern', company: 'Side Hustle', when: 'May 2020 — Jun 2020' },
+]
 
-function about({}: Props) {
+const SKILLS = [
+  'JavaScript', 'ReactJS', 'NextJS', 'TypeScript', 'Python', 'Material UI',
+  'Tailwind CSS', 'Git', 'Bitbucket', 'Styled-Components', 'HTML5', 'SASS',
+  'SCSS', 'CSS3', 'Docker', 'AWS', 'Azure DevOps', 'Circle CI',
+  'Responsive Design', 'Performance Optimization', 'Agile Development',
+  'REST', 'GraphQL', 'React Native', 'Flutter',
+]
+
+const About = () => {
+  const ref = useReveal<HTMLDivElement>(({ q, splits, reduce }) => {
+    if (reduce) return
+
+    const portrait = q('.portrait')[0]
+    if (portrait) {
+      gsap.from(portrait, {
+        clipPath: 'inset(0 0 100% 0)',
+        duration: 1.6,
+        ease: 'expo.inOut',
+        scrollTrigger: { trigger: portrait, start: 'top 88%' },
+      })
+      gsap.fromTo(
+        q('.portrait .inner'),
+        { scale: 1.25 },
+        {
+          scale: 1,
+          ease: 'none',
+          scrollTrigger: { trigger: portrait, start: 'top bottom', end: 'bottom top', scrub: true },
+        }
+      )
+    }
+
+    const lead = q('.lead')[0]
+    if (lead) scrollWords(lead, splits)
+    const second = q('.second')[0]
+    if (second) fadeUp(second, second, 'top 92%')
+
+    q('.label').forEach((l) => drawRule(l.querySelector('.rule'), l, 'top 88%'))
+    // Animate each row's cells, not the row: the row has a CSS opacity transition for the hover dimming.
+    q('.exp .row').forEach((row) => fadeUp(Array.from(row.children), row, 'top 92%'))
+    fadeUp(q('.skills span'), q('.skills')[0], 'top 88%')
+    const resume = q('.resume')[0]
+    if (resume) fadeUp(resume, resume, 'top 95%')
+  })
+
   return (
-    <div>
-      <Head>
-        <title>Godswill Francis &trade; | About</title>
-        <meta
-          name="description"
-          content="Learn more about Godswill Francis - a passionate frontend developer with 5 years of experience in React, TypeScript, Next.js, Python, Docker, AWS, and Azure DevOps. Discover my journey, skills, and experience in creating beautiful user experiences."
+    <PageShell
+      title="About"
+      description="Godswill Francis is a frontend developer in Lagos, Nigeria, building fast, expressive interfaces with React, Next.js and TypeScript."
+      footer="full"
+    >
+      <div ref={ref}>
+        <PageHero
+          label="(01) — About"
+          meta="Lagos, Nigeria"
+          lines={[{ text: 'About' }, { text: 'me', out: true }]}
         />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link
-          rel="stylesheet"
-          href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"
-        ></link>
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="32x32"
-          href="/favicon_io (2)/favicon-32x32.png"
-        />
-        {/* Open Graph Meta Tags */}
-        <meta property="og:title" content="Godswill Francis ™ | About" />
-        <meta
-          property="og:description"
-          content="Learn more about Godswill Francis - a passionate frontend developer with 5 years of experience in React, TypeScript, Next.js, Python, Docker, AWS, and Azure DevOps."
-        />
-        <meta property="og:image" content="/profile.jpeg" />
-        <meta property="og:url" content="https://yourwebsite.com/about" />
-        <meta property="og:type" content="website" />
-        {/* Twitter Card Meta Tags */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Godswill Francis ™ | About" />
-        <meta
-          name="twitter:description"
-          content="Learn more about Godswill Francis - a passionate frontend developer with 5 years of experience in React, TypeScript, Next.js, Python, Docker, AWS, and Azure DevOps."
-        />
-        <meta name="twitter:image" content="/profile.jpeg" />
-      </Head>
-      <Navbar />
-      <div className="w95">
-        <AboutContainer>
-          <Thumbnail>
-            <div className="image__container">
-              <Image
-                src="/profile.jpeg"
-                alt=""
-                width={100}
-                height={100}
-                className="img"
-              />
-            </div>
-          </Thumbnail>
-          <AboutHeaderContent>
-            <h6>ABOUT ME</h6>
 
-            <div className="content">
-              <p className="large">
-                Unleash {`tech's`} beauty with me, Godswill Francis - a frontend
-                dev who transforms user experiences into stunning works of art.
-                With 5 years of experience merging tech and beauty, {`I've`}{' '}
-                honed my skills in UI development with a keen eye for detail.
-                Skilled in React, TypeScript, Next.js, Python, Docker, AWS, and
-                Azure DevOps, {`I've`} worked with various companies in
-                different industries, delivering scalable solutions while
-                prioritizing user experience. {`Let's`} create something amazing
-                together!
+        <Section style={{ paddingTop: 0 }}>
+          <BioGrid>
+            <div className="portrait">
+              <div className="inner">
+                <Image
+                  src="/profile.jpeg"
+                  alt="Portrait of Godswill Francis"
+                  fill
+                  priority
+                  sizes="(max-width: 800px) 90vw, 36vw"
+                />
+              </div>
+            </div>
+            <div>
+              <p className="lead">
+                Unleash tech’s beauty with me, Godswill Francis — a frontend dev
+                who transforms user experiences into stunning works of art. With
+                5 years of experience merging tech and beauty, I’ve honed my
+                skills in UI development with a keen eye for detail. Skilled in
+                React, TypeScript, Next.js, Python, Docker, AWS and Azure
+                DevOps, I’ve worked with companies across different industries,
+                delivering scalable solutions while prioritizing user
+                experience. Let’s create something amazing together!
+              </p>
+              <p className="second">
+                I have had the privilege of working with organizations such as
+                Vsonet Groups, Ullweb Technologies and Yetti Technologies.
+                Currently I have unlimited availability for freelance projects,
+                so if you believe I can help with your innovative endeavor,
+                reach out at{' '}
+                <a href="mailto:willzudoh4@gmail.com">willzudoh4@gmail.com</a>.
               </p>
             </div>
-            <div
-              className="content bottom mt-8 animate__fadeIn"
-              id="about-secondary"
-              data-scroll
-              data-scroll-call="animate-in+about-secondary"
-            >
-              <p className="medium">
-                I have had the privilege of working with esteemed organizations
-                such as Vsonet Groups, Ullweb Technologies, and Yetti
-                Technologies. Currently, I have unlimited availability for
-                freelance projects, so if you believe that I can be of
-                assistance to your innovative endeavor, please feel free to
-                reach out to me via email at{' '}
-                <Link
-                  href="mailto:willzudoh4@gmail.com"
-                  target="_blank"
-                  className="link"
-                >
-                  willzudoh4@gmail.com
-                </Link>
-                .
-              </p>
-            </div>
-          </AboutHeaderContent>
-        </AboutContainer>
-        <ExperienceContainer>
-          <h2>Experience</h2>
+          </BioGrid>
+        </Section>
 
-          <ExperienceList>
-            <li>
-              <div>
-                <p>Senior Frontend Developer</p>
-                <p className="small">Polar Frequency</p>
+        <Section>
+          <SectionLabel className="label">
+            <span>(02) — Experience</span>
+            <span>{String(EXPERIENCE.length).padStart(2, '0')} roles</span>
+            <span className="rule" />
+          </SectionLabel>
+          <ExpList className="exp">
+            {EXPERIENCE.map((e, i) => (
+              <div className="row" key={`${e.company}-${e.role}`}>
+                <span className="n">{String(i + 1).padStart(2, '0')}</span>
+                <span className="role">{e.role}</span>
+                <span className="co">{e.company}</span>
+                <span className="when">{e.when}</span>
               </div>
-              <ExperienceDate>
-                <p className="mr-2">
-                  <span className="mobile-hide">December</span> 2024
-                </p>
-
-                <svg
-                  className="arrow arrow-right"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 52 52"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M1.98887e-06 29.25L39.65 29.25L21.45 47.45L26 52L52 26L26 -2.27299e-06L21.45 4.55L39.65 22.75L2.55712e-06 22.75L1.98887e-06 29.25Z"
-                    fill="white"
-                  />
-                </svg>
-
-                <p className="ml-2">Present</p>
-              </ExperienceDate>
-          </li>
-            <li>
-              <div>
-                <p>Senior Frontend Developer</p>
-                <p className="small">Sterling Bank</p>
-              </div>
-              <ExperienceDate>
-                <p className="mr-2">
-                  <span className="mobile-hide">June</span> 2023
-                </p>
-                <svg
-                  className="arrow arrow-right"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 52 52"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M1.98887e-06 29.25L39.65 29.25L21.45 47.45L26 52L52 26L26 -2.27299e-06L21.45 4.55L39.65 22.75L2.55712e-06 22.75L1.98887e-06 29.25Z"
-                    fill="white"
-                  />
-                </svg>
-                <span className="mobile-hide">August</span> 2025
-              </ExperienceDate>
-            </li>
-            <li>
-              <div>
-                <p>Senior Frontend Developer</p>
-                <p className="small">Santoms</p>
-              </div>
-              <ExperienceDate>
-                <p className="mr-2">
-                  <span className="mobile-hide">December</span> 2022
-                </p>
-
-                <svg
-                  className="arrow arrow-right"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 52 52"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M1.98887e-06 29.25L39.65 29.25L21.45 47.45L26 52L52 26L26 -2.27299e-06L21.45 4.55L39.65 22.75L2.55712e-06 22.75L1.98887e-06 29.25Z"
-                    fill="white"
-                  />
-                </svg>
-
-                <p className="ml-2">Present</p>
-              </ExperienceDate>
-            </li>
-
-            <li>
-              <div>
-                <p>React Developer</p>
-                <p className="small">Ullweb Technologies</p>
-              </div>
-              <ExperienceDate>
-                <p className="mr-2">
-                  <span className="mobile-hide">September</span> 2022
-                </p>
-
-                <svg
-                  className="arrow arrow-right"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 52 52"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M1.98887e-06 29.25L39.65 29.25L21.45 47.45L26 52L52 26L26 -2.27299e-06L21.45 4.55L39.65 22.75L2.55712e-06 22.75L1.98887e-06 29.25Z"
-                    fill="white"
-                  />
-                </svg>
-
-                <p className="ml-2">Present</p>
-              </ExperienceDate>
-            </li>
-
-            <li>
-              <div>
-                <p>Frontend Developer</p>
-                <p className="small"> Yetti Technologies</p>
-              </div>
-              <ExperienceDate>
-                <p className="mr-2">
-                  <span className="mobile-hide">December</span> 2021
-                </p>
-
-                <svg
-                  className="arrow arrow-right"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 52 52"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M1.98887e-06 29.25L39.65 29.25L21.45 47.45L26 52L52 26L26 -2.27299e-06L21.45 4.55L39.65 22.75L2.55712e-06 22.75L1.98887e-06 29.25Z"
-                    fill="white"
-                  />
-                </svg>
-
-                <p className="ml-2">
-                  <span className="mobile-hide">August</span> 2022
-                </p>
-              </ExperienceDate>
-            </li>
-
-            <li>
-              <div>
-                <p>Frontend Developer</p>
-                <p className="small">Vsonet Group</p>
-              </div>
-              <ExperienceDate>
-                <p className="mr-2">
-                  <span className="mobile-hide">January</span> 2020
-                </p>
-
-                <svg
-                  className="arrow arrow-right"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 52 52"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M1.98887e-06 29.25L39.65 29.25L21.45 47.45L26 52L52 26L26 -2.27299e-06L21.45 4.55L39.65 22.75L2.55712e-06 22.75L1.98887e-06 29.25Z"
-                    fill="white"
-                  />
-                </svg>
-
-                <p className="ml-2">
-                  <span className="mobile-hide">February</span> 2021
-                </p>
-              </ExperienceDate>
-            </li>
-
-            <li>
-              <div>
-                <p>Frontend Developer Intern</p>
-                <p className="small">Side Hustle</p>
-              </div>
-              <ExperienceDate>
-                <p className="mr-2">
-                  <span className="mobile-hide">May</span> 2020
-                </p>
-
-                <svg
-                  className="arrow arrow-right"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 52 52"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M1.98887e-06 29.25L39.65 29.25L21.45 47.45L26 52L52 26L26 -2.27299e-06L21.45 4.55L39.65 22.75L2.55712e-06 22.75L1.98887e-06 29.25Z"
-                    fill="white"
-                  />
-                </svg>
-
-                <p className="ml-2">
-                  <span className="mobile-hide">June</span> 2020
-                </p>
-              </ExperienceDate>
-            </li>
-          </ExperienceList>
-          <Link
-            className="link resume"
-            href="/Godswill Francis - Frontend Developer.pdf"
-            target="_blank"
-            download
-          >
-            <p>Download Resume</p>
-          </Link>
-        </ExperienceContainer>
-        <SkillsContainer className="about_skills_container">
-          <h2>Skills</h2>
-          <div className="skills">
-            <span>Javascript</span>
-            <span>ReactJS</span>
-            <span>NextJS</span>
-            <span>TypeScript</span>
-            <span>Python</span>
-            <span>Material UI</span>
-            <span>Tailwind CSS</span>
-            <span>Git</span>
-            <span>Bitbucket</span>
-            <span>Styled-Components</span>
-            <span>HTML5</span>
-            <span>SASS</span>
-            <span>SCSS</span>
-            <span>CSS3</span>
-            <span>Docker</span>
-            <span>AWS</span>
-            <span>Azure DevOps</span>
-            <span>Circle CI</span>
-            <span>Responsive Design</span>
-            <span>Performance Optimization</span>
-            <span>Agile Development</span>
-            <span>REST</span>
-            <span>GRAPH QL</span>
-            <span>React Native</span>
-            <span>Flutter</span>
+            ))}
+          </ExpList>
+          <div style={{ marginTop: 'clamp(2rem, 4vw, 3rem)' }} className="resume">
+            <LinkOut href="/Godswill Francis - Frontend Developer.pdf" target="_blank" download>
+              Download resume <span>↓</span>
+            </LinkOut>
           </div>
-        </SkillsContainer>
-        <Footer />
+        </Section>
+
+        <Section>
+          <SectionLabel className="label">
+            <span>(03) — Skills</span>
+            <span>{String(SKILLS.length).padStart(2, '0')} tools</span>
+            <span className="rule" />
+          </SectionLabel>
+          <SkillGrid className="skills">
+            {SKILLS.map((s) => (
+              <span key={s}>{s}</span>
+            ))}
+          </SkillGrid>
+        </Section>
       </div>
-    </div>
+    </PageShell>
   )
 }
 
-export default about
+export default About

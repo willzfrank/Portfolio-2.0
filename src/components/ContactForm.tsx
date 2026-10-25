@@ -1,18 +1,82 @@
 import React, { useState } from 'react'
+import styled from 'styled-components'
+import { MINT, DIM, HAIR } from '@/components/home/homeStyles'
 
-const field: React.CSSProperties = {
-  width: '100%',
-  padding: '0.75rem',
-  marginBottom: '0.75rem',
-  border: '1px solid rgb(50, 50, 50)',
-  background: 'transparent',
-  font: 'inherit',
-}
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.5rem, 3vw, 2.2rem);
+
+  label {
+    position: relative;
+    display: block;
+  }
+  label span {
+    display: block;
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: ${DIM};
+    margin-bottom: 0.4rem;
+  }
+  input,
+  textarea {
+    width: 100%;
+    padding: 0.7rem 0 0.9rem;
+    border: 0;
+    border-bottom: 1px solid ${HAIR};
+    border-radius: 0;
+    background: transparent;
+    color: ${MINT};
+    font: inherit;
+    font-size: clamp(1.1rem, 1.8vw, 1.5rem);
+    outline: none;
+    resize: vertical;
+    transition: border-color 0.4s;
+  }
+  input:focus,
+  textarea:focus {
+    border-bottom-color: ${MINT};
+  }
+  input::placeholder,
+  textarea::placeholder {
+    color: rgba(231, 250, 236, 0.25);
+  }
+
+  button {
+    align-self: flex-start;
+    padding: 1.1rem 2.2rem;
+    border: 0;
+    border-radius: 999px;
+    background: ${MINT};
+    color: #1f1f1f;
+    font: inherit;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    cursor: pointer;
+    /* no opacity transition here: GSAP fades this in and the two would fight */
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  button:hover:not(:disabled) {
+    transform: scale(1.05);
+  }
+  button:disabled {
+    opacity: 0.6;
+  }
+  .note {
+    margin: 0;
+    font-size: 0.95rem;
+    color: rgba(231, 250, 236, 0.85);
+  }
+  .note.err {
+    color: #ff8f8f;
+  }
+`
 
 const ContactForm: React.FC = () => {
-  const [state, setState] = useState<'idle' | 'sending' | 'sent' | 'error'>(
-    'idle'
-  )
+  const [state, setState] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
 
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -31,31 +95,34 @@ const ContactForm: React.FC = () => {
   }
 
   return (
-    <form onSubmit={submit} style={{ marginTop: '2rem', maxWidth: 520 }}>
-      <input name="name" placeholder="Your name" required style={field} />
-      <input
-        name="email"
-        type="email"
-        placeholder="Your email"
-        required
-        style={field}
-      />
-      <textarea
-        name="message"
-        placeholder="Your message"
-        rows={5}
-        required
-        style={field}
-      />
+    <Form onSubmit={submit}>
+      <label>
+        <span>Your name</span>
+        <input name="name" placeholder="Jane Doe" required autoComplete="name" />
+      </label>
+      <label>
+        <span>Your email</span>
+        <input
+          name="email"
+          type="email"
+          placeholder="jane@company.com"
+          required
+          autoComplete="email"
+        />
+      </label>
+      <label>
+        <span>Tell me about your project</span>
+        <textarea name="message" rows={4} placeholder="What are we building?" required />
+      </label>
       <input name="website" tabIndex={-1} autoComplete="off" hidden />
       <button type="submit" disabled={state === 'sending'}>
-        {state === 'sending' ? 'SENDING…' : 'SEND MESSAGE'}
+        {state === 'sending' ? 'Sending…' : 'Send message'}
       </button>
-      {state === 'sent' && <p>Thanks! Your message has been sent.</p>}
+      {state === 'sent' && <p className="note">Thanks! Your message has been sent.</p>}
       {state === 'error' && (
-        <p>Something went wrong. Please email me directly instead.</p>
+        <p className="note err">Something went wrong. Please email me directly instead.</p>
       )}
-    </form>
+    </Form>
   )
 }
 

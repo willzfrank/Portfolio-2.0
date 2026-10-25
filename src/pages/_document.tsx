@@ -12,7 +12,7 @@ function MyDocumentBody() {
     <Html lang="en">
       <Head>
         <noscript>
-          <style>{`.preloader-overlay{display:none!important}`}</style>
+          <style>{`.preloader-overlay{display:none!important}[data-hero]{visibility:visible!important}header *{opacity:1!important}header .portrait-clip{clip-path:none!important}`}</style>
         </noscript>
         <link rel="manifest" href="/manifest.json" />
         <link

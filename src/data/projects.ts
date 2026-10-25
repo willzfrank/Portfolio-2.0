@@ -174,6 +174,39 @@ The project focuses on creating an intuitive interface that makes learning acces
       },
     ],
   },
+  {
+    id: '04',
+    title: 'Portfolio 1.0',
+    slug: 'portfolio1.0',
+    type: 'Portfolio Page',
+    technologies: ['JavaScript', 'PHP'],
+    timeline: 'January 2022-February 2022',
+    description:
+      'My debut portfolio, built with vanilla JS and a touch of PHP.',
+    longDescription: `Ready to see the OG of portfolios? Introducing Portfolio 1.0! This was my debut portfolio in the world of digital self-promotion. Built with a touch of vanilla JS and a dash of PHP magic, it was the perfect showcase for my skills.
+
+January 2022 was a game-changer. That's when I had the idea to create Portfolio 1.0, a platform that speaks for my skills and talents, designed with the latest and greatest of that era.
+
+My greatest challenge was adding a backend to Portfolio 1.0. I knew I needed backup, and that's when backend developer Ogundipe Olusegun swooped in and worked his PHP magic to make the web application a true work of art. Together, we were unstoppable.`,
+    liveUrl: 'https://willzfrank.netlify.app/',
+    githubUrl: 'https://github.com/willzfrank/Portfolio-1.0',
+    image: '/Willz Frank.png',
+    category: 'web-design',
+    contributors: [
+      {
+        role: 'Backend Developer',
+        name: 'Ogundipe Olusegun',
+        link: 'https://github.com/Emmagist',
+      },
+    ],
+    contributions: ['Copywriting', 'Page layout & design'],
+    images: [
+      { src: '/Willz Frank.png', alt: 'Portfolio 1.0 home page', width: 1920, height: 892 },
+      { src: '/Willz Frank (2).png', alt: 'Portfolio 1.0 projects on mobile', width: 597, height: 820 },
+      { src: '/Willz Frank (1).png', alt: 'Portfolio 1.0 on mobile', width: 712, height: 815 },
+      { src: '/Willz Frankblack.png', alt: 'Portfolio 1.0 introduction on mobile', width: 674, height: 820 },
+    ],
+  },
   //   {
   //     id: '04',
   //     title: 'GoghR',

@@ -1,4 +1,4 @@
-import Pointer from '@/components/pointer/pointer';
+import Cursor from '@/components/cursor/Cursor';
 import SmoothScroll from '@/components/scroll/SmoothScroll';
 import PresenceToast from '@/components/presence/PresenceToast';
 import '@/styles/globals.css';
@@ -11,9 +11,10 @@ const App = ({ Component, pageProps }: AppProps) => {
 
   return (
     <>
-      {!isAdmin && <Pointer />}
+      {!isAdmin && <Cursor />}
       {!isAdmin && <PresenceToast />}
       {!isAdmin && <SmoothScroll />}
+      {!isAdmin && <div className="grain" aria-hidden />}
       <Component {...pageProps} />
     </>
   );

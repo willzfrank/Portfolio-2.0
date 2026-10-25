@@ -27,8 +27,32 @@ const SEEN_KEY = 'pf_preloader_seen'
 let playedThisPageLoad = false
 export const hasPreloaderPlayed = () => playedThisPageLoad
 
+const FONT_WAIT_MAX_MS = 1500
+const LOAD_WAIT_MAX_MS = 6000
+
+const withTimeout = (p: Promise<unknown>, ms: number) =>
+  Promise.race([p, new Promise((r) => setTimeout(r, ms))])
+
+/** Resolves once the display font is usable, so the first words don't flash a fallback. */
+const fontReady = () =>
+  withTimeout(
+    document.fonts ? document.fonts.load('1em MyFont') : Promise.resolve(),
+    FONT_WAIT_MAX_MS
+  )
+
+/** Resolves once the page's images/scripts finished, so the reveal never shows a half-loaded site. */
+const pageLoaded = () =>
+  withTimeout(
+    document.readyState === 'complete'
+      ? Promise.resolve()
+      : new Promise((r) => window.addEventListener('load', r, { once: true })),
+    LOAD_WAIT_MAX_MS
+  )
+
 interface PreloaderProps {
   onComplete: () => void
+  /** Fires the moment the panels start lifting, so the hero can animate in with them. */
+  onLeaving?: () => void
 }
 
 /**
@@ -36,12 +60,15 @@ interface PreloaderProps {
  * 2. The name rises letter by letter through a mask
  * 3. The dark screen splits into panels that lift away from the centre
  */
-const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
+const Preloader: React.FC<PreloaderProps> = ({ onComplete, onLeaving }) => {
   const [greeting, setGreeting] = useState(0)
   const [count, setCount] = useState(0)
   const [leaving, setLeaving] = useState(false)
+  const [started, setStarted] = useState(false)
   const onCompleteRef = useRef(onComplete)
   onCompleteRef.current = onComplete
+  const onLeavingRef = useRef(onLeaving)
+  onLeavingRef.current = onLeaving
 
   // Skip for reduced-motion users and for reloads within the same session.
   const skip = useRef(false)
@@ -67,26 +94,44 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
   }, [])
 
   useEffect(() => {
+    let cancelled = false
+    fontReady().then(() => !cancelled && setStarted(true))
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!started) return
     const id = setInterval(
       () => setGreeting((g) => Math.min(g + 1, GREETINGS.length)),
       GREETING_MS
     )
     return () => clearInterval(id)
-  }, [])
+  }, [started])
 
   useEffect(() => {
+    if (!started) return
+    let cancelled = false
     const controls = animate(0, 100, {
       duration: COUNT_SECONDS,
       ease: 'easeInOut',
       onUpdate: (v) => setCount(Math.round(v)),
-      onComplete: () => setTimeout(() => setLeaving(true), 800),
+      onComplete: () =>
+        pageLoaded().then(
+          () => !cancelled && setTimeout(() => setLeaving(true), 800)
+        ),
     })
-    return () => controls.stop()
-  }, [])
+    return () => {
+      cancelled = true
+      controls.stop()
+    }
+  }, [started])
 
   // Unmount once the panels have cleared the screen.
   useEffect(() => {
     if (!leaving) return
+    onLeavingRef.current?.()
     const id = setTimeout(() => {
       playedThisPageLoad = true
       try {
