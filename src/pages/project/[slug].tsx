@@ -15,7 +15,8 @@ import Image from 'next/image'
 import Footer from '@/components/footer/Footer'
 import Marquee from '@/components/marquee/Marquee'
 import { GetStaticProps, GetStaticPaths } from 'next'
-import { projects, getProjectBySlug, Project } from '@/data/projects'
+import { Project } from '@/data/projects'
+import { getProjects } from '@/lib/projectsRepo'
 
 interface ProjectPageProps {
   project: Project
@@ -201,22 +202,19 @@ const ProjectPage: React.FC<ProjectPageProps> = ({ project }) => {
   )
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  const paths = projects.map((project) => ({
-    params: { slug: project.slug },
-  }))
-
-  return {
-    paths,
-    fallback: false,
-  }
-}
+// Pages are generated on first request (and revalidated), so projects added
+// in the admin appear without a rebuild. The legacy hand-written pages
+// (artsy, vsonet, ...) take routing precedence for their own slugs.
+export const getStaticPaths: GetStaticPaths = async () => ({
+  paths: [],
+  fallback: 'blocking',
+})
 
 export const getStaticProps: GetStaticProps<ProjectPageProps> = async ({
   params,
 }) => {
   const slug = params?.slug as string
-  const project = getProjectBySlug(slug)
+  const project = (await getProjects()).find((p) => p.slug === slug)
 
   if (!project) {
     return {
@@ -228,6 +226,7 @@ export const getStaticProps: GetStaticProps<ProjectPageProps> = async ({
     props: {
       project,
     },
+    revalidate: 60,
   }
 }
 

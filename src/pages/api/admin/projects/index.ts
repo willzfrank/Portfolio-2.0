@@ -1,0 +1,32 @@
+import { withAdmin } from '@/lib/adminAuth'
+import { getServerClient } from '@/lib/supabaseAdmin'
+import { pickProjectFields } from '@/lib/projectInput'
+
+export default withAdmin(async (req, res) => {
+  const db = getServerClient()
+
+  if (req.method === 'GET') {
+    const { data, error } = await db
+      .from('projects')
+      .select('*')
+      .order('position', { ascending: true })
+      .order('created_at', { ascending: true })
+    if (error) return res.status(500).json({ error: error.message })
+    return res.status(200).json(data)
+  }
+
+  if (req.method === 'POST') {
+    const parsed = pickProjectFields(req.body, true)
+    if ('error' in parsed) return res.status(400).json(parsed)
+    const { data, error } = await db
+      .from('projects')
+      .insert(parsed.fields)
+      .select()
+      .single()
+    if (error) return res.status(400).json({ error: error.message })
+    return res.status(201).json(data)
+  }
+
+  res.setHeader('Allow', 'GET, POST')
+  return res.status(405).json({ error: 'Method not allowed' })
+})

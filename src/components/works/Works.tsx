@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import VerticalTabs from './VerticalTab/Tab';
+import { Project } from '@/data/projects';
 import {
   WorkContentBox,
   WorkContentTitle,
@@ -7,7 +8,7 @@ import {
   WorkBox,
 } from './WorkStyles';
 
-const Works = () => {
+const Works = ({ projects }: { projects: Project[] }) => {
   return (
     <WorkBox>
       <WorkContentBox>
@@ -20,7 +21,7 @@ const Works = () => {
           .
         </WorkContentText>
       </WorkContentBox>
-      <VerticalTabs />
+      <VerticalTabs projects={projects} />
     </WorkBox>
   );
 };

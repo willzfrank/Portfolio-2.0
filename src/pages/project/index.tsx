@@ -14,9 +14,11 @@ import Link from 'next/link'
 import Image from 'next/image'
 import Footer from '@/components/footer/Footer'
 import Marquee from '@/components/marquee/Marquee'
-import { projects } from '@/data/projects'
+import { GetStaticProps } from 'next'
+import { Project } from '@/data/projects'
+import { getProjects } from '@/lib/projectsRepo'
 
-const ProjectsPage = () => {
+const ProjectsPage = ({ projects }: { projects: Project[] }) => {
   return (
     <div>
       <Head>
@@ -152,3 +154,8 @@ const ProjectsPage = () => {
 }
 
 export default ProjectsPage
+
+export const getStaticProps: GetStaticProps = async () => ({
+  props: { projects: await getProjects() },
+  revalidate: 60,
+})

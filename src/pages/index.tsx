@@ -6,23 +6,25 @@ import AboutComponent from '@/components/about/About'
 import Works from '@/components/works/Works'
 import Footer from '@/components/footer/Footer'
 import Marquee from '@/components/marquee/Marquee'
-import Preloader from '@/components/preloader/Preloader'
+import Preloader, { hasPreloaderPlayed } from '@/components/preloader/Preloader'
 import StructuredData from '@/components/StructuredData'
+import { GetStaticProps } from 'next'
+import { Project } from '@/data/projects'
+import { getProjects, getSiteContent } from '@/lib/projectsRepo'
 
-export default function Home() {
-  const [isLoading, setIsLoading] = React.useState(true)
-
-  React.useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false)
-    }, 5000)
-  }, [])
+export default function Home({
+  projects,
+  aboutText,
+}: {
+  projects: Project[]
+  aboutText: string | null
+}) {
+  const [isLoading, setIsLoading] = React.useState(() => !hasPreloaderPlayed())
 
   return (
     <>
-      {isLoading ? (
-        <Preloader />
-      ) : (
+      {isLoading && <Preloader onComplete={() => setIsLoading(false)} />}
+      {(
         <>
           <Head>
             <title>Godswill Francis &trade; | Home</title>
@@ -101,8 +103,8 @@ export default function Home() {
           <div className="w95">
             <div className="overflow_hidden">
               <Header />
-              <AboutComponent />
-              <Works />
+              <AboutComponent text={aboutText} />
+              <Works projects={projects} />
               <Marquee />
               <Footer />
             </div>
@@ -111,4 +113,18 @@ export default function Home() {
       )}
     </>
   )
+}
+
+export const getStaticProps: GetStaticProps = async () => {
+  const [projects, about] = await Promise.all([
+    getProjects(),
+    getSiteContent('about'),
+  ])
+  return {
+    props: {
+      projects,
+      aboutText: typeof about?.text === 'string' ? about.text : null,
+    },
+    revalidate: 60,
+  }
 }
