@@ -31,7 +31,6 @@ function MyDocumentBody() {
           type="font/ttf"
           crossOrigin="anonymous"
         />
-        <link rel="preload" href="/profile-hero.jpeg" as="image" />
         <link rel="manifest" href="/manifest.json" />
         <link
           rel="apple-touch-icon"
