@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { getServerClient, isSupabaseConfigured } from '@/lib/supabaseAdmin'
 import { rateLimited } from '@/lib/rateLimit'
 import { hostOf, parseUA } from '@/lib/ua'
-import { notifyForeignVisit } from '@/lib/notify'
+import { notifyForeignVisit, notifyResumeDownload } from '@/lib/notify'
 
 /**
  * Anonymous analytics collector. One endpoint, three kinds of message
@@ -167,6 +167,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           }
         })
       if (rows.length) await db.from('events').insert(rows)
+      const resume = b.evs.slice(0, 20).find((e: any) => e?.type === 'resume')
+      if (resume) {
+        await notifyResumeDownload({
+          country: str(req.headers['x-vercel-ip-country'], 8),
+          region: decode(req.headers['x-vercel-ip-country-region']),
+          city: decode(req.headers['x-vercel-ip-city']),
+          device: ua.device,
+          browser: ua.browser,
+          os: ua.os,
+          file: typeof resume.meta?.file === 'string' ? resume.meta.file.slice(0, 120) : null,
+          path: str(resume.path, 200),
+        })
+      }
     }
   } catch {
     // Analytics must never break the site.
