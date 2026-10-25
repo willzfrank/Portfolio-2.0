@@ -2,10 +2,11 @@ import Head from 'next/head'
 import React from 'react'
 import { Navbar } from '@/components/navbar'
 import Header from '@/components/header/Header'
-import AboutComponent from '@/components/about/About'
-import Works from '@/components/works/Works'
-import Footer from '@/components/footer/Footer'
-import Marquee from '@/components/marquee/Marquee'
+import Manifesto from '@/components/home/Manifesto'
+import WorkIndex from '@/components/home/WorkIndex'
+import Ticker from '@/components/home/Ticker'
+import Contact from '@/components/home/Contact'
+import ScrollProgress from '@/components/home/ScrollProgress'
 import Preloader, { hasPreloaderPlayed } from '@/components/preloader/Preloader'
 import StructuredData from '@/components/StructuredData'
 import { GetStaticProps } from 'next'
@@ -20,10 +21,17 @@ export default function Home({
   aboutText: string | null
 }) {
   const [isLoading, setIsLoading] = React.useState(() => !hasPreloaderPlayed())
+  // True from the moment the loader's panels start lifting.
+  const [revealing, setRevealing] = React.useState(false)
 
   return (
     <>
-      {isLoading && <Preloader onComplete={() => setIsLoading(false)} />}
+      {isLoading && (
+        <Preloader
+          onComplete={() => setIsLoading(false)}
+          onLeaving={() => setRevealing(true)}
+        />
+      )}
       {(
         <>
           <Head>
@@ -99,16 +107,20 @@ export default function Home({
             }}
           />
 
+          <ScrollProgress />
           <Navbar />
           <div className="w95">
             <div className="overflow_hidden">
-              <Header />
-              <AboutComponent text={aboutText} />
-              <Works projects={projects} />
-              <Marquee />
-              <Footer />
+              <Header
+                ready={!isLoading || revealing}
+                projects={projects.map(({ title, slug, type }) => ({ title, slug, type }))}
+              />
+              <Manifesto text={aboutText} />
+              <WorkIndex projects={projects} />
             </div>
           </div>
+          <Ticker />
+          <Contact />
         </>
       )}
     </>

@@ -1,122 +1,131 @@
-import Footer from '@/components/footer/Footer'
-import { Navbar } from '@/components/navbar'
-import Head from 'next/head'
-import React from 'react'
-import { ContactContainer, ContactSocials } from '@/styles/ContactStyles'
-import Link from 'next/link'
+import React, { useEffect, useState } from 'react'
+import styled from 'styled-components'
+import { useReveal, fadeUp, drawRule } from '@/lib/useReveal'
+import PageShell from '@/components/page/PageShell'
+import PageHero from '@/components/page/PageHero'
+import { Section, SectionLabel } from '@/components/page/pageStyles'
 import ContactForm from '@/components/ContactForm'
-import Marquee from '@/components/marquee/Marquee'
+import { MINT, DIM, HAIR } from '@/components/home/homeStyles'
 
-type Props = {}
+const EMAIL = 'willzudoh4@gmail.com'
 
-const contact = (props: Props) => {
+const Grid = styled.div`
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.2fr);
+  gap: clamp(2.5rem, 7vw, 7rem);
+  margin-top: clamp(1.5rem, 3vw, 2.5rem);
+
+  .details > div {
+    padding: 1.1rem 0;
+    border-top: 1px solid ${HAIR};
+  }
+  .details small {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: ${DIM};
+  }
+  .details a,
+  .details span {
+    color: ${MINT};
+    text-decoration: none;
+  }
+  .details .mail {
+    font-size: clamp(1.2rem, 2.2vw, 1.8rem);
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+    text-decoration-color: rgba(231, 250, 236, 0.4);
+  }
+  .details .links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    font-size: 1.05rem;
+  }
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+`
+
+const lagosTime = () =>
+  new Intl.DateTimeFormat('en-GB', { timeZone: 'Africa/Lagos', hour: '2-digit', minute: '2-digit' }).format(new Date())
+
+const Contact = () => {
+  const [time, setTime] = useState('--:--')
+  useEffect(() => {
+    setTime(lagosTime())
+    const id = setInterval(() => setTime(lagosTime()), 15000)
+    return () => clearInterval(id)
+  }, [])
+
+  const ref = useReveal<HTMLDivElement>(({ q, reduce }) => {
+    if (reduce) return
+    q('.label').forEach((l) => drawRule(l.querySelector('.rule'), l, 'top 90%'))
+    const rows = q('.details > div')
+    if (rows.length) fadeUp(rows, q('.details')[0], 'top 90%')
+    const fields = q('form > *')
+    if (fields.length) fadeUp(fields, q('form')[0], 'top 90%')
+  })
+
   return (
-    <>
-      <Head>
-        <title>Godswill Francis &trade; | Contact</title>
-        <meta
-          name="description"
-          content="Get in touch with Godswill Francis for collaboration opportunities, freelance projects, or to discuss your next web development idea. Available for exciting projects!"
-        />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link
-          rel="stylesheet"
-          href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"
-        ></link>
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="32x32"
-          href="/favicon_io (2)/favicon-32x32.png"
-        />
-        {/* Open Graph Meta Tags */}
-        <meta property="og:title" content="Godswill Francis ™ | Contact" />
-        <meta
-          property="og:description"
-          content="Get in touch with Godswill Francis for collaboration opportunities, freelance projects, or to discuss your next web development idea."
-        />
-        <meta property="og:image" content="/profile.jpeg" />
-        <meta property="og:url" content="https://yourwebsite.com/contact" />
-        <meta property="og:type" content="website" />
-        {/* Twitter Card Meta Tags */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Godswill Francis ™ | Contact" />
-        <meta
-          name="twitter:description"
-          content="Get in touch with Godswill Francis for collaboration opportunities, freelance projects, or to discuss your next web development idea."
-        />
-        <meta name="twitter:image" content="/profile.jpeg" />
-      </Head>
-      <Navbar />
-      <div className="w95">
-        <div className="overflow_hidden">
-          <ContactContainer>
-            <div className="contact_container2">
-              <div className="contact_title">
-                <h6>A PROJECT?</h6>
-              </div>
-              <div className="contact_content">
-                <h2>
-                  CONTACT <span> - COLLABORATION REQUEST</span>
-                </h2>
-                <h5>
-                  Are you looking for a freelance frontend developer? Do you
-                  have a project, an idea to realize? Do not hesitate to send me
-                  an email to discuss it, I am at your disposal!
-                </h5>
+    <PageShell
+      title="Contact"
+      description="Looking for a freelance frontend developer? Get in touch with Godswill Francis to discuss your project."
+      footer="minimal"
+    >
+      <div ref={ref}>
+        <PageHero
+          label="(01) — Contact"
+          meta="Open to new projects"
+          lines={[{ text: 'Let’s work' }, { text: 'together.', out: true }]}
+        >
+          Are you looking for a freelance frontend developer? Do you have a
+          project, an idea to realize? Send a message and let’s talk. I’m at
+          your disposal.
+        </PageHero>
 
-                <button>
-                  <Link
-                    href="mailto:willzudoh4@gmail.com"
-                    target="_blank"
-                    className="link"
-                    style={{
-                      color: 'rgb(50, 50, 50)',
-                    }}
-                  >
-                    SEND AN EMAIL
-                  </Link>
-                </button>
-                <ContactForm />
+        <Section style={{ paddingTop: 0 }}>
+          <SectionLabel className="label">
+            <span>(02) — Say hello</span>
+            <span />
+            <span className="rule" />
+          </SectionLabel>
+          <Grid>
+            <div className="details">
+              <div>
+                <small>Email</small>
+                <a className="mail" href={`mailto:${EMAIL}`}>
+                  {EMAIL}
+                </a>
+              </div>
+              <div>
+                <small>Follow</small>
+                <div className="links">
+                  <a href="https://github.com/willzfrank" target="_blank" rel="noreferrer">
+                    GitHub ↗
+                  </a>
+                  <a href="https://twitter.com/willzfrank001" target="_blank" rel="noreferrer">
+                    Twitter ↗
+                  </a>
+                  <a href="https://www.linkedin.com/in/godswill-udoh/" target="_blank" rel="noreferrer">
+                    LinkedIn ↗
+                  </a>
+                </div>
+              </div>
+              <div>
+                <small>Based in</small>
+                <span>Lagos, Nigeria — {time} WAT</span>
               </div>
             </div>
-
-            <ContactSocials>
-              <li>
-                <Link
-                  href="https://github.com/willzfrank"
-                  className="link"
-                  target="_blank"
-                >
-                  <i className="uil uil-github"></i>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="https://twitter.com/willzfrank001"
-                  className="link"
-                  target="_blank"
-                >
-                  <i className="uil uil-twitter"></i>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="https://www.linkedin.com/in/godswill-udoh/"
-                  target="_blank"
-                  className="link"
-                >
-                  <i className="uil uil-linkedin"></i>
-                </Link>
-              </li>
-            </ContactSocials>
-          </ContactContainer>
-          <Marquee />
-          <Footer />
-        </div>
+            <ContactForm />
+          </Grid>
+        </Section>
       </div>
-    </>
+    </PageShell>
   )
 }
 
-export default contact
+export default Contact

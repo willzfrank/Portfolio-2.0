@@ -42,16 +42,19 @@ export const openPresence = (
   const channel = getBrowserClient().channel(PRESENCE_CHANNEL, {
     config: { presence: { key } },
   })
-  const count = () => Object.keys(channel.presenceState()).length
+  // A join/leave can fire before our own state syncs, so never report fewer
+  // people than the event itself implies (the other visitor plus us).
+  const count = (min = 0) =>
+    Math.max(min, Object.keys(channel.presenceState()).length)
   channel
     .on('presence', { event: 'sync' }, () =>
       onChange({ type: 'sync', count: count() })
     )
     .on('presence', { event: 'join' }, ({ key: k }) => {
-      if (k !== key) onChange({ type: 'join', count: count() })
+      if (k !== key) onChange({ type: 'join', count: count(2) })
     })
     .on('presence', { event: 'leave' }, ({ key: k }) => {
-      if (k !== key) onChange({ type: 'leave', count: count() })
+      if (k !== key) onChange({ type: 'leave', count: count(1) })
     })
     .subscribe((status) => {
       if (status === 'SUBSCRIBED' && track)
