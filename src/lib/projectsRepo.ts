@@ -45,6 +45,7 @@ export const rowToProject = (row: ProjectRow, index: number): Project => ({
   contributions: row.contributions,
   images: row.images,
   // Until the `links` column exists (supabase/project-links.sql) use the built-in ones.
+  accent: staticProjects.find((p) => p.slug === row.slug)?.accent,
   links: row.links?.length ? row.links : staticProjects.find((p) => p.slug === row.slug)?.links ?? [],
 })
 

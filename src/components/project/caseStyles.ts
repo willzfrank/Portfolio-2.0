@@ -145,7 +145,7 @@ export const Screens = styled.div`
 export const Cover = styled.div`
   position: relative;
   margin-top: clamp(1rem, 3vw, 2rem);
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 16 / 10;
   border-radius: 6px;
   overflow: hidden;
   background: #2b2b2b;
@@ -153,7 +153,7 @@ export const Cover = styled.div`
 
   .inner {
     position: absolute;
-    inset: -8% 0;
+    inset: -2% 0;
   }
   img {
     object-fit: cover;
