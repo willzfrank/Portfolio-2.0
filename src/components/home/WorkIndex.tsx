@@ -124,7 +124,7 @@ const WorkIndex = ({
 
       <WorkList className="list">
         {projects.map((p, i) => (
-          <Link key={p.slug} href={`/project/${p.slug}`} className="row" data-cursor>
+          <Link key={p.slug} href={`/project/${p.slug}`} className="row" data-cursor="View">
             <span className="n">{String(i + 1).padStart(2, '0')}</span>
             <span className="title">{p.title}</span>
             <span className="meta">
