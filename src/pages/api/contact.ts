@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { getServerClient, isSupabaseConfigured } from '@/lib/supabaseAdmin'
 import { rateLimited } from '@/lib/rateLimit'
+import { notifyContactMessage } from '@/lib/notify'
 
 export default async function handler(
   req: NextApiRequest,
@@ -42,5 +43,10 @@ export default async function handler(
     .from('messages')
     .insert({ name: name.trim(), email: email.trim(), message: message.trim() })
   if (error) return res.status(500).json({ error: 'Could not send message' })
+  await notifyContactMessage({
+    name: name.trim(),
+    email: email.trim(),
+    message: message.trim(),
+  })
   return res.status(201).json({ ok: true })
 }
