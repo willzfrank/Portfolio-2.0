@@ -153,7 +153,7 @@ export const Cover = styled.div`
 
   .inner {
     position: absolute;
-    inset: -2% 0;
+    inset: 0;
   }
   img {
     object-fit: cover;
