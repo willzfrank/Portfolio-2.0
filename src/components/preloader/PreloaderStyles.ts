@@ -1,47 +1,97 @@
-import styled, { keyframes, css } from 'styled-components';
-import { HTMLAttributes } from 'react';
+import styled from 'styled-components'
+import { motion } from 'framer-motion'
 
-interface CountProps extends HTMLAttributes<HTMLDivElement> {
-  count: number;
-}
+const MINT = 'rgb(231, 250, 236)'
 
-export const Container = styled.div`
+export const Overlay = styled.div`
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  color: ${MINT};
+  overflow: hidden;
+  pointer-events: none;
+`
+
+export const Strips = styled.div`
+  position: absolute;
+  inset: 0;
   display: flex;
+`
+
+export const Strip = styled(motion.div)`
+  flex: 1;
+  background: #1f1f1f;
+  /* hide hairline gaps between panels */
+  margin-right: -1px;
+`
+
+export const Stage = styled.div`
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-`;
+  gap: 1.5rem;
+`
 
-export const countAnimation = keyframes`
-  from {
-    transform: scale(1);
-  }
-  to {
-    transform: scale(1.3);
-  }
-`;
-
-export const Count = styled.div.attrs<CountProps>(({ count }) => ({
-  count,
-}))<CountProps>`
-  font-size: 8vw;
-  line-height: 1.2;
-  transform-origin: center;
-  transform: scale(1);
-  font-family: 'MyFont', sans-serif !important;
-  background-color: #1f1f1f;
-  z-index: 7000;
-  height: 100vh;
-  width: 100vw !important;
+export const Greeting = styled(motion.div)`
   display: flex;
   align-items: center;
-  justify-content: center;
-  color: white;
+  gap: 1rem;
+  font-family: 'MyFont', sans-serif;
+  font-size: clamp(3rem, 9vw, 9rem);
+  line-height: 1.1;
+`
 
-  ${({ count }) =>
-    count === 100 &&
-    css`
-      animation: ${countAnimation} 1s forwards;
-      animation-delay: 0.5s;
-    `};
-`;
+export const Dot = styled.span`
+  width: 0.2em;
+  height: 0.2em;
+  border-radius: 50%;
+  background: ${MINT};
+`
+
+export const NameLine = styled.h1`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  font-family: 'MyFont', sans-serif;
+  font-size: clamp(2.2rem, 8vw, 8rem);
+  line-height: 1.15;
+  font-weight: 400;
+  text-align: center;
+`
+
+export const Mask = styled.span<{ $space: boolean }>`
+  display: inline-block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+  width: ${(p) => (p.$space ? '0.35em' : 'auto')};
+`
+
+export const Letter = styled(motion.span)`
+  display: inline-block;
+  transform-origin: bottom left;
+`
+
+export const Role = styled(motion.p)`
+  font-size: clamp(0.7rem, 1.2vw, 0.95rem);
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+`
+
+export const Corner = styled.span`
+  position: absolute;
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  opacity: 0.55;
+`
+
+export const Counter = styled.span`
+  position: absolute;
+  font-family: 'MyFont', sans-serif;
+  font-size: clamp(3rem, 8vw, 7rem);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+`

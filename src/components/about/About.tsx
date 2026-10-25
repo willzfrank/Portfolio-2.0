@@ -1,21 +1,14 @@
 import Link from 'next/link';
 import { AboutBox, AboutTitle, MoreBtn } from './aboutStyles';
 
-const AboutComponent: React.FC = () => {
+const DEFAULT_ABOUT = `With 5 years of software development experience, I am now working with Polar Frequency, having previously been part of the amazing team at Sterling Bank Plc. I am a master of crafting efficient and creative solutions. Passionate about using tech for good, I am constantly seeking innovative problem-solving methods. Expert in React, Next.js, TypeScript, Node.js, and modern web technologies, I deliver high-quality software that impresses clients. I have a talent for simplifying complex ideas and strive to continuously improve.`;
+
+const AboutComponent: React.FC<{ text?: string | null }> = ({ text }) => {
   return (
     <AboutBox>
       <div>
         <AboutTitle>About</AboutTitle>
-        <span>
-          With 5 years of software development experience, I am now working with
-          Polar Frequency, having previously been part of the amazing team at
-          Sterling Bank Plc. I am a master of crafting efficient and creative
-          solutions. Passionate about using tech for good, I am constantly
-          seeking innovative problem-solving methods. Expert in React, Next.js,
-          TypeScript, Node.js, and modern web technologies, I deliver
-          high-quality software that impresses clients. I have a talent for
-          simplifying complex ideas and strive to continuously improve.
-        </span>
+        <span>{text || DEFAULT_ABOUT}</span>
       </div>
 
       <MoreBtn>

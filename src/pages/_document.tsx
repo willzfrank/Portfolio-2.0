@@ -1,9 +1,19 @@
-import { Html, Head, Main, NextScript } from 'next/document'
+import Document, {
+  DocumentContext,
+  Html,
+  Head,
+  Main,
+  NextScript,
+} from 'next/document'
+import { ServerStyleSheet } from 'styled-components'
 
-export default function Document() {
+function MyDocumentBody() {
   return (
     <Html lang="en">
       <Head>
+        <noscript>
+          <style>{`.preloader-overlay{display:none!important}`}</style>
+        </noscript>
         <link rel="manifest" href="/manifest.json" />
         <link
           rel="apple-touch-icon"
@@ -22,4 +32,31 @@ export default function Document() {
       </body>
     </Html>
   )
+}
+
+export default class MyDocument extends Document {
+  // Inline styled-components CSS into the server HTML to avoid a flash of
+  // unstyled content before hydration.
+  static async getInitialProps(ctx: DocumentContext) {
+    const sheet = new ServerStyleSheet()
+    const originalRenderPage = ctx.renderPage
+    try {
+      ctx.renderPage = () =>
+        originalRenderPage({
+          enhanceApp: (App) => (props) =>
+            sheet.collectStyles(<App {...props} />),
+        })
+      const initialProps = await Document.getInitialProps(ctx)
+      return {
+        ...initialProps,
+        styles: [initialProps.styles, sheet.getStyleElement()],
+      }
+    } finally {
+      sheet.seal()
+    }
+  }
+
+  render() {
+    return <MyDocumentBody />
+  }
 }

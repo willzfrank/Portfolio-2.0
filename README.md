@@ -36,3 +36,18 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## Admin & backend (Supabase)
+
+The site reads projects and the About text from Supabase and falls back to
+`src/data/projects.ts` when Supabase isn't configured or has no projects.
+
+1. Create a Supabase project and run `supabase/schema.sql` in the SQL editor.
+2. In Supabase Auth, create your admin user (email + password).
+3. Copy `.env.example` to `.env.local` and fill in the URL, anon key,
+   service-role key and `ADMIN_EMAILS` (only these users can use the admin).
+4. Run `npm run dev` and open `/admin`.
+
+From `/admin` you can create/edit/delete projects (with cover + gallery image
+uploads to the `portfolio` storage bucket), edit the home About text, and read
+messages sent from the contact form.

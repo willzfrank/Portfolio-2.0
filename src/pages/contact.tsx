@@ -4,6 +4,7 @@ import Head from 'next/head'
 import React from 'react'
 import { ContactContainer, ContactSocials } from '@/styles/ContactStyles'
 import Link from 'next/link'
+import ContactForm from '@/components/ContactForm'
 import Marquee from '@/components/marquee/Marquee'
 
 type Props = {}
@@ -76,6 +77,7 @@ const contact = (props: Props) => {
                     SEND AN EMAIL
                   </Link>
                 </button>
+                <ContactForm />
               </div>
             </div>
 

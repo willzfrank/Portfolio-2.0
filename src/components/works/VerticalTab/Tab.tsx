@@ -2,11 +2,11 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React, { useState, useEffect } from 'react'
 import { Tab, TabContent, TabImage, TabContainer } from './TabStyles'
-import { projects } from '@/data/projects'
+import { Project } from '@/data/projects'
 import ProjectCard from '../ProjectCard'
 import MobileProjectCard from '../MobileProjectCard'
 
-const VerticalTabs = () => {
+const VerticalTabs = ({ projects }: { projects: Project[] }) => {
   const [activeTab, setActiveTab] = useState<string>(projects[0]?.title || '')
 
   useEffect(() => {
