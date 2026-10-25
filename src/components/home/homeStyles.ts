@@ -217,7 +217,7 @@ export const Preview = styled.div`
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: top;
+    object-position: left top;
     opacity: 0;
     transform: scale(1.15);
     transition: opacity 0.4s ease, transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);

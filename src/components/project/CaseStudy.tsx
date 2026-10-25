@@ -49,6 +49,7 @@ const CaseStudy = ({ project, next, index, total }: CaseStudyProps) => {
     hasStore(/play\.google\.com/) && 'Android',
   ].filter(Boolean) as string[]
 
+  const coverImg = project.images.find((i) => i.src === project.image)
   const caption = (i: number) => screens[i].caption || screens[i].alt || project.title
 
   const stripRef = React.useRef<HTMLDivElement>(null)
@@ -88,18 +89,6 @@ const CaseStudy = ({ project, next, index, total }: CaseStudyProps) => {
           ease: 'expo.inOut',
           scrollTrigger: { trigger: f, start: 'top 88%' },
         })
-        const inner = f.querySelector('.inner, img')
-        if (inner) {
-          gsap.fromTo(
-            inner,
-            { scale: 1.04 },
-            {
-              scale: 1,
-              ease: 'none',
-              scrollTrigger: { trigger: f, start: 'top bottom', end: 'bottom top', scrub: true },
-            }
-          )
-        }
       })
 
       // App hero: the two phones drift apart as you scroll past.
@@ -262,7 +251,10 @@ const CaseStudy = ({ project, next, index, total }: CaseStudyProps) => {
         )}
 
         {!isApp && project.image && (
-          <Cover className="cover-frame">
+          <Cover
+            className="cover-frame"
+            style={{ aspectRatio: coverImg ? `${coverImg.width} / ${coverImg.height}` : '16 / 10' }}
+          >
             <div className="inner">
               <Image
                 src={project.image}
