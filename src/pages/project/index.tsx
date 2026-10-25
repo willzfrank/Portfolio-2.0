@@ -36,7 +36,7 @@ const ProjectsPage = ({ projects }: { projects: Project[] }) => {
         lines={[{ text: 'Selected' }, { text: 'work', out: true }]}
       >
         Each project is a unique challenge and learning opportunity, showing my
-        skills in frontend development and user experience design.
+        skills across web, mobile, backend and cloud.
       </PageHero>
 
       {categories.length > 1 && (

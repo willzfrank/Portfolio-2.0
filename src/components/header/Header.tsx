@@ -110,7 +110,7 @@ const Header = ({
   return (
     <header ref={root}>
       <SrOnly id="index-h1">
-        Godswill Francis — Frontend Developer based in Lagos, Nigeria
+        Godswill Francis — Software Developer based in Lagos, Nigeria
       </SrOnly>
 
       <Hero data-hero>
@@ -120,7 +120,7 @@ const Header = ({
 
         <TopMeta className="top-meta">
           <div>
-            <div className="fade-up">(Frontend Developer)</div>
+            <div className="fade-up">(Software Developer)</div>
             <div className="fade-up dim coords">
               Lagos, Nigeria
             </div>

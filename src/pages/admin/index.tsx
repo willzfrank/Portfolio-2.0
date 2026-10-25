@@ -10,6 +10,7 @@ import AnalyticsPanel from '@/components/admin/AnalyticsPanel'
 interface Img {
   src: string
   alt: string
+  caption?: string
   width: number
   height: number
 }
@@ -35,6 +36,7 @@ interface ProjectRow {
   contributors: Contributor[]
   contributions: string[]
   images: Img[]
+  links?: { label: string; url: string }[]
   published: boolean
 }
 interface Message {
@@ -62,6 +64,7 @@ const emptyProject = (): ProjectRow => ({
   contributors: [],
   contributions: [],
   images: [],
+  links: [],
   published: true,
 })
 
@@ -451,6 +454,7 @@ function ProjectForm({
 }) {
   const [p, setP] = useState<ProjectRow>(initial)
   const [techText, setTechText] = useState(initial.technologies.join(', '))
+  const [linksText, setLinksText] = useState((initial.links ?? []).map((l) => `${l.label} | ${l.url}`).join('\n'))
   const [contribText, setContribText] = useState(
     initial.contributions.join('\n')
   )
@@ -568,6 +572,25 @@ function ProjectForm({
             <StyledInput value={p.github_url ?? ''} onChange={(e) => set('github_url', e.target.value)} />
           </InputGroup>
         </FormGrid>
+
+        <InputGroup>
+          <InputLabel>Store links (one per line: Label | URL, e.g. Google Play | https://play.google.com/...)</InputLabel>
+          <StyledTextarea
+            rows={3}
+            value={linksText}
+            onChange={(e) => {
+              setLinksText(e.target.value)
+              set(
+                'links',
+                e.target.value
+                  .split('\n')
+                  .map((l) => l.split('|').map((x) => x.trim()))
+                  .filter((p) => p.length >= 2 && p[0] && p[1])
+                  .map((p) => ({ label: p[0], url: p.slice(1).join('|') }))
+              )
+            }}
+          />
+        </InputGroup>
 
         <InputGroup>
           <InputLabel>Technologies (comma separated)</InputLabel>

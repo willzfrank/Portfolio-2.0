@@ -19,11 +19,11 @@ export default withAdmin(async (req, res) => {
   if (req.method === 'POST') {
     const parsed = pickProjectFields(req.body, true)
     if ('error' in parsed) return res.status(400).json(parsed)
-    const { data, error } = await db
-      .from('projects')
-      .insert(parsed.fields)
-      .select()
-      .single()
+    let { data, error } = await db.from('projects').insert(parsed.fields).select().single()
+    if (error && /links/.test(error.message) && 'links' in parsed.fields) {
+      const { links: _links, ...rest } = parsed.fields
+      ;({ data, error } = await db.from('projects').insert(rest).select().single())
+    }
     if (error) return res.status(400).json({ error: error.message })
     await revalidateSite(res, [data.slug])
     return res.status(201).json(data)

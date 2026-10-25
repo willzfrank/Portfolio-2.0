@@ -9,11 +9,18 @@ export interface Project {
   longDescription: string
   liveUrl: string
   githubUrl?: string
+  /** Extra places to open the project, e.g. App Store or Google Play. */
+  links?: ProjectLink[]
   image: string
   contributors: Contributor[]
   contributions: string[]
   images: ProjectImage[]
   category: 'web-design' | 'ai' | 'hr' | 'ecommerce' | 'tech'
+}
+
+export interface ProjectLink {
+  label: string
+  url: string
 }
 
 export interface Contributor {
@@ -25,6 +32,8 @@ export interface Contributor {
 export interface ProjectImage {
   src: string
   alt: string
+  /** Short line shown beside a phone screen in the scroll showcase. */
+  caption?: string
   width: number
   height: number
   className?: string
@@ -33,6 +42,86 @@ export interface ProjectImage {
 export const projects: Project[] = [
   {
     id: '01',
+    title: 'Café One',
+    slug: 'cafeone',
+    type: 'Coworking Platform',
+    technologies: ['Mobile', 'iOS & Android'],
+    timeline: '2026',
+    description:
+      "Booking and membership for Nigeria's largest coworking network.",
+    longDescription: `Café One brings workspace booking, events and membership for a network of coworking hubs across Nigeria into one clear experience.
+
+I built the mobile app: the way members find a space, book it and get on with their day.`,
+    liveUrl: 'https://cafeone.ng',
+    links: [{ label: 'Google Play', url: 'https://play.google.com/store/apps/details?id=com.cafe.one' }],
+    image: '/work/cafeone-1.jpg',
+    category: 'tech',
+    contributors: [],
+    contributions: ['Mobile app engineering'],
+    images: [
+      { src: '/work/cafeone-1.jpg', alt: 'Café One home page', width: 1440, height: 900 },
+      { src: '/work/cafeone-app-1.jpg', alt: 'Café One app', caption: 'Meet over coffee', width: 777, height: 1688 },
+      { src: '/work/cafeone-app-2.jpg', alt: 'Café One app', caption: 'Work and community', width: 777, height: 1688 },
+      { src: '/work/cafeone-app-3.jpg', alt: 'Café One app', caption: 'Book a workspace', width: 777, height: 1688 },
+      { src: '/work/cafeone-app-4.jpg', alt: 'Café One app', caption: 'Events and tickets', width: 777, height: 1688 },
+      { src: '/work/cafeone-2.jpg', alt: 'Café One spaces', width: 1440, height: 900 },
+    ],
+  },
+  {
+    id: '02',
+    title: 'Whipcare',
+    slug: 'whipcare',
+    type: 'Car-care Marketplace',
+    technologies: ['Mobile', 'iOS & Android'],
+    timeline: '2026',
+    description:
+      'A marketplace connecting vehicle owners with trusted service providers.',
+    longDescription: `Whipcare connects vehicle owners with mechanics, detailers and other service providers across Lagos, through iOS and Android apps.
+
+I built the mobile app.`,
+    liveUrl: 'https://whipcare.app',
+    links: [
+      { label: 'App Store', url: 'https://apps.apple.com/ng/app/whipcare-car-care-near-you/id6670729882' },
+      { label: 'Google Play', url: 'https://play.google.com/store/apps/details?id=com.jozy.whipcareapp2' },
+    ],
+    image: '/work/whipcare-1.jpg',
+    category: 'tech',
+    contributors: [],
+    contributions: ['Mobile app engineering'],
+    images: [
+      { src: '/work/whipcare-1.jpg', alt: 'Whipcare home page', width: 1440, height: 900 },
+      { src: '/work/whipcare-app-1.jpg', alt: 'Whipcare app', caption: 'Owners meet providers', width: 776, height: 1688 },
+      { src: '/work/whipcare-app-2.jpg', alt: 'Whipcare app', caption: 'Find a mechanic', width: 776, height: 1688 },
+      { src: '/work/whipcare-app-3.jpg', alt: 'Whipcare app', caption: 'Book a service', width: 776, height: 1688 },
+      { src: '/work/whipcare-app-4.jpg', alt: 'Whipcare app', caption: 'Stay ahead of repairs', width: 776, height: 1688 },
+      { src: '/work/whipcare-2.jpg', alt: 'Whipcare mobile app screens', width: 1440, height: 900 },
+    ],
+  },
+  {
+    id: '03',
+    title: 'Bucks Invest',
+    slug: 'bucksinvest',
+    type: 'Investment Platform',
+    technologies: ['Web', 'Platform'],
+    timeline: '2025–2026',
+    description:
+      'A calm, confident way for investors to grow their money.',
+    longDescription: `Bucks Invest is Bucksfield Asset Management's investment platform, with a customer portal for investors and an operations console for the team behind it.
+
+I built the customer portal and the operations console.`,
+    liveUrl: '',
+    image: '/work/bucks-1.jpg',
+    category: 'tech',
+    contributors: [],
+    contributions: ['Software engineering'],
+    images: [
+      { src: '/work/bucks-1.jpg', alt: 'Bucks Invest sign in', width: 1440, height: 900 },
+      { src: '/work/bucks-2.jpg', alt: 'Bucks Invest onboarding', width: 1440, height: 900 },
+      { src: '/work/bucks-3.jpg', alt: 'Bucks Invest on mobile', width: 780, height: 1688 },
+    ],
+  },
+  {
+    id: '04',
     title: 'Artsy',
     slug: 'artsy',
     type: 'Photography E-commerce',
@@ -82,7 +171,7 @@ In particular, there was difficulty in setting up the routing for both the Marke
     ],
   },
   {
-    id: '02',
+    id: '05',
     title: 'Machala Vehicles',
     slug: 'machalavehicles',
     type: 'Vehicle Website',
@@ -125,7 +214,7 @@ The website features detailed vehicle listings, service information, and contact
     ],
   },
   {
-    id: '03',
+    id: '06',
     title: 'Vsonet Education',
     slug: 'vsonet',
     type: 'Tech Website',
@@ -175,7 +264,7 @@ The project focuses on creating an intuitive interface that makes learning acces
     ],
   },
   {
-    id: '04',
+    id: '07',
     title: 'Portfolio 1.0',
     slug: 'portfolio1.0',
     type: 'Portfolio Page',

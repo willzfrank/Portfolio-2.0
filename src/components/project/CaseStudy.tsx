@@ -7,7 +7,8 @@ import { useReveal, scrollWords, fadeUp, drawRule, riseChars } from '@/lib/useRe
 import PageShell from '@/components/page/PageShell'
 import PageHero from '@/components/page/PageHero'
 import { Section, SectionLabel, LinkOut } from '@/components/page/pageStyles'
-import { MetaGrid, Cover, Story, Credits, Gallery, NextProject } from './caseStyles'
+import { Phone, Stage, Pinned, StripWrap } from './appStyles'
+import { MetaGrid, Actions, Screens, Cover, Story, Credits, Gallery, NextProject } from './caseStyles'
 
 export interface NextRef {
   title: string
@@ -28,9 +29,52 @@ const CaseStudy = ({ project, next, index, total }: CaseStudyProps) => {
     .filter(Boolean)
   const [lead, ...rest] = paragraphs
 
+  // Wide shots go in the gallery; tall phone screens get their own horizontal strip.
+  const screens = project.images.filter((i) => i.height / i.width >= 1.6)
+  const wide = project.images.filter((i) => i.height / i.width < 1.6)
+
+  const actions = [
+    ...(project.links ?? []),
+    ...(project.liveUrl ? [{ label: 'Live site', url: project.liveUrl }] : []),
+    ...(project.githubUrl ? [{ label: 'Source code', url: project.githubUrl }] : []),
+  ]
+  const hasStore = (re: RegExp) => (project.links ?? []).some((l) => re.test(l.url))
+  const platforms = [
+    project.liveUrl && 'Web',
+    hasStore(/apple\.com/) && 'iOS',
+    hasStore(/play\.google\.com/) && 'Android',
+  ].filter(Boolean) as string[]
+
+  const isApp = screens.length >= 2 && hasStore(/apple\.com|play\.google\.com/)
+  const caption = (i: number) => screens[i].caption || screens[i].alt || project.title
+
+  const stripRef = React.useRef<HTMLDivElement>(null)
+  // Mouse drag-to-scroll for the screens strip (touch and trackpads already scroll it).
+  const onStripDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    const el = stripRef.current
+    if (!el || e.pointerType !== 'mouse') return
+    const startX = e.clientX
+    const startLeft = el.scrollLeft
+    el.classList.add('dragging')
+    const move = (ev: PointerEvent) => {
+      el.scrollLeft = startLeft - (ev.clientX - startX)
+    }
+    const up = () => {
+      el.classList.remove('dragging')
+      window.removeEventListener('pointermove', move)
+      window.removeEventListener('pointerup', up)
+    }
+    window.addEventListener('pointermove', move)
+    window.addEventListener('pointerup', up)
+  }
+
   const ref = useReveal<HTMLDivElement>(
     ({ q, splits, reduce }) => {
-      if (reduce) return
+      if (reduce) {
+        q('.pin').forEach((el) => ((el as HTMLElement).style.display = 'none'))
+        q('.strip-wrap').forEach((el) => ((el as HTMLElement).style.display = 'block'))
+        return
+      }
 
       // Media frames wipe open and settle as they enter the viewport.
       const frames = [...q('.cover-frame'), ...q('.gallery .frame')] as HTMLElement[]
@@ -54,6 +98,74 @@ const CaseStudy = ({ project, next, index, total }: CaseStudyProps) => {
           )
         }
       })
+
+      // App hero: the two phones drift apart as you scroll past.
+      const stage = q('.stage')[0]
+      if (stage) {
+        gsap.to(q('.stage .front'), {
+          yPercent: -6,
+          rotation: -8,
+          ease: 'none',
+          scrollTrigger: { trigger: stage, start: 'top bottom', end: 'bottom top', scrub: true },
+        })
+        gsap.to(q('.stage .back'), {
+          yPercent: 7,
+          rotation: 11,
+          ease: 'none',
+          scrollTrigger: { trigger: stage, start: 'top bottom', end: 'bottom top', scrub: true },
+        })
+      }
+
+      // Pinned showcase: one phone stays put, its screen and caption change as you scroll.
+      const pin = q('.pin')[0] as HTMLElement | undefined
+      if (pin) {
+        const mm = gsap.matchMedia()
+        mm.add('(min-width: 801px)', () => {
+          const shotsEl = q('.pin .shot') as HTMLElement[]
+          const caps = q('.pin .cap') as HTMLElement[]
+          const dots = q('.pin .dots i') as HTMLElement[]
+          const cur = q('.pin .cur')[0] as HTMLElement | undefined
+          const n = shotsEl.length
+          gsap.set(shotsEl.slice(1), { clipPath: 'inset(100% 0 0 0)' })
+          gsap.set(caps.slice(1), { opacity: 0, y: 40 })
+          const tl = gsap.timeline({
+            defaults: { ease: 'none' },
+            scrollTrigger: {
+              trigger: pin,
+              start: 'top top',
+              end: () => `+=${(n - 1) * 85}%`,
+              pin: true,
+              scrub: 0.6,
+              anticipatePin: 1,
+              invalidateOnRefresh: true,
+              onUpdate: (self) => {
+                const i = Math.min(n - 1, Math.round(self.progress * (n - 1)))
+                if (cur) cur.textContent = String(i + 1).padStart(2, '0')
+                dots.forEach((d, k) => d.classList.toggle('on', k === i))
+              },
+            },
+          })
+          for (let i = 1; i < n; i++) {
+            tl.to(shotsEl[i], { clipPath: 'inset(0% 0 0 0)', duration: 1 }, i - 1)
+              .to(caps[i - 1], { opacity: 0, y: -40, duration: 0.45 }, i - 1)
+              .fromTo(caps[i], { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.45 }, i - 0.45)
+              .to(q('.pin .device')[0], { rotation: i % 2 ? 2.5 : -2.5, duration: 1 }, i - 1)
+          }
+        })
+      }
+
+      const shots = q('.screens figure')
+      if (shots.length) {
+        gsap.from(shots, {
+          y: 90,
+          opacity: 0,
+          scale: 0.94,
+          duration: 1.2,
+          ease: 'expo.out',
+          stagger: 0.12,
+          scrollTrigger: { trigger: q('.screens')[0], start: 'top 85%' },
+        })
+      }
 
       q('.label').forEach((l) => drawRule(l.querySelector('.rule'), l, 'top 88%'))
 
@@ -98,29 +210,48 @@ const CaseStudy = ({ project, next, index, total }: CaseStudyProps) => {
             <dd>{project.type}</dd>
           </div>
           <div>
-            <dt>Stack</dt>
+            <dt>Focus</dt>
             <dd>{project.technologies.join(' · ')}</dd>
           </div>
-          <div>
-            <dt>Links</dt>
-            <dd>
-              <div className="links">
-                {project.liveUrl && (
-                  <LinkOut href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-                    Live site <span>↗</span>
-                  </LinkOut>
-                )}
-                {project.githubUrl && (
-                  <LinkOut href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                    Source code <span>↗</span>
-                  </LinkOut>
-                )}
-              </div>
-            </dd>
-          </div>
+          {platforms.length > 0 && (
+            <div>
+              <dt>Platforms</dt>
+              <dd>{platforms.join(' · ')}</dd>
+            </div>
+          )}
         </MetaGrid>
 
-        {project.image && (
+        {actions.length > 0 && (
+          <Actions data-hero-in>
+            {actions.map((a) => (
+              <a key={a.url} href={a.url} target="_blank" rel="noopener noreferrer" data-cursor="Open">
+                {a.label} <span>↗</span>
+              </a>
+            ))}
+          </Actions>
+        )}
+
+        {isApp && (
+          <Stage className="stage">
+            <div className="wash" style={{ backgroundImage: `url(${screens[0].src})` }} />
+            <div className="grain" />
+            <div className="phones">
+              <Phone className="phone back">
+                <div className="screen">
+                  <Image src={screens[1].src} alt="" fill sizes="320px" />
+                </div>
+              </Phone>
+              <Phone className="phone front">
+                <div className="screen">
+                  <Image src={screens[0].src} alt={project.title} fill sizes="320px" priority />
+                </div>
+              </Phone>
+            </div>
+            <span className="tag">{platforms.filter((p) => p !== 'Web').join(' · ') || 'Mobile'}</span>
+          </Stage>
+        )}
+
+        {!isApp && project.image && (
           <Cover className="cover-frame">
             <div className="inner">
               <Image
@@ -196,15 +327,83 @@ const CaseStudy = ({ project, next, index, total }: CaseStudyProps) => {
           </Section>
         )}
 
-        {project.images.length > 0 && (
+        {isApp && (
+          <Pinned className="pin">
+            <div className="copy">
+              <span className="count">
+                (04) — Screens · <b className="cur">01</b> / {String(screens.length).padStart(2, '0')}
+              </span>
+              <div className="caps">
+                {screens.map((_, i) => (
+                  <h3 key={i} className="cap">
+                    {caption(i)}
+                  </h3>
+                ))}
+              </div>
+              <div className="dots">
+                {screens.map((_, i) => (
+                  <i key={i} className={i === 0 ? 'on' : ''} />
+                ))}
+              </div>
+            </div>
+            <div className="device">
+              <Phone>
+                <div className="screen">
+                  {screens.map((img, i) => (
+                    <div key={i} className="shot">
+                      <Image
+                        src={img.src}
+                        alt={img.alt || project.title}
+                        fill
+                        sizes="(max-width: 1400px) 40vw, 420px"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </Phone>
+            </div>
+          </Pinned>
+        )}
+
+        {screens.length > 0 && (
+          <StripWrap className="strip-wrap" $app={isApp}>
           <Section>
             <SectionLabel className="label">
-              <span>(04) — Gallery</span>
-              <span>{String(project.images.length).padStart(2, '0')} images</span>
+              <span>(04) — Screens</span>
+              <span>{String(screens.length).padStart(2, '0')} screens · drag</span>
+              <span className="rule" />
+            </SectionLabel>
+            <Screens
+              ref={stripRef}
+              className="screens"
+              onPointerDown={onStripDown}
+              data-cursor="Drag"
+            >
+              {screens.map((img, i) => (
+                <figure key={i}>
+                  <Image
+                    src={img.src}
+                    alt={img.alt || project.title}
+                    width={img.width}
+                    height={img.height}
+                    sizes="(max-width: 700px) 60vw, 360px"
+                  />
+                </figure>
+              ))}
+            </Screens>
+          </Section>
+          </StripWrap>
+        )}
+
+        {wide.length > 0 && (
+          <Section>
+            <SectionLabel className="label">
+              <span>(05) — Gallery</span>
+              <span>{String(wide.length).padStart(2, '0')} images</span>
               <span className="rule" />
             </SectionLabel>
             <Gallery className="gallery">
-              {project.images.map((img, i) => (
+              {wide.map((img, i) => (
                 <figure key={i} className={img.height > img.width ? 'portrait' : ''}>
                   <div className="frame">
                     <Image

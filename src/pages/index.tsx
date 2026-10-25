@@ -38,7 +38,7 @@ export default function Home({
             <title>Godswill Francis &trade; | Home</title>
             <meta
               name="description"
-              content="Personal portfolio of Godswill Francis - Frontend Developer with expertise in React, TypeScript, Next.js, Python, Docker, AWS, and Azure DevOps"
+              content="Personal portfolio of Godswill Francis - Software Developer working across web, mobile, backend and cloud"
             />
             <meta
               name="viewport"
@@ -58,7 +58,7 @@ export default function Home({
             <meta property="og:title" content="Godswill Francis ™ | Home" />
             <meta
               property="og:description"
-              content="Personal portfolio of Godswill Francis - Frontend Developer with expertise in React, TypeScript, Next.js, Python, Docker, AWS, and Azure DevOps"
+              content="Personal portfolio of Godswill Francis - Software Developer working across web, mobile, backend and cloud"
             />
             <meta property="og:image" content="/path/to/image.jpg" />
             <meta property="og:url" content="https://yourwebsite.com" />
@@ -68,7 +68,7 @@ export default function Home({
             <meta name="twitter:title" content="Godswill Francis ™ | Home" />
             <meta
               name="twitter:description"
-              content="Personal portfolio of Godswill Francis - Frontend Developer with expertise in React, TypeScript, Next.js, Python, Docker, AWS, and Azure DevOps"
+              content="Personal portfolio of Godswill Francis - Software Developer working across web, mobile, backend and cloud"
             />
             <meta name="twitter:image" content="/path/to/image.jpg" />
           </Head>
@@ -77,9 +77,9 @@ export default function Home({
             type="Person"
             data={{
               name: 'Godswill Francis',
-              jobTitle: 'Frontend Developer',
+              jobTitle: 'Software Developer',
               description:
-                'A passionate frontend developer with 5 years of experience in React, TypeScript, Next.js, Python, Docker, AWS, and Azure DevOps',
+                'A software developer with 5 years of experience across web, mobile, backend and cloud',
               url: 'https://yourwebsite.com',
               sameAs: [
                 'https://github.com/willzfrank',

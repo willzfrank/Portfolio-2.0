@@ -16,12 +16,19 @@ export default withAdmin(async (req, res) => {
       .select('slug, image, images')
       .eq('id', id)
       .single()
-    const { data, error } = await db
-      .from('projects')
-      .update({ ...parsed.fields, updated_at: new Date().toISOString() })
-      .eq('id', id)
-      .select()
-      .single()
+    const save = (fields: Record<string, unknown>) =>
+      db
+        .from('projects')
+        .update({ ...fields, updated_at: new Date().toISOString() })
+        .eq('id', id)
+        .select()
+        .single()
+    let { data, error } = await save(parsed.fields)
+    // The `links` column comes from supabase/project-links.sql; save the rest if it's missing.
+    if (error && /links/.test(error.message) && 'links' in parsed.fields) {
+      const { links: _links, ...rest } = parsed.fields
+      ;({ data, error } = await save(rest))
+    }
     if (error) return res.status(400).json({ error: error.message })
     // Drop uploads that are no longer referenced.
     if (before) {
