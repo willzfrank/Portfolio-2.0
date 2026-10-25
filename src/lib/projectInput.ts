@@ -38,6 +38,13 @@ export const pickProjectFields = (
   if (contributions) fields.contributions = contributions
   if (Array.isArray(b.contributors)) fields.contributors = b.contributors
   if (Array.isArray(b.images)) fields.images = b.images
+  if (Array.isArray(b.links)) {
+    fields.links = b.links
+      .filter((l: any) => l && typeof l.label === 'string' && typeof l.url === 'string')
+      .map((l: any) => ({ label: l.label.trim().slice(0, 40), url: l.url.trim().slice(0, 500) }))
+      .filter((l: { label: string; url: string }) => l.label && /^https?:\/\//i.test(l.url))
+      .slice(0, 6)
+  }
   if (typeof b.published === 'boolean') fields.published = b.published
   if (typeof b.position === 'number') fields.position = b.position
   if (b.category !== undefined) {

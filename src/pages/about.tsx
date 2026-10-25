@@ -64,7 +64,7 @@ const About = () => {
   return (
     <PageShell
       title="About"
-      description="Godswill Francis is a frontend developer in Lagos, Nigeria, building fast, expressive interfaces with React, Next.js and TypeScript."
+      description="Godswill Francis is a software developer in Lagos, Nigeria, building web, mobile, backend and cloud products."
       footer="full"
     >
       <div ref={ref}>
@@ -89,7 +89,7 @@ const About = () => {
             </div>
             <div>
               <p className="lead">
-                Unleash tech’s beauty with me, Godswill Francis — a frontend dev
+                Unleash tech’s beauty with me, Godswill Francis — a software dev
                 who transforms user experiences into stunning works of art. With
                 5 years of experience merging tech and beauty, I’ve honed my
                 skills in UI development with a keen eye for detail. Skilled in

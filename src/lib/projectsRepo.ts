@@ -3,6 +3,7 @@ import {
   Project,
   Contributor,
   ProjectImage,
+  ProjectLink,
 } from '@/data/projects'
 import { getServerClient, isSupabaseConfigured } from './supabaseAdmin'
 
@@ -23,6 +24,7 @@ export interface ProjectRow {
   contributors: Contributor[]
   contributions: string[]
   images: ProjectImage[]
+  links?: ProjectLink[] | null
   published: boolean
 }
 
@@ -42,6 +44,8 @@ export const rowToProject = (row: ProjectRow, index: number): Project => ({
   contributors: row.contributors,
   contributions: row.contributions,
   images: row.images,
+  // Until the `links` column exists (supabase/project-links.sql) use the built-in ones.
+  links: row.links?.length ? row.links : staticProjects.find((p) => p.slug === row.slug)?.links ?? [],
 })
 
 /**

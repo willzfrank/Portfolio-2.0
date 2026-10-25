@@ -1,6 +1,6 @@
 # Godswill Francis — Portfolio
 
-Personal portfolio of Godswill Francis, a frontend developer based in Lagos, Nigeria. It has an animated
+Personal portfolio of Godswill Francis, a software developer (web, mobile, backend and cloud) based in Lagos, Nigeria. It has an animated
 home page, case-study pages, and a private admin for managing content and watching who visits.
 
 **Stack:** Next.js 13 (pages router) · React 18 · TypeScript · styled-components · GSAP (ScrollTrigger,

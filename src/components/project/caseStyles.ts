@@ -32,7 +32,113 @@ export const MetaGrid = styled.dl`
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   @media (max-width: 520px) {
-    grid-template-columns: 1fr;
+    gap: 1.4rem 1rem;
+  }
+`
+
+export const Actions = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-top: clamp(1.5rem, 3vw, 2.5rem);
+
+  a {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.95rem 1.5rem;
+    border: 1px solid ${MINT};
+    border-radius: 999px;
+    color: ${MINT};
+    font-size: 0.9rem;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    transition: color 0.45s;
+  }
+  a::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background: ${MINT};
+    transform: translateY(101%);
+    transition: transform 0.55s cubic-bezier(0.7, 0, 0.2, 1);
+  }
+  a span {
+    display: inline-block;
+    transition: transform 0.45s;
+  }
+  a:hover {
+    color: #1d1d1d;
+  }
+  a:hover::before {
+    transform: translateY(0);
+  }
+  a:hover span {
+    transform: translate(2px, -2px);
+  }
+  /* first button is the primary action */
+  a:first-child {
+    background: ${MINT};
+    color: #1d1d1d;
+  }
+  a:first-child::before {
+    background: transparent;
+  }
+  a:first-child:hover {
+    background: transparent;
+    color: ${MINT};
+  }
+`
+
+export const Screens = styled.div`
+  display: flex;
+  gap: clamp(0.8rem, 2vw, 1.5rem);
+  margin-top: clamp(1.5rem, 3vw, 2.5rem);
+  padding-bottom: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  &.dragging {
+    scroll-snap-type: none;
+    user-select: none;
+  }
+  figure {
+    position: relative;
+    flex: 0 0 auto;
+    height: min(72vh, 640px);
+    margin: 0;
+    aspect-ratio: 777 / 1688;
+    border-radius: 26px;
+    overflow: hidden;
+    background: #2b2b2b;
+    scroll-snap-align: start;
+  }
+  /* staggered rhythm, like a contact sheet */
+  figure:nth-child(even) {
+    margin-top: clamp(1.5rem, 4vw, 3.5rem);
+  }
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+  }
+
+  @media (max-width: 700px) {
+    figure {
+      height: min(62vh, 520px);
+    }
   }
 `
 
