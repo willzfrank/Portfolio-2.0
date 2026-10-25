@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
+import { track } from '@/lib/analytics'
 import styled from 'styled-components'
 import { MINT, DIM, HAIR } from '@/components/home/homeStyles'
 
@@ -77,6 +78,14 @@ const Form = styled.form`
 
 const ContactForm: React.FC = () => {
   const [state, setState] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
+  const started = useRef(false)
+
+  // First time a field is focused = they're seriously considering getting in touch.
+  const onFocus = () => {
+    if (started.current) return
+    started.current = true
+    track('form_start')
+  }
 
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -91,11 +100,15 @@ const ContactForm: React.FC = () => {
     if (res?.ok) {
       form.reset()
       setState('sent')
-    } else setState('error')
+      track('form_submit')
+    } else {
+      setState('error')
+      track('form_error', { status: res ? res.status : 0 })
+    }
   }
 
   return (
-    <Form onSubmit={submit}>
+    <Form onSubmit={submit} onFocusCapture={onFocus}>
       <label>
         <span>Your name</span>
         <input name="name" placeholder="Jane Doe" required autoComplete="name" />

@@ -122,7 +122,7 @@ const Header = ({
           <div>
             <div className="fade-up">(Frontend Developer)</div>
             <div className="fade-up dim coords">
-              Lagos, Nigeria — 6.5244° N, 3.3792° E
+              Lagos, Nigeria
             </div>
           </div>
           <div className="meta-right">

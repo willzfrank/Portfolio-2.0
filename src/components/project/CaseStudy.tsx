@@ -228,7 +228,7 @@ const CaseStudy = ({ project, next, index, total }: CaseStudyProps) => {
               <span />
               <span className="rule" />
             </SectionLabel>
-            <Link href={`/project/${next.slug}`} className="big" data-cursor>
+            <Link href={`/project/${next.slug}`} className="big" data-cursor="Next">
               <div className="row">
                 <span className="t next-title">{next.title}</span>
                 <span className="arrow">↗</span>

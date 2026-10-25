@@ -51,3 +51,12 @@ The site reads projects and the About text from Supabase and falls back to
 From `/admin` you can create/edit/delete projects (with cover + gallery image
 uploads to the `portfolio` storage bucket), edit the home About text, and read
 messages sent from the contact form.
+
+## Analytics
+
+Anonymous, cookie-less analytics (no IP addresses stored; Do Not Track is respected; opt-in via a consent banner, so nothing is measured or stored until the visitor accepts). Run these in the
+Supabase SQL editor, in order: `supabase/analytics.sql`, then `supabase/analytics-v2.sql`.
+
+The admin **Analytics** tab shows live visitors, hot leads, per-project engagement (time, scroll depth,
+link clicks), where visitors come from, and issues (errors, broken files, slow pages, rage clicks).
+Country/city come from Vercel's edge headers, so they only appear on the deployed site.

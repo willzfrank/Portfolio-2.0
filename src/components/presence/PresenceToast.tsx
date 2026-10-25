@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/router'
 import { AnimatePresence } from 'framer-motion'
 import { Stack, Toast, Dot } from './presenceStyles'
+import { useConsent } from '@/lib/consent'
 import { getVisitorId, isOwnerBrowser, openPresence } from '@/lib/presence'
 
 interface Item {
@@ -29,10 +30,11 @@ const PresenceToast: React.FC = () => {
   const nextId = useRef(0)
   const timers = useRef(new Map<number, ReturnType<typeof setTimeout>>())
   const router = useRouter()
+  const { consent } = useConsent()
 
   // Presence tracking
   useEffect(() => {
-    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || isOwnerBrowser()) return
+    if (consent !== 'granted' || !process.env.NEXT_PUBLIC_SUPABASE_URL || isOwnerBrowser()) return
 
     const expire = (id: number) => {
       clearTimeout(timers.current.get(id))
@@ -45,49 +47,40 @@ const PresenceToast: React.FC = () => {
       )
     }
 
-    const close = openPresence(getVisitorId(), ({ type, count }) => {
-      if (type === 'sync') return
-      const now = Date.now()
-      setItems((prev) => {
-        const top = prev[prev.length - 1]
-        // Same kind right after the last card: fold into it instead of stacking.
-        if (top && top.kind === type && now - top.at < MERGE_MS) {
-          expire(top.id)
-          return [...prev.slice(0, -1), { ...top, people: top.people + 1, count, at: now }]
-        }
-        const id = nextId.current++
-        expire(id)
-        const next = [...prev, { id, kind: type, people: 1, count, at: now }]
-        return next.slice(-MAX_CARDS)
-      })
-    })
+    const presence = openPresence(
+      getVisitorId(),
+      ({ type, count }) => {
+        if (type === 'sync') return
+        const now = Date.now()
+        setItems((prev) => {
+          const top = prev[prev.length - 1]
+          // Same kind right after the last card: fold into it instead of stacking.
+          if (top && top.kind === type && now - top.at < MERGE_MS) {
+            expire(top.id)
+            return [...prev.slice(0, -1), { ...top, people: top.people + 1, count, at: now }]
+          }
+          const id = nextId.current++
+          expire(id)
+          const next = [...prev, { id, kind: type, people: 1, count, at: now }]
+          return next.slice(-MAX_CARDS)
+        })
+      },
+      true,
+      () => ({ path: window.location.pathname })
+    )
+
+    // Tell the admin which page this visitor is on.
+    const onRoute = () => presence.update()
+    router.events.on('routeChangeComplete', onRoute)
+
     return () => {
-      close()
+      router.events.off('routeChangeComplete', onRoute)
+      presence()
       timers.current.forEach(clearTimeout)
       timers.current.clear()
     }
-  }, [])
-
-  // Page view analytics
-  useEffect(() => {
-    if (isOwnerBrowser()) return
-    const track = (path: string) => {
-      fetch('/api/track', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          visitorId: getVisitorId(),
-          path,
-          referrer: document.referrer || null,
-        }),
-        keepalive: true,
-      }).catch(() => undefined)
-    }
-    track(window.location.pathname)
-    const onRoute = (url: string) => track(url.split(/[?#]/)[0])
-    router.events.on('routeChangeComplete', onRoute)
-    return () => router.events.off('routeChangeComplete', onRoute)
-  }, [router.events])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [consent])
 
   return (
     <Stack aria-live="polite">

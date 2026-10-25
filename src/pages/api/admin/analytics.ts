@@ -1,68 +1,47 @@
 import { withAdmin } from '@/lib/adminAuth'
 import { getServerClient } from '@/lib/supabaseAdmin'
+import { buildReport } from '@/lib/analyticsReport'
+import { EventRow, SessionRow, ViewRow } from '@/lib/analyticsTypes'
 
-const DAYS = 14
-
-const count = (items: string[]) =>
-  Object.entries(
-    items.reduce<Record<string, number>>((acc, k) => {
-      acc[k] = (acc[k] || 0) + 1
-      return acc
-    }, {})
-  )
-    .sort((a, b) => b[1] - a[1])
-    .slice(0, 8)
-    .map(([name, views]) => ({ name, views }))
+const ALLOWED_DAYS = [1, 7, 30, 90]
+const LIMIT = 20000
 
 export default withAdmin(async (req, res) => {
   if (req.method !== 'GET') {
     res.setHeader('Allow', 'GET')
     return res.status(405).json({ error: 'Method not allowed' })
   }
-  const since = new Date(Date.now() - DAYS * 86400000).toISOString()
-  const { data, error } = await getServerClient()
-    .from('page_views')
-    .select('visitor_id, path, referrer, device, created_at')
-    .gte('created_at', since)
-    .order('created_at', { ascending: false })
-    .limit(50000)
-  if (error) return res.status(500).json({ error: error.message })
+  const asked = Number(req.query.days)
+  const days = ALLOWED_DAYS.includes(asked) ? asked : 30
+  const since = new Date(Date.now() - days * 86400000).toISOString()
+  const db = getServerClient()
 
-  const rows = data ?? []
-  const byDay: Record<string, { views: number; visitors: Set<string> }> = {}
-  for (let i = DAYS - 1; i >= 0; i--) {
-    const d = new Date(Date.now() - i * 86400000).toISOString().slice(0, 10)
-    byDay[d] = { views: 0, visitors: new Set() }
-  }
-  for (const r of rows) {
-    const d = r.created_at.slice(0, 10)
-    if (byDay[d]) {
-      byDay[d].views++
-      byDay[d].visitors.add(r.visitor_id)
-    }
-  }
-  const referrers = rows
-    .map((r) => {
-      try {
-        return r.referrer ? new URL(r.referrer).hostname : 'direct'
-      } catch {
-        return 'direct'
-      }
-    })
-    .filter((h) => h !== 'localhost')
+  const [s, v, e] = await Promise.all([
+    db.from('sessions').select('*').gte('started_at', since).order('started_at', { ascending: false }).limit(LIMIT),
+    db
+      .from('page_views')
+      .select('view_id, session_id, visitor_id, path, created_at, duration_ms, max_scroll')
+      .gte('created_at', since)
+      .order('created_at', { ascending: false })
+      .limit(LIMIT),
+    db.from('events').select('session_id, visitor_id, type, path, meta, created_at').gte('created_at', since).order('created_at', { ascending: false }).limit(LIMIT),
+  ])
 
-  return res.status(200).json({
-    days: DAYS,
-    totalViews: rows.length,
-    uniqueVisitors: new Set(rows.map((r) => r.visitor_id)).size,
-    daily: Object.entries(byDay).map(([date, v]) => ({
-      date,
-      views: v.views,
-      visitors: v.visitors.size,
-    })),
-    topPages: count(rows.map((r) => r.path)),
-    topReferrers: count(referrers),
-    devices: count(rows.map((r) => r.device ?? 'desktop')),
-    recent: rows.slice(0, 10),
-  })
+  const failed = s.error || v.error || e.error
+  if (failed) {
+    // Tables from supabase/analytics-v2.sql haven't been created yet.
+    const missing = /does not exist|schema cache|relation|column/i.test(failed.message)
+    return res.status(missing ? 200 : 500).json({ setupNeeded: missing, error: failed.message })
+  }
+
+  return res.status(200).json(
+    buildReport(
+      {
+        sessions: (s.data ?? []) as SessionRow[],
+        views: (v.data ?? []) as ViewRow[],
+        events: (e.data ?? []) as EventRow[],
+      },
+      days
+    )
+  )
 })

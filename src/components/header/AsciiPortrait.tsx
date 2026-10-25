@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { gsap } from '@/lib/gsap';
+import { track } from '@/lib/analytics';
 
 const SRC = '/profile.jpeg';
 /** Where the crop is anchored vertically (0 = top). Shared with the CSS lens image. */
@@ -60,6 +61,7 @@ const AsciiPortrait = ({ ready }: { ready: boolean }) => {
     let prevBox = { x0: 0, y0: 0, x1: 0, y1: 0 };
     let lastPointer = 0;
     let introTl: gsap.core.Timeline | null = null;
+    let lensTracked = false;
 
     const img = new window.Image();
 
@@ -246,6 +248,10 @@ const AsciiPortrait = ({ ready }: { ready: boolean }) => {
       target.x = x;
       target.y = y;
       target.r = inside ? LENS_R : 0;
+      if (inside && !lensTracked) {
+        lensTracked = true;
+        track('lens'); // they found the interactive portrait
+      }
     };
 
     startRef.current = () => {

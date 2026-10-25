@@ -3,7 +3,8 @@ import React, { useCallback, useEffect, useState } from 'react'
 import styled, { keyframes, css } from 'styled-components'
 import type { Session } from '@supabase/supabase-js'
 import { getBrowserClient } from '@/lib/supabaseClient'
-import { markOwnerBrowser, openPresence } from '@/lib/presence'
+import { markOwnerBrowser } from '@/lib/presence'
+import AnalyticsPanel from '@/components/admin/AnalyticsPanel'
 
 /* ---------- types ---------- */
 interface Img {
@@ -348,106 +349,13 @@ function Dashboard({ token, email }: { token: string; email?: string }) {
         </MobileHeader>
 
         <DashContent>
-          {tab === 'analytics' && <Analytics token={token} />}
+          {tab === 'analytics' && <AnalyticsPanel token={token} />}
           {tab === 'projects' && <Projects token={token} />}
           {tab === 'content' && <Content token={token} />}
           {tab === 'messages' && <Messages token={token} />}
         </DashContent>
       </DashMain>
     </DashLayout>
-  )
-}
-
-/* ---------- analytics ---------- */
-interface Stats {
-  days: number
-  totalViews: number
-  uniqueVisitors: number
-  daily: { date: string; views: number; visitors: number }[]
-  topPages: { name: string; views: number }[]
-  topReferrers: { name: string; views: number }[]
-  devices: { name: string; views: number }[]
-}
-
-function Analytics({ token }: { token: string }) {
-  const [stats, setStats] = useState<Stats | null>(null)
-  const [online, setOnline] = useState(0)
-  const [error, setError] = useState('')
-
-  useEffect(() => {
-    api(token, 'analytics').then(setStats).catch((e) => setError(e.message))
-    // Observe live presence without counting the admin as a visitor.
-    return openPresence(
-      'admin-observer',
-      ({ count }) => setOnline(count),
-      false
-    )
-  }, [token])
-
-  const max = Math.max(1, ...(stats?.daily.map((d) => d.views) ?? []))
-  const renderList = (rows: { name: string; views: number }[]) =>
-    rows.length === 0 ? (
-      <StatusText>No data yet</StatusText>
-    ) : (
-      rows.map((r) => (
-        <StatRow key={r.name}>
-          <span>{r.name}</span>
-          <strong>{r.views}</strong>
-        </StatRow>
-      ))
-    )
-
-  return (
-    <FadeIn>
-      <SectionHeader>
-        <SectionTitle>Analytics</SectionTitle>
-      </SectionHeader>
-      {error && <Err>{error}</Err>}
-      <StatGrid>
-        <StatCard>
-          <small>Online now</small>
-          <b>
-            <LiveDot /> {online}
-          </b>
-        </StatCard>
-        <StatCard>
-          <small>Views ({stats?.days ?? 14} days)</small>
-          <b>{stats?.totalViews ?? '–'}</b>
-        </StatCard>
-        <StatCard>
-          <small>Unique visitors</small>
-          <b>{stats?.uniqueVisitors ?? '–'}</b>
-        </StatCard>
-      </StatGrid>
-      <StatCard>
-        <small>Daily views</small>
-        <Bars>
-          {stats?.daily.map((d) => (
-            <div
-              key={d.date}
-              title={`${d.date}: ${d.views} views, ${d.visitors} visitors`}
-            >
-              <span style={{ height: `${(d.views / max) * 100}%` }} />
-              <small>{d.date.slice(8)}</small>
-            </div>
-          ))}
-        </Bars>
-      </StatCard>
-      <StatGrid style={{ marginTop: '1rem' }}>
-        <StatCard>
-          <small>Top pages</small>
-          {renderList(stats?.topPages ?? [])}
-        </StatCard>
-        <StatCard>
-          <small>Referrers</small>
-          {renderList(stats?.topReferrers ?? [])}
-        </StatCard>
-        <StatCard>
-          <small>Devices</small>
-          {renderList(stats?.devices ?? [])}
-        </StatCard>
-      </StatGrid>
-    </FadeIn>
   )
 }
 
@@ -1535,75 +1443,7 @@ const MessageActions = styled.div`
   margin-top: 0.25rem;
 `
 
-const StatGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
-  margin-bottom: 1rem;
-`
 
-const StatCard = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-  padding: 1.1rem 1.25rem;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(231, 250, 236, 0.08);
-  border-radius: 14px;
-  color: rgb(231, 250, 236);
-  small {
-    opacity: 0.6;
-    font-size: 0.8rem;
-  }
-  b {
-    font-size: 2rem;
-    font-weight: 600;
-  }
-`
 
-const StatRow = styled.div`
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  font-size: 0.9rem;
-  span {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-`
 
-const LiveDot = styled.i`
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: #3ddc84;
-  box-shadow: 0 0 8px #3ddc84;
-`
 
-const Bars = styled.div`
-  display: flex;
-  align-items: flex-end;
-  gap: 6px;
-  height: 140px;
-  > div {
-    flex: 1;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 4px;
-  }
-  span {
-    width: 100%;
-    min-height: 2px;
-    background: rgb(231, 250, 236);
-    opacity: 0.8;
-    border-radius: 3px 3px 0 0;
-  }
-  small {
-    font-size: 0.65rem;
-  }
-`

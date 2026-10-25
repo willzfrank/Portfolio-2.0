@@ -187,6 +187,9 @@ const Contact = ({ minimal = false }: { minimal?: boolean }) => {
       <Legal>
         Website made in Nigeria with ♥ by Godswill Francis — © @iamwillzfrank / {year} / All
         rights reserved.
+        <br />
+        Cookies and analytics are opt-in: nothing is measured until you accept. No IP addresses
+        stored, and Do Not Track is respected.
       </Legal>
       <Wordmark className="wordmark" aria-hidden>
         Godswill Francis
