@@ -127,7 +127,7 @@ const About = () => {
             ))}
           </ExpList>
           <div style={{ marginTop: 'clamp(2rem, 4vw, 3rem)' }} className="resume">
-            <LinkOut href="/Godswill Francis - Frontend Developer.pdf" target="_blank" download>
+            <LinkOut href="/api/resume" target="_blank" download>
               Download resume <span>↓</span>
             </LinkOut>
           </div>

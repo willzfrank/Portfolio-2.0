@@ -70,7 +70,7 @@ export const PortraitArea = styled.div`
     --r: 0px;
     position: absolute;
     inset: 0;
-    background: url('/profile.jpeg') 50% 22% / cover no-repeat;
+    background: url('/profile-hero.jpeg') 50% 22% / cover no-repeat;
     filter: grayscale(1) contrast(1.1) brightness(0.8);
     -webkit-mask-image: radial-gradient(
       circle var(--r) at var(--x) var(--y),

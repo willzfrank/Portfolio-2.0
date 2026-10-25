@@ -1,12 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=League+Spartan&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display+SC:wght@400;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Rubik+Moonrocks&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Courgette&display=swap');
-
 @font-face {
   font-family: 'MyFont';
   src: url('/Ogg-Font/Ogg-Font/OggBold.ttf') format('truetype');
+  font-display: swap;
 }
 
 * {
@@ -204,4 +199,12 @@ html.has-cursor input,
 html.has-cursor textarea,
 html.has-cursor [contenteditable='true'] {
   cursor: text !important;
+}
+
+/* While a route is loading, signal it and ignore repeat clicks on links. */
+body.is-routing a {
+  pointer-events: none;
+}
+body.is-routing {
+  cursor: progress;
 }

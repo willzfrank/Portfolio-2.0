@@ -106,8 +106,7 @@ export const NavbarListContainer = styled.ul`
     /* color: rgb(89, 89, 89); */
     color: rgb(231, 250, 236);
   }
-  .link:nth-child(2),
-  .link:nth-child(3) {
+  .link + .link {
     display: inline-block;
     margin-left: 2em;
     /* color: rgb(89, 89, 89); */

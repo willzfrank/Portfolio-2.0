@@ -20,6 +20,8 @@ import {
   CloseNavbarBtn,
 } from './NavbarStyles';
 
+const RESUME_HREF = '/api/resume';
+
 const Navbar = () => {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
@@ -149,6 +151,25 @@ const Navbar = () => {
                   </p>
                 </Link>
               </li>
+
+              <li className="link">
+                <a
+                  href={RESUME_HREF}
+                  download
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="secondary"
+                >
+                  <p
+                    className="text-animate"
+                    id="link-Resume"
+                    data-scroll
+                    data-scroll-call="text-animate+link-Resume"
+                  >
+                    Resume
+                  </p>
+                </a>
+              </li>
             </NavbarListContainer>
           </div>
         </div>
@@ -208,6 +229,18 @@ const Navbar = () => {
                   Contact
                 </p>
               </Link>
+            </li>
+
+            <li className="link">
+              <a
+                href={RESUME_HREF}
+                download
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mobile-secondary"
+              >
+                <p>Resume</p>
+              </a>
             </li>
           </MobileNavbarList>
           <p className="role bottom white mobile-only ">

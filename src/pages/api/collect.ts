@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { getServerClient, isSupabaseConfigured } from '@/lib/supabaseAdmin'
 import { rateLimited } from '@/lib/rateLimit'
 import { hostOf, parseUA } from '@/lib/ua'
+import { notifyForeignVisit } from '@/lib/notify'
 
 /**
  * Anonymous analytics collector. One endpoint, three kinds of message
@@ -68,7 +69,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
       if (b.ses && typeof b.ses === 'object') {
         const s = b.ses
-        await db.from('sessions').upsert(
+        const { data: created } = await db.from('sessions').upsert(
           {
             id: sid,
             visitor_id: vid,
@@ -91,12 +92,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             is_returning: Boolean(s.ret),
           },
           { onConflict: 'id', ignoreDuplicates: true }
-        )
+        ).select('*')
+        // Only a brand-new session is a new visit worth a notification.
+        if (created?.length) await notifyForeignVisit(created[0])
       }
 
       // If the visit's first request was lost, still record a basic session row.
       if (!b.ses) {
-        await db.from('sessions').upsert(
+        const { data: created } = await db.from('sessions').upsert(
           {
             id: sid,
             visitor_id: vid,
@@ -111,7 +114,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             landing_path: path,
           },
           { onConflict: 'id', ignoreDuplicates: true }
-        )
+        ).select('*')
+        if (created?.length) await notifyForeignVisit(created[0])
       }
 
       await db.from('page_views').upsert(

@@ -14,6 +14,24 @@ function MyDocumentBody() {
         <noscript>
           <style>{`.preloader-overlay{display:none!important}[data-hero]{visibility:visible!important}header *{opacity:1!important}header .portrait-clip{clip-path:none!important}`}</style>
         </noscript>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=League+Spartan&family=Playfair+Display+SC:wght@400;700&display=swap"
+        />
+        <link
+          rel="preload"
+          href="/Ogg-Font/Ogg-Font/OggBold.ttf"
+          as="font"
+          type="font/ttf"
+          crossOrigin="anonymous"
+        />
+        <link rel="preload" href="/profile-hero.jpeg" as="image" />
         <link rel="manifest" href="/manifest.json" />
         <link
           rel="apple-touch-icon"

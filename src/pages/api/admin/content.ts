@@ -3,7 +3,7 @@ import { getServerClient } from '@/lib/supabaseAdmin'
 import { revalidateSite } from '@/lib/revalidate'
 
 // Keys the admin is allowed to edit.
-const KEYS = ['about', 'hero']
+const KEYS = ['about', 'hero', 'resume']
 
 export default withAdmin(async (req, res) => {
   const db = getServerClient()
