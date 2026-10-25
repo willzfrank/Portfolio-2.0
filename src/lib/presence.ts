@@ -3,6 +3,21 @@ import { getBrowserClient } from './supabaseClient'
 export const PRESENCE_CHANNEL = 'portfolio-presence'
 
 const VISITOR_KEY = 'pf_visitor_id'
+const OWNER_KEY = 'pf_owner'
+
+/** Browsers where the admin has signed in are excluded from analytics. */
+export const markOwnerBrowser = () => {
+  try {
+    localStorage.setItem(OWNER_KEY, '1')
+  } catch {}
+}
+export const isOwnerBrowser = (): boolean => {
+  try {
+    return localStorage.getItem(OWNER_KEY) === '1'
+  } catch {
+    return false
+  }
+}
 
 /** Stable anonymous id per browser, used for presence and unique-visitor counts. */
 export const getVisitorId = (): string => {

@@ -1,5 +1,6 @@
 import { withAdmin } from '@/lib/adminAuth'
 import { getServerClient } from '@/lib/supabaseAdmin'
+import { revalidateSite } from '@/lib/revalidate'
 
 // Keys the admin is allowed to edit.
 const KEYS = ['about', 'hero']
@@ -22,6 +23,7 @@ export default withAdmin(async (req, res) => {
       .from('site_content')
       .upsert({ key, value, updated_at: new Date().toISOString() })
     if (error) return res.status(400).json({ error: error.message })
+    await revalidateSite(res)
     return res.status(200).json({ ok: true })
   }
 
