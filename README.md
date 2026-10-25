@@ -1,62 +1,97 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Godswill Francis — Portfolio
 
-## Getting Started
+Personal portfolio of Godswill Francis, a frontend developer based in Lagos, Nigeria. It has an animated
+home page, case-study pages, and a private admin for managing content and watching who visits.
 
-First, run the development server:
+**Stack:** Next.js 13 (pages router) · React 18 · TypeScript · styled-components · GSAP (ScrollTrigger,
+SplitText) · Lenis smooth scroll · framer-motion · Supabase (Postgres, Auth, Storage, Realtime).
+
+## Features
+
+- **Animated front end:** preloader, glyph-portrait hero with a lens, scroll-driven sections, a liquid cursor,
+  and a live "Someone joined / left" presence card.
+- **Admin at `/admin`:** create, edit and delete projects (cover and gallery uploads), edit the About text,
+  and read messages from the contact form. Saves update the live site immediately.
+- **Analytics:** a private dashboard showing who visits and what they care about (see below).
+- **Fallback content:** if Supabase isn't configured, the site uses `src/data/projects.ts`.
+
+## Getting started
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+npm install
+cp .env.example .env.local   # then fill in the values below
+npm run dev                  # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Requires Node 24.x (pinned in `package.json` for Vercel).
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+| Command | What it does |
+| --- | --- |
+| `npm run dev` | Start the dev server |
+| `npm run build` / `npm start` | Production build and server |
+| `npm run type-check` | TypeScript check |
+| `npm run lint` | ESLint |
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## Environment variables
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+| Variable | Where to find it | Notes |
+| --- | --- | --- |
+| `NEXT_PUBLIC_SUPABASE_URL` | Supabase → Project Settings → API | Public |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Same page (publishable key) | Public |
+| `SUPABASE_SERVICE_ROLE_KEY` | Same page (secret key) | **Server only.** Never prefix with `NEXT_PUBLIC_` |
+| `ADMIN_EMAILS` | You choose | Comma-separated. Only these Supabase Auth users can use `/admin` |
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Locally these go in `.env.local` (git-ignored). On Vercel, add them under **Project → Settings →
+Environment Variables** and redeploy. GitHub Actions secrets are not used for this.
 
-## Learn More
+## Supabase setup
 
-To learn more about Next.js, take a look at the following resources:
+1. Create a Supabase project.
+2. In the SQL editor, run in order: `supabase/schema.sql`, `supabase/analytics.sql`, then
+   `supabase/analytics-v2.sql`. All are safe to re-run.
+3. In **Authentication**, create your admin user (email and password) matching `ADMIN_EMAILS`.
+4. Run the app and sign in at `/admin`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-
-## Admin & backend (Supabase)
-
-The site reads projects and the About text from Supabase and falls back to
-`src/data/projects.ts` when Supabase isn't configured or has no projects.
-
-1. Create a Supabase project and run `supabase/schema.sql` in the SQL editor.
-2. In Supabase Auth, create your admin user (email + password).
-3. Copy `.env.example` to `.env.local` and fill in the URL, anon key,
-   service-role key and `ADMIN_EMAILS` (only these users can use the admin).
-4. Run `npm run dev` and open `/admin`.
-
-From `/admin` you can create/edit/delete projects (with cover + gallery image
-uploads to the `portfolio` storage bucket), edit the home About text, and read
-messages sent from the contact form.
+Content is stored in the `projects`, `site_content` and `messages` tables and the `portfolio` storage
+bucket. Pages use ISR (`revalidate: 60`) plus on-demand revalidation when you save in the admin.
 
 ## Analytics
 
-Anonymous, cookie-less analytics (no IP addresses stored; Do Not Track is respected). Run these in the
-Supabase SQL editor, in order: `supabase/analytics.sql`, then `supabase/analytics-v2.sql`.
+Anonymous and cookie-less. It exists to show which projects visitors spend time on and whether a visit looks
+like genuine interest.
 
-The admin **Analytics** tab shows live visitors, hot leads, per-project engagement (time, scroll depth,
-link clicks), where visitors come from, and issues (errors, broken files, slow pages, rage clicks).
-Country/city come from Vercel's edge headers, so they only appear on the deployed site.
+**Measured:** pages viewed, active time (tab visible and recently used), scroll depth, project engagement,
+clicks on email, resume, social and outbound links, contact-form starts and submissions, where visitors
+arrive from (referrer, UTM), country and city, device, browser, language, and returning visitors.
+**Issues:** JavaScript errors, broken files, 404s, rage clicks and slow loads.
+
+The admin **Analytics** tab has Overview, Projects, Visitors, Audience and Issues views, a 1/7/30/90-day
+range, and a heat score (hot, warm, casual, bounced) per visit. It can't identify a person or company; the
+score is the substitute.
+
+**Privacy:** no IP addresses are stored, and no cookies are set. A random ID in browser storage tells visits
+apart. Do Not Track is respected, and your own admin browser and localhost are excluded. Bots are filtered.
+Location comes from Vercel's edge headers, so it only appears on the deployed site. Coordinates are never
+collected.
+
+**Retention:** `supabase/analytics-retention.sql` deletes data older than 12 months. Run it on demand or
+schedule it.
+
+**Known limits:** private windows and cleared storage count as new visitors, ad blockers may block
+`/api/collect`, and VPNs or mobile networks can show the wrong city.
+
+## Deploying
+
+Deploy on Vercel with the environment variables above. `next.config.js` and the `engines` field in
+`package.json` pin the Node version.
+
+## Project structure
+
+```
+src/
+  components/   home, header, preloader, cursor, presence, analytics, admin, page shells
+  lib/          Supabase clients, analytics tracker and report, rate limiting, auth
+  pages/        site pages, /admin, and API routes (contact, collect, admin/*)
+  data/         fallback projects
+supabase/       SQL for the schema, analytics and retention
+```
