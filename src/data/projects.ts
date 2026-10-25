@@ -11,6 +11,8 @@ export interface Project {
   githubUrl?: string
   /** Extra places to open the project, e.g. App Store or Google Play. */
   links?: ProjectLink[]
+  /** Brand colour behind the phones on app projects. */
+  accent?: string
   image: string
   contributors: Contributor[]
   contributions: string[]
@@ -54,17 +56,19 @@ export const projects: Project[] = [
 I built the mobile app: the way members find a space, book it and get on with their day.`,
     liveUrl: 'https://cafeone.ng',
     links: [{ label: 'Google Play', url: 'https://play.google.com/store/apps/details?id=com.cafe.one' }],
+    accent: '#b3121a',
     image: '/work/cafeone-1.jpg',
     category: 'tech',
     contributors: [],
     contributions: ['Mobile app engineering'],
     images: [
-      { src: '/work/cafeone-1.jpg', alt: 'Café One home page', width: 1440, height: 900 },
-      { src: '/work/cafeone-app-1.jpg', alt: 'Café One app', caption: 'Meet over coffee', width: 777, height: 1688 },
-      { src: '/work/cafeone-app-2.jpg', alt: 'Café One app', caption: 'Work and community', width: 777, height: 1688 },
-      { src: '/work/cafeone-app-3.jpg', alt: 'Café One app', caption: 'Book a workspace', width: 777, height: 1688 },
-      { src: '/work/cafeone-app-4.jpg', alt: 'Café One app', caption: 'Events and tickets', width: 777, height: 1688 },
-      { src: '/work/cafeone-2.jpg', alt: 'Café One spaces', width: 1440, height: 900 },
+      { src: '/work/cafeone-s1.jpg', alt: 'Café One home', caption: 'Your workspace, sorted', width: 900, height: 1951 },
+      { src: '/work/cafeone-s2.jpg', alt: 'Café One hub', caption: 'Pick a hub', width: 900, height: 1951 },
+      { src: '/work/cafeone-s3.jpg', alt: 'Café One time selection', caption: 'Choose your time', width: 900, height: 1951 },
+      { src: '/work/cafeone-s4.jpg', alt: 'Café One bookings', caption: 'Every booking in one place', width: 900, height: 1951 },
+      { src: '/work/cafeone-s5.jpg', alt: 'Café One wallet', caption: 'Pay with your wallet', width: 900, height: 1951 },
+      { src: '/work/cafeone-s6.jpg', alt: 'Café One event review', caption: 'Host your own event', width: 900, height: 1951 },
+      { src: '/work/cafeone-1.jpg', alt: 'Café One website', width: 1440, height: 900 },
     ],
   },
   {
@@ -84,17 +88,19 @@ I built the mobile app.`,
       { label: 'App Store', url: 'https://apps.apple.com/ng/app/whipcare-car-care-near-you/id6670729882' },
       { label: 'Google Play', url: 'https://play.google.com/store/apps/details?id=com.jozy.whipcareapp2' },
     ],
+    accent: '#7a2205',
     image: '/work/whipcare-1.jpg',
     category: 'tech',
     contributors: [],
     contributions: ['Mobile app engineering'],
     images: [
-      { src: '/work/whipcare-1.jpg', alt: 'Whipcare home page', width: 1440, height: 900 },
-      { src: '/work/whipcare-app-1.jpg', alt: 'Whipcare app', caption: 'Owners meet providers', width: 776, height: 1688 },
-      { src: '/work/whipcare-app-2.jpg', alt: 'Whipcare app', caption: 'Find a mechanic', width: 776, height: 1688 },
-      { src: '/work/whipcare-app-3.jpg', alt: 'Whipcare app', caption: 'Book a service', width: 776, height: 1688 },
-      { src: '/work/whipcare-app-4.jpg', alt: 'Whipcare app', caption: 'Stay ahead of repairs', width: 776, height: 1688 },
-      { src: '/work/whipcare-2.jpg', alt: 'Whipcare mobile app screens', width: 1440, height: 900 },
+      { src: '/work/whipcare-s1.jpg', alt: 'Whipcare home', caption: 'Your car at a glance', width: 900, height: 1951 },
+      { src: '/work/whipcare-s2.jpg', alt: 'Whipcare booking', caption: 'Book a service', width: 900, height: 1951 },
+      { src: '/work/whipcare-s3.jpg', alt: 'Whipcare offers', caption: 'Compare offers', width: 900, height: 1951 },
+      { src: '/work/whipcare-s4.jpg', alt: 'Whipcare tracking', caption: 'Track every repair', width: 900, height: 1951 },
+      { src: '/work/whipcare-s5.jpg', alt: 'Whipcare vehicle health', caption: 'Know its health', width: 900, height: 1951 },
+      { src: '/work/whipcare-s6.jpg', alt: 'Whipcare provider dashboard', caption: 'A dashboard for providers', width: 900, height: 1951 },
+      { src: '/work/whipcare-1.jpg', alt: 'Whipcare website', width: 1440, height: 900 },
     ],
   },
   {
@@ -110,18 +116,45 @@ I built the mobile app.`,
 
 I built the customer portal and the operations console.`,
     liveUrl: '',
-    image: '/work/bucks-1.jpg',
+    image: '/work/bucks-v1.jpg',
     category: 'tech',
     contributors: [],
     contributions: ['Software engineering'],
     images: [
-      { src: '/work/bucks-1.jpg', alt: 'Bucks Invest sign in', width: 1440, height: 900 },
-      { src: '/work/bucks-2.jpg', alt: 'Bucks Invest onboarding', width: 1440, height: 900 },
-      { src: '/work/bucks-3.jpg', alt: 'Bucks Invest on mobile', width: 780, height: 1688 },
+      { src: '/work/bucks-v1.jpg', alt: 'Bucks Invest dashboard', caption: 'Your money at a glance', width: 1600, height: 865 },
+      { src: '/work/bucks-v2.jpg', alt: 'Bucks Invest products', caption: 'Choose an instrument', width: 1600, height: 865 },
+      { src: '/work/bucks-v3.jpg', alt: 'Bucks Invest product details', caption: 'Know the terms before you buy', width: 1600, height: 865 },
+      { src: '/work/bucks-v4.jpg', alt: 'Bucks Invest portfolio', caption: 'Your portfolio', width: 1600, height: 865 },
+      { src: '/work/bucks-v5.jpg', alt: 'Bucks Invest transactions', caption: 'Every transaction', width: 1600, height: 865 },
     ],
   },
   {
     id: '04',
+    title: 'E-CAM',
+    slug: 'ecam',
+    type: 'Credit Appraisal Platform',
+    technologies: ['Web', 'Platform'],
+    timeline: '2026',
+    description:
+      'A workspace for reviewing, verifying and approving loan applications.',
+    longDescription: `E-CAM is a credit appraisal platform that takes loan applications from first review to approval, with identity checks, contracts and a clear audit trail.
+
+I built the platform.`,
+    liveUrl: '',
+    image: '/work/ecam-v1.jpg',
+    category: 'tech',
+    contributors: [],
+    contributions: ['Software engineering'],
+    images: [
+      { src: '/work/ecam-v1.jpg', alt: 'E-CAM dashboard', caption: 'A day at a glance', width: 1600, height: 1000 },
+      { src: '/work/ecam-v2.jpg', alt: 'E-CAM pending applications', caption: 'The review queue', width: 1600, height: 1000 },
+      { src: '/work/ecam-v3.jpg', alt: 'E-CAM application review', caption: 'Every application, in depth', width: 1600, height: 1000 },
+      { src: '/work/ecam-v4.jpg', alt: 'E-CAM credit checks', caption: 'Credit checks', width: 1600, height: 1000 },
+      { src: '/work/ecam-v5.jpg', alt: 'E-CAM reports', caption: 'Reporting', width: 1600, height: 1000 },
+    ],
+  },
+  {
+    id: '05',
     title: 'Artsy',
     slug: 'artsy',
     type: 'Photography E-commerce',
@@ -171,7 +204,7 @@ In particular, there was difficulty in setting up the routing for both the Marke
     ],
   },
   {
-    id: '05',
+    id: '06',
     title: 'Machala Vehicles',
     slug: 'machalavehicles',
     type: 'Vehicle Website',
@@ -214,7 +247,7 @@ The website features detailed vehicle listings, service information, and contact
     ],
   },
   {
-    id: '06',
+    id: '07',
     title: 'Vsonet Education',
     slug: 'vsonet',
     type: 'Tech Website',
@@ -264,7 +297,7 @@ The project focuses on creating an intuitive interface that makes learning acces
     ],
   },
   {
-    id: '07',
+    id: '08',
     title: 'Portfolio 1.0',
     slug: 'portfolio1.0',
     type: 'Portfolio Page',

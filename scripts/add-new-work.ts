@@ -17,7 +17,7 @@ const db = createClient(
   { auth: { persistSession: false } }
 )
 
-const NEW = ['cafeone', 'whipcare', 'bucksinvest']
+const NEW = ['cafeone', 'whipcare', 'bucksinvest', 'ecam']
 
 async function main() {
   for (let i = 0; i < projects.length; i++) {

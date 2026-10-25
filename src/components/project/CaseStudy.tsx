@@ -31,21 +31,24 @@ const CaseStudy = ({ project, next, index, total }: CaseStudyProps) => {
 
   // Wide shots go in the gallery; tall phone screens get their own horizontal strip.
   const screens = project.images.filter((i) => i.height / i.width >= 1.6)
-  const wide = project.images.filter((i) => i.height / i.width < 1.6)
+  const hasStore = (re: RegExp) => (project.links ?? []).some((l) => re.test(l.url))
+  const isApp = screens.length >= 2 && hasStore(/apple\.com|play\.google\.com/)
+  // The cover already shows the main image, so don't repeat it in the gallery.
+  const wide = project.images.filter(
+    (i) => i.height / i.width < 1.6 && (isApp || i.src !== project.image)
+  )
 
   const actions = [
     ...(project.links ?? []),
     ...(project.liveUrl ? [{ label: 'Live site', url: project.liveUrl }] : []),
     ...(project.githubUrl ? [{ label: 'Source code', url: project.githubUrl }] : []),
   ]
-  const hasStore = (re: RegExp) => (project.links ?? []).some((l) => re.test(l.url))
   const platforms = [
     project.liveUrl && 'Web',
     hasStore(/apple\.com/) && 'iOS',
     hasStore(/play\.google\.com/) && 'Android',
   ].filter(Boolean) as string[]
 
-  const isApp = screens.length >= 2 && hasStore(/apple\.com|play\.google\.com/)
   const caption = (i: number) => screens[i].caption || screens[i].alt || project.title
 
   const stripRef = React.useRef<HTMLDivElement>(null)
@@ -89,7 +92,7 @@ const CaseStudy = ({ project, next, index, total }: CaseStudyProps) => {
         if (inner) {
           gsap.fromTo(
             inner,
-            { scale: 1.2 },
+            { scale: 1.04 },
             {
               scale: 1,
               ease: 'none',
@@ -233,7 +236,14 @@ const CaseStudy = ({ project, next, index, total }: CaseStudyProps) => {
 
         {isApp && (
           <Stage className="stage">
-            <div className="wash" style={{ backgroundImage: `url(${screens[0].src})` }} />
+            <div
+              className="wash"
+              style={
+                project.accent
+                  ? { background: `radial-gradient(circle at 50% 45%, ${project.accent}, #140805 75%)` }
+                  : { backgroundImage: `url(${screens[0].src})` }
+              }
+            />
             <div className="grain" />
             <div className="phones">
               <Phone className="phone back">

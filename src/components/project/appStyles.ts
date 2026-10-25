@@ -56,7 +56,9 @@ export const Stage = styled.div`
     inset: -20%;
     background-size: cover;
     background-position: center;
-    filter: blur(80px) saturate(1.5) brightness(0.5);
+    &:not([style*='gradient']) {
+      filter: blur(80px) saturate(1.5) brightness(0.5);
+    }
     transform: scale(1.1);
   }
   .grain {
