@@ -75,7 +75,7 @@ const Manifesto = ({ text }: { text?: string | null }) => {
         </div>
         <div className="reveal">
           <small>Focus</small>
-          Full-stack: React to Node.js &amp; Java
+          Web, mobile &amp; backend
         </div>
         <div className="reveal">
           <small>Status</small>

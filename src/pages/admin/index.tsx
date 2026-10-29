@@ -402,7 +402,7 @@ function Projects({ token }: { token: string }) {
     <FadeIn>
       <SectionHeader>
         <SectionTitle>Projects</SectionTitle>
-        <PrimaryButton onClick={() => setEditing(emptyProject())}>
+        <PrimaryButton onClick={() => setEditing({ ...emptyProject(), position: rows.reduce((m, r) => Math.max(m, r.position), -1) + 1 })}>
           + New project
         </PrimaryButton>
       </SectionHeader>
@@ -549,7 +549,7 @@ function ProjectForm({
             <StyledInput value={p.timeline} onChange={(e) => set('timeline', e.target.value)} />
           </InputGroup>
           <InputGroup>
-            <InputLabel>Order (lower first)</InputLabel>
+            <InputLabel>Order (lower first; the first 4 published show on the home page)</InputLabel>
             <StyledInput type="number" value={p.position} onChange={(e) => set('position', Number(e.target.value))} />
           </InputGroup>
         </FormGrid>

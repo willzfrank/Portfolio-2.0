@@ -110,7 +110,7 @@ const Header = ({
   return (
     <header ref={root}>
       <SrOnly id="index-h1">
-        Godswill Francis — Software Developer based in Lagos, Nigeria
+        Godswill Francis — Software Engineer based in Lagos, Nigeria
       </SrOnly>
 
       <Hero data-hero>
@@ -120,7 +120,7 @@ const Header = ({
 
         <TopMeta className="top-meta">
           <div>
-            <div className="fade-up">(Software Developer)</div>
+            <div className="fade-up">(Software Engineer)</div>
             <div className="fade-up dim coords">
               Lagos, Nigeria
             </div>
@@ -155,8 +155,9 @@ const Header = ({
           <BottomRow className="bottom-row">
             <div>
               <p className="about fade-up">
-                I build software end to end: fast interfaces in React and
-                Next.js, backed by APIs and data in Node.js, Java and PostgreSQL.
+                I build software end to end: web interfaces in React and
+                Next.js, mobile apps in React Native and Flutter, and back ends
+                in Node.js, Java, .NET and Go.
               </p>
               <div className="scroll fade-up">
                 <span /> Scroll

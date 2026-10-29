@@ -49,6 +49,7 @@ export const rowToProject = (row: ProjectRow, index: number): Project => ({
   highlights: staticProjects.find((p) => p.slug === row.slug)?.highlights,
   story: staticProjects.find((p) => p.slug === row.slug)?.story,
   access: staticProjects.find((p) => p.slug === row.slug)?.access,
+  platforms: staticProjects.find((p) => p.slug === row.slug)?.platforms,
   links: row.links?.length ? row.links : staticProjects.find((p) => p.slug === row.slug)?.links ?? [],
 })
 

@@ -90,7 +90,7 @@ const Navbar = () => {
                 data-scroll
                 data-scroll-call="text-animate+nav-role"
               >
-                <TitleSpan>Software Developer</TitleSpan>
+                <TitleSpan>Software Engineer</TitleSpan>
               </span>
               <Dashspan
                 className="dash"
@@ -251,7 +251,7 @@ const Navbar = () => {
             </li>
           </MobileNavbarList>
           <p className="role bottom white mobile-only ">
-            Software Developer
+            Software Engineer
             <SmallDash className="dash"></SmallDash>
           </p>
         </MobileNavbar>

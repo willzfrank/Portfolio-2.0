@@ -45,7 +45,7 @@ const CaseStudy = ({ project, next, index, total }: CaseStudyProps) => {
     ...(project.liveUrl ? [{ label: 'Live site', url: project.liveUrl }] : []),
     ...(project.githubUrl ? [{ label: 'Source code', url: project.githubUrl }] : []),
   ]
-  const platforms = [
+  const platforms = project.platforms ?? [
     project.liveUrl && 'Web',
     hasStore(/apple\.com/) && 'iOS',
     hasStore(/play\.google\.com/) && 'Android',
@@ -198,7 +198,7 @@ const CaseStudy = ({ project, next, index, total }: CaseStudyProps) => {
 
   return (
     <PageShell
-      title={project.title}
+      title={`${project.title}: ${project.type}`}
       description={project.description}
       image={project.image}
       footer="full"
