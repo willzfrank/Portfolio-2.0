@@ -155,8 +155,8 @@ const Header = ({
           <BottomRow className="bottom-row">
             <div>
               <p className="about fade-up">
-                I design and build fast, expressive interfaces for the web with
-                React, Next.js and TypeScript.
+                I build software end to end: fast interfaces in React and
+                Next.js, backed by APIs and data in Node.js, Java and PostgreSQL.
               </p>
               <div className="scroll fade-up">
                 <span /> Scroll

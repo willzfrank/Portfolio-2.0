@@ -14,10 +14,13 @@ const WorkIndex = ({
   projects,
   label = '(02) — Selected work',
   showAll = true,
+  total,
 }: {
   projects: Project[]
   label?: string
   showAll?: boolean
+  /** Every published project, when `projects` is only the featured few. */
+  total?: number
 }) => {
   const root = useRef<HTMLElement>(null);
   const preview = useRef<HTMLDivElement>(null);
@@ -147,7 +150,7 @@ const WorkIndex = ({
       {showAll && (
         <Link href="/project" legacyBehavior passHref>
           <LinkArrow>
-            All projects <span>↗</span>
+            All projects{total && total > projects.length ? ` (${String(total).padStart(2, '0')})` : ''} <span>↗</span>
           </LinkArrow>
         </Link>
       )}

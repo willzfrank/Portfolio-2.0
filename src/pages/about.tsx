@@ -22,7 +22,8 @@ const SKILLS = [
   'Tailwind CSS', 'Git', 'Bitbucket', 'Styled-Components', 'HTML5', 'SASS',
   'SCSS', 'CSS3', 'Docker', 'AWS', 'Azure DevOps', 'Circle CI',
   'Responsive Design', 'Performance Optimization', 'Agile Development',
-  'REST', 'GraphQL', 'React Native', 'Flutter',
+  'REST', 'GraphQL', 'React Native', 'Flutter', 'Node.js', 'NestJS', 'Java',
+  'Spring Boot', 'PostgreSQL', 'Redis', 'WebSockets', 'System Design',
 ]
 
 const About = () => {
@@ -92,9 +93,10 @@ const About = () => {
                 Unleash tech’s beauty with me, Godswill Francis — a software dev
                 who transforms user experiences into stunning works of art. With
                 5 years of experience merging tech and beauty, I’ve honed my
-                skills in UI development with a keen eye for detail. Skilled in
-                React, TypeScript, Next.js, Python, Docker, AWS and Azure
-                DevOps, I’ve worked with companies across different industries,
+                skills in UI development with a keen eye for detail, and I build
+                the back end too: APIs, queues, databases and money-safe
+                transaction logic. Skilled in React, TypeScript, Next.js,
+                Node.js, Java, Python, Docker, AWS and Azure DevOps, I’ve worked with companies across different industries,
                 delivering scalable solutions while prioritizing user
                 experience. Let’s create something amazing together!
               </p>
