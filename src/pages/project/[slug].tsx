@@ -11,7 +11,9 @@ interface ProjectPageProps {
   total: number
 }
 
-const ProjectPage = (props: ProjectPageProps) => <CaseStudy {...props} />
+// Keyed by slug so going project to project remounts the page. The scroll animations split
+// text into spans; reusing the same DOM for a different project left the old text behind.
+const ProjectPage = (props: ProjectPageProps) => <CaseStudy key={props.project.slug} {...props} />
 
 // Pages are generated on first request (and revalidated), so projects added
 // in the admin appear without a rebuild.
