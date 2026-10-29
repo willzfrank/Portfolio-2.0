@@ -14,11 +14,16 @@ import { GetStaticProps } from 'next'
 import { Project } from '@/data/projects'
 import { getProjects, getSiteContent } from '@/lib/projectsRepo'
 
+// The home page only shows the top projects in the admin order; the rest live on /project.
+const HOME_PROJECTS = 4
+
 export default function Home({
   projects,
+  totalProjects,
   aboutText,
 }: {
   projects: Project[]
+  totalProjects: number
   aboutText: string | null
 }) {
   const [isLoading, setIsLoading] = React.useState(() => !hasPreloaderPlayed())
@@ -115,7 +120,7 @@ export default function Home({
                 projects={projects.map(({ title, slug, type }) => ({ title, slug, type }))}
               />
               <Manifesto text={aboutText} />
-              <WorkIndex projects={projects} />
+              <WorkIndex projects={projects} total={totalProjects} />
             </div>
           </div>
           <Ticker />
@@ -133,7 +138,8 @@ export const getStaticProps: GetStaticProps = async () => {
   ])
   return {
     props: {
-      projects,
+      projects: projects.slice(0, HOME_PROJECTS),
+      totalProjects: projects.length,
       aboutText: typeof about?.text === 'string' ? about.text : null,
     },
     revalidate: 60,

@@ -75,7 +75,7 @@ const Manifesto = ({ text }: { text?: string | null }) => {
         </div>
         <div className="reveal">
           <small>Focus</small>
-          React, Next.js, TypeScript
+          Full-stack: React to Node.js &amp; Java
         </div>
         <div className="reveal">
           <small>Status</small>

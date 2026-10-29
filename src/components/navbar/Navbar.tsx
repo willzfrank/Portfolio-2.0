@@ -30,6 +30,13 @@ const Navbar = () => {
   };
 
   const [sticky, setSticky] = React.useState(false);
+  const [projectCount, setProjectCount] = React.useState<number | null>(null);
+  React.useEffect(() => {
+    fetch('/api/project-count')
+      .then((r) => r.json())
+      .then((j) => typeof j.count === 'number' && setProjectCount(j.count))
+      .catch(() => undefined);
+  }, []);
   const router = useRouter();
 
   React.useEffect(() => {
@@ -120,7 +127,7 @@ const Navbar = () => {
                       data-scroll
                       data-scroll-call="animate-in+project-count"
                     >
-                      4
+                      {projectCount ?? ''}
                     </sup>
                   </span>{' '}
                 </Link>
@@ -199,7 +206,7 @@ const Navbar = () => {
                     data-scroll
                     data-scroll-call="animate-in+project-count"
                   >
-                    4
+                    {projectCount ?? ''}
                   </sup>
                 </span>{' '}
               </Link>

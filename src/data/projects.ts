@@ -243,6 +243,128 @@ I built the platform.`,
     ],
   },
   {
+    id: '05',
+    title: 'Chimera',
+    slug: 'chimera',
+    type: 'AI Incident Response',
+    technologies: ['NestJS', 'Next.js', 'TypeScript', 'PostgreSQL', 'Redis'],
+    timeline: '2026',
+    description:
+      'A society of AI agents that diagnoses production incidents and challenges its own conclusions.',
+    longDescription: `Chimera is an incident-response system built on a society of AI agents. When an alert arrives from PagerDuty, a webhook or its own metric watcher, a meta-orchestrator designs a team of specialist agents for that kind of failure, while a separate set of adversarial agents tries to pull their diagnosis apart before anything is recommended.
+
+A consensus engine weighs the specialists' confidence against the objections and decides whether the fix is safe to propose or needs a human. Resolved incidents feed a memory of reusable patterns, stored with pgvector, so the next similar incident starts with what the last one taught it.
+
+I built the whole system: the NestJS API with queued incident handling, the live Next.js dashboard that shows the agents thinking in real time, and the Slack and webhook integrations.`,
+    liveUrl: '',
+    highlights: {
+      role: 'Designed and built the full system',
+      stack: 'NestJS · TypeScript · BullMQ · Redis · PostgreSQL (pgvector) · Socket.IO · Next.js',
+      outcomes: [
+        'Specialist agents diagnose, adversarial agents challenge, and a consensus engine decides when a human must step in',
+        'Incidents arrive from PagerDuty, a generic webhook or built-in metric rules, and updates go to Slack',
+        "A live dashboard streams each agent's reasoning as it happens",
+      ],
+    },
+    story: {
+      challenge:
+        'On-call engineers lose the first minutes of an incident to guessing. A single AI answer is risky because it can be confidently wrong, and a wrong fix in production costs more than a slow one.',
+      approach:
+        'I built a NestJS API where a meta-orchestrator designs a team of specialist agents for each incident and adversarial agents challenge every diagnosis. A consensus engine weighs confidence against dissent and escalates to a human when it is not sure. Incidents run on BullMQ queues, agents talk over a message bus, and every step streams to a Next.js dashboard through Socket.IO. Resolved incidents are stored with pgvector so later incidents of the same kind start with what was learned.',
+      result:
+        'A working system that goes from alert to a reasoned, challenged resolution, shows its thinking live and knows when to ask a human. Alerts come in from PagerDuty, a generic webhook or built-in metric rules, and updates go to Slack.',
+    },
+    access: 'Source code and a live walkthrough are available on request.',
+    image: '/work/chimera-1.jpg',
+    category: 'ai',
+    contributors: [],
+    contributions: ['Backend architecture', 'Multi-agent orchestration', 'Realtime dashboard'],
+    images: [
+      { src: '/work/chimera-1.jpg', alt: 'Chimera architecture', caption: 'How an incident is handled', width: 1600, height: 1000 },
+    ],
+  },
+  {
+    id: '06',
+    title: 'NovaWallet',
+    slug: 'novawallet',
+    type: 'Fintech Mobile App',
+    technologies: ['Flutter', 'Dart', 'Riverpod', 'Hive'],
+    timeline: '2026',
+    description:
+      'A wallet app that keeps working offline and never sends the same payment twice.',
+    longDescription: `NovaWallet is a Nigerian fintech wallet: check your balance, send money in three steps and save towards goals with NovaSave. It was built around one hard question: what happens to a payment when the network drops?
+
+Every action goes into a persistent queue with its own idempotency key, so it survives the app being killed and syncs when the connection returns without ever debiting twice. Money is held as whole kobo, never as a floating-point number.
+
+I built the whole app in Flutter, with English and Yoruba, a biometric lock and local notifications.`,
+    liveUrl: '',
+    highlights: {
+      role: 'Designed and built the app',
+      stack: 'Flutter · Dart · Riverpod · Hive',
+      outcomes: [
+        'Offline queue with idempotency keys and crash recovery, so no payment is lost or sent twice',
+        'Money handled as integer kobo from storage to screen, with no floating-point drift',
+        'English and Yoruba, a biometric lock, and unit, widget and integration tests',
+      ],
+    },
+    story: {
+      challenge:
+        'In a market with patchy connectivity, a wallet that fails when the network drops loses trust fast. A retry that sends money twice loses it faster.',
+      approach:
+        'I built the app in Flutter with Riverpod. Every send or save is written to a Hive queue with a UUID idempotency key before anything else happens, and a processor drains it when connectivity returns, with exponential backoff and jitter. Half-finished actions are reset after a crash. Amounts stay as integer kobo, the balance lives in secure storage, and tests cover the queue, with an integration test for sync.',
+      result:
+        'A wallet where send money, NovaSave goals and the offline queue work end to end, including after the app is killed mid-sync. It supports English and Yoruba.',
+    },
+    access: 'Source code and a live walkthrough are available on request.',
+    image: '/work/novawallet-1.jpg',
+    category: 'tech',
+    contributors: [],
+    contributions: ['Mobile app engineering', 'Offline-first architecture'],
+    images: [
+    ],
+  },
+  {
+    id: '07',
+    title: 'Wallet System',
+    slug: 'wallet-system',
+    type: 'Backend Service',
+    technologies: ['Java', 'Spring Boot', 'JPA', 'H2'],
+    timeline: '2026',
+    description:
+      'A money-transfer API built to stay correct under retries, spikes and concurrent requests.',
+    longDescription: `Wallet System is a Spring Boot service for creating accounts and moving money between them. The interesting part is everything around the transfer: row locking in a fixed order so concurrent transfers cannot deadlock, idempotency keys so a retried request never debits twice, and an append-only audit log of every attempt.
+
+It also protects itself under load with rate limiting, a cap on in-flight transfers and a circuit breaker that fails fast instead of piling up timeouts.
+
+I built the service and its integration tests.`,
+    liveUrl: '',
+    highlights: {
+      role: 'Designed and built the service',
+      stack: 'Java 17 · Spring Boot 3 · JPA · H2 · JUnit',
+      outcomes: [
+        'Row locking in a stable order, so simultaneous transfers cannot deadlock or overdraw an account',
+        'Idempotent transfers: retrying a reference replays the original result and never debits twice',
+        'Rate limiting, an in-flight cap and a circuit breaker keep it responsive under traffic spikes',
+      ],
+    },
+    story: {
+      challenge:
+        'Moving money is the one operation where a retry, a timeout or two requests at the same instant must never produce the wrong balance.',
+      approach:
+        'Each transfer locks both accounts with PESSIMISTIC_WRITE in sorted order, runs at READ_COMMITTED and is backed by a database check against negative balances. A transaction reference acts as an idempotency key with a pending-to-success state machine, so the same request returns the original result and a changed payload is rejected. Timestamps come from the database clock, every event goes to an append-only audit log, and rate limiting, an in-flight cap and a circuit breaker protect the service under load.',
+      result:
+        'A small, well-tested service where retries are safe, concurrent transfers stay consistent and every attempt is auditable, with the endpoints documented through OpenAPI.',
+    },
+    access: 'Source code and a live walkthrough are available on request.',
+    image: '/work/walletsystem-1.jpg',
+    category: 'tech',
+    contributors: [],
+    contributions: ['Backend engineering', 'API design', 'Integration testing'],
+    images: [
+      { src: '/work/walletsystem-1.jpg', alt: 'Wallet System transfer flow', caption: 'How a transfer is made safe', width: 1600, height: 1000 },
+    ],
+  },
+  {
     id: '07',
     title: 'Vsonet Education',
     slug: 'vsonet',

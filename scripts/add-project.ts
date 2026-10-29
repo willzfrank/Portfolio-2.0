@@ -1,6 +1,7 @@
 /**
  * One-off: upserts a single static project (by slug) into Supabase without
- * touching anything else. Usage: npx tsx scripts/add-project.ts <slug>
+ * touching anything else. Usage: npx tsx scripts/add-project.ts <slug> [--draft]
+ * --draft saves it unpublished, e.g. until the site code that shows it has been deployed.
  */
 import { createClient } from '@supabase/supabase-js'
 import { readFileSync } from 'fs'
@@ -17,6 +18,7 @@ const db = createClient(
 )
 
 const slug = process.argv[2]
+const draft = process.argv.includes('--draft')
 const i = projects.findIndex((p) => p.slug === slug)
 if (i === -1) {
   console.error(`No static project with slug "${slug}"`)
@@ -42,12 +44,12 @@ async function main() {
       contributors: p.contributors,
       contributions: p.contributions,
       images: p.images,
-      published: true,
+      published: !draft,
     },
     { onConflict: 'slug' }
   )
   if (error) throw new Error(error.message)
-  console.log(`Upserted "${p.title}" at position ${i}.`)
+  console.log(`Upserted "${p.title}" at position ${i}${draft ? ' (draft)' : ''}.`)
 }
 
 main().catch((e) => {

@@ -2,8 +2,8 @@ import React, { useEffect, useRef } from 'react';
 import { gsap, ScrollTrigger } from '@/lib/gsap';
 import { TickerWrap, TickerRow } from './homeStyles';
 
-const A = ['JavaScript', 'React', 'Next.js', 'TypeScript', 'Python', 'Tailwind CSS', 'Docker'];
-const B = ['Styled-Components', 'GraphQL', 'AWS', 'Azure DevOps', 'React Native', 'Flutter', 'REST'];
+const A = ['JavaScript', 'React', 'Next.js', 'TypeScript', 'Node.js', 'NestJS', 'Python', 'Tailwind CSS', 'Docker'];
+const B = ['Java', 'Spring Boot', 'PostgreSQL', 'Redis', 'GraphQL', 'REST', 'AWS', 'Azure DevOps', 'React Native', 'Flutter'];
 
 const Items = ({ words }: { words: string[] }) => (
   <div className="item">
