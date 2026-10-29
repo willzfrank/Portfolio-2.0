@@ -177,6 +177,7 @@ export const buildReport = (
 
     return {
       id: s.id,
+      visitorId: s.visitor_id,
       at: s.started_at,
       country: countryName(s.country),
       city: s.city,
@@ -432,6 +433,6 @@ export const buildReport = (
     funnel,
     actions,
     issues,
-    sessions: summaries.sort((a, b) => b.at.localeCompare(a.at)).slice(0, 40),
+    sessions: summaries.sort((a, b) => b.at.localeCompare(a.at)).slice(0, 100),
   }
 }

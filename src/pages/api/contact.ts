@@ -39,15 +39,17 @@ export default async function handler(
   if ((count ?? 0) >= 30) {
     return res.status(429).json({ error: 'Too many messages, try again later' })
   }
-  const { error } = await db
-    .from('messages')
-    .insert({ name: name.trim(), email: email.trim(), message: message.trim() })
+  const tag = typeof ref === 'string' && ref ? ref.slice(0, 60) : null
+  const row = { name: name.trim(), email: email.trim(), message: message.trim() }
+  let { error } = await db.from('messages').insert({ ...row, ref: tag })
+  // The `ref` column comes from supabase/message-ref.sql; still save the message if it's missing.
+  if (error && /ref/.test(error.message)) ({ error } = await db.from('messages').insert(row))
   if (error) return res.status(500).json({ error: 'Could not send message' })
   await notifyContactMessage({
     name: name.trim(),
     email: email.trim(),
     message: message.trim(),
-    ref: typeof ref === 'string' ? ref.slice(0, 60) : null,
+    ref: tag,
   })
   return res.status(201).json({ ok: true })
 }

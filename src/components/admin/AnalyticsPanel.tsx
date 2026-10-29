@@ -93,6 +93,17 @@ export default function AnalyticsPanel({ token }: Props) {
   // Who is on the site right now, and where.
   useEffect(() => openPresence('admin-observer', (e) => setPeople(e.people), false), [])
 
+  const removeVisit = async (s: SessionSummary, all: boolean) => {
+    const msg = all
+      ? 'Delete every visit from this browser? This cannot be undone.'
+      : 'Delete this visit? This cannot be undone.'
+    if (!window.confirm(msg)) return
+    const q = all ? `visitor=${encodeURIComponent(s.visitorId)}` : `session=${encodeURIComponent(s.id)}`
+    const res = await fetch(`/api/admin/analytics?${q}`, { method: 'DELETE', headers: { Authorization: `Bearer ${token}` } })
+    if (!res.ok) return setError('Could not delete that visit')
+    load()
+  }
+
   const name = (slug: string) => titles[slug] || slug
   const nicePath = (p: string) => {
     if (p === '/') return 'Home'
@@ -155,6 +166,18 @@ export default function AnalyticsPanel({ token }: Props) {
       )}
       {error && <Notice className="err">{error}</Notice>}
 
+      {report?.partial && (
+        <p className="muted" style={{ margin: '0 0 1rem' }}>
+          This range has more data than the dashboard can load, so the oldest visits are missing. Pick a shorter range for
+          complete numbers.
+        </p>
+      )}
+      {report && report.alertsOn === false && (
+        <p className="muted" style={{ margin: '0 0 1rem' }}>
+          Email alerts are off: set RESEND_API_KEY to be told about tracked-link visits, foreign visits and resume downloads.
+        </p>
+      )}
+
       {report && (
         <>
           <TabBar>
@@ -167,9 +190,9 @@ export default function AnalyticsPanel({ token }: Props) {
             ))}
           </TabBar>
 
-          {tab === 'overview' && <Overview r={report} nicePath={nicePath} name={name} />}
+          {tab === 'overview' && <Overview r={report} nicePath={nicePath} name={name} onDelete={removeVisit} />}
           {tab === 'projects' && <Projects r={report} name={name} />}
-          {tab === 'visitors' && <Visitors r={report} nicePath={nicePath} name={name} />}
+          {tab === 'visitors' && <Visitors r={report} nicePath={nicePath} name={name} onDelete={removeVisit} />}
           {tab === 'audience' && <Audience r={report} />}
           {tab === 'issues' && <Issues r={report} nicePath={nicePath} />}
         </>
@@ -183,10 +206,12 @@ function Overview({
   r,
   nicePath,
   name,
+  onDelete,
 }: {
   r: Report
   nicePath: (p: string) => string
   name: (s: string) => string
+  onDelete: (s: SessionSummary, all: boolean) => void
 }) {
   const o = r.overview
   const maxDay = Math.max(1, ...r.daily.map((d) => d.sessions))
@@ -259,7 +284,7 @@ function Overview({
           <p className="sub">Visits with strong signs of interest: long reads, several projects, resume or contact actions.</p>
           <div className="stack">
             {hot.map((s) => (
-              <SessionCard key={s.id} s={s} nicePath={nicePath} name={name} compact />
+              <SessionCard key={s.id} s={s} nicePath={nicePath} name={name} onDelete={onDelete} compact />
             ))}
           </div>
         </Panel>
@@ -387,10 +412,12 @@ function Visitors({
   r,
   nicePath,
   name,
+  onDelete,
 }: {
   r: Report
   nicePath: (p: string) => string
   name: (s: string) => string
+  onDelete: (s: SessionSummary, all: boolean) => void
 }) {
   const [filter, setFilter] = useState<Heat | 'all' | 'returning'>('all')
   const shown = r.sessions.filter((s) =>
@@ -413,7 +440,7 @@ function Visitors({
       <div className="stack">
         {shown.length === 0 && <p className="muted">No visits match.</p>}
         {shown.map((s) => (
-          <SessionCard key={s.id} s={s} nicePath={nicePath} name={name} />
+          <SessionCard key={s.id} s={s} nicePath={nicePath} name={name} onDelete={onDelete} />
         ))}
       </div>
     </Panel>
@@ -424,11 +451,13 @@ function SessionCard({
   s,
   nicePath,
   name,
+  onDelete,
   compact,
 }: {
   s: SessionSummary
   nicePath: (p: string) => string
   name: (s: string) => string
+  onDelete: (s: SessionSummary, all: boolean) => void
   compact?: boolean
 }) {
   const where = [s.city, s.country].filter(Boolean).join(', ') || 'Unknown location'
@@ -485,6 +514,10 @@ function SessionCard({
           <span>Read: {s.projects.map(name).join(', ')}</span>
         </div>
       )}
+      <div className="tools">
+        <button onClick={() => onDelete(s, false)}>Delete visit</button>
+        {s.visitNo > 1 && <button onClick={() => onDelete(s, true)}>Delete all from this browser</button>}
+      </div>
     </Session>
   )
 }
@@ -1054,6 +1087,25 @@ const Session = styled.div`
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
+  }
+  .tools {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.6rem;
+  }
+  .tools button {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: ${DIM};
+    font: inherit;
+    font-size: 0.74rem;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+  }
+  .tools button:hover {
+    color: #ff8f8f;
   }
   .heat.hot {
     background: #ff8a3d;

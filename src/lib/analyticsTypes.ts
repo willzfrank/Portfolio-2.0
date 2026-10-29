@@ -51,6 +51,7 @@ export interface JourneyStep {
 
 export interface SessionSummary {
   id: string
+  visitorId: string
   at: string
   country: string | null
   city: string | null
@@ -138,6 +139,10 @@ export interface Report {
   sources: Count[]
   campaigns: CampaignStat[]
   returningVisitors: ReturningVisitor[]
+  /** Set by the API: the report hit the row cap, so older data is missing. */
+  partial?: boolean
+  /** Set by the API: whether email alerts are configured. */
+  alertsOn?: boolean
   countries: Count[]
   cities: Count[]
   devices: Count[]
