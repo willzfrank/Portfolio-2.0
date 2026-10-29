@@ -1,3 +1,4 @@
+import { SITE_URL, absoluteUrl } from '@/lib/site'
 import Head from 'next/head'
 import React from 'react'
 import { Navbar } from '@/components/navbar'
@@ -57,8 +58,9 @@ export default function Home({
               property="og:description"
               content="Personal portfolio of Godswill Francis - Software Developer working across web, mobile, backend and cloud"
             />
-            <meta property="og:image" content="/path/to/image.jpg" />
-            <meta property="og:url" content="https://yourwebsite.com" />
+            <meta property="og:image" content={absoluteUrl('/profile.jpeg')} />
+            <meta property="og:url" content={SITE_URL} />
+            <link rel="canonical" href={SITE_URL} />
             <meta property="og:type" content="website" />
 
             <meta name="twitter:card" content="summary_large_image" />
@@ -67,7 +69,7 @@ export default function Home({
               name="twitter:description"
               content="Personal portfolio of Godswill Francis - Software Developer working across web, mobile, backend and cloud"
             />
-            <meta name="twitter:image" content="/path/to/image.jpg" />
+            <meta name="twitter:image" content={absoluteUrl('/profile.jpeg')} />
           </Head>
 
           <StructuredData
@@ -77,7 +79,7 @@ export default function Home({
               jobTitle: 'Software Developer',
               description:
                 'A software developer with 5 years of experience across web, mobile, backend and cloud',
-              url: 'https://yourwebsite.com',
+              url: SITE_URL,
               sameAs: [
                 'https://github.com/willzfrank',
                 'https://twitter.com/willzfrank001',

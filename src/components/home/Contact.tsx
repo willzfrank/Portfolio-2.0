@@ -171,6 +171,7 @@ const Contact = ({ minimal = false }: { minimal?: boolean }) => {
             <Link href="/project">Projects</Link>
             <Link href="/about">About</Link>
             <Link href="/contact">Contact</Link>
+            <Link href="/privacy">Privacy</Link>
           </div>
           <div>
             <small>Lagos, Nigeria</small>
@@ -189,7 +190,7 @@ const Contact = ({ minimal = false }: { minimal?: boolean }) => {
         rights reserved.
         <br />
         Privacy-friendly analytics: no cookies, no IP addresses stored, and your browser&apos;s
-        Do Not Track setting is respected.
+        Do Not Track setting is respected. <Link href="/privacy" style={{ color: 'inherit' }}>Read the privacy note</Link>.
       </Legal>
       <Wordmark className="wordmark" aria-hidden>
         Godswill Francis
