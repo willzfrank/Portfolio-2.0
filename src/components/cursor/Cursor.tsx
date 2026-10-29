@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from '@/lib/gsap';
 
 const INTERACTIVE = 'a, button, [data-cursor], summary, label';
@@ -20,8 +20,15 @@ const Cursor: React.FC = () => {
   const bubble = useRef<HTMLDivElement>(null);
   const bubbleInner = useRef<HTMLDivElement>(null);
   const label = useRef<HTMLSpanElement>(null);
+  // Touch devices have no pointer to replace; render nothing so the label bubble can't sit visible at 0,0.
+  const [enabled, setEnabled] = useState(false);
 
   useEffect(() => {
+    setEnabled(window.matchMedia('(hover: hover) and (pointer: fine)').matches);
+  }, []);
+
+  useEffect(() => {
+    if (!enabled) return;
     const dotEl = dot.current;
     const dotIn = dotInner.current;
     const ringEl = ring.current;
@@ -29,7 +36,6 @@ const Cursor: React.FC = () => {
     const bubbleIn = bubbleInner.current;
     const labelEl = label.current;
     if (!dotEl || !dotIn || !ringEl || !bubbleEl || !bubbleIn || !labelEl) return;
-    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
 
     const root = document.documentElement;
     root.classList.add('has-cursor');
@@ -145,7 +151,7 @@ const Cursor: React.FC = () => {
       document.removeEventListener('mouseleave', onLeave);
       gsap.ticker.remove(tick);
     };
-  }, []);
+  }, [enabled]);
 
   const base: React.CSSProperties = {
     position: 'fixed',
@@ -154,6 +160,8 @@ const Cursor: React.FC = () => {
     pointerEvents: 'none',
     zIndex: 99999,
   };
+
+  if (!enabled) return null;
 
   return (
     <>
