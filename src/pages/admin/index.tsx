@@ -45,6 +45,7 @@ interface Message {
   email: string
   message: string
   read: boolean
+  ref?: string | null
   created_at: string
 }
 
@@ -753,6 +754,7 @@ function Messages({ token }: { token: string }) {
               <MessageDate>{new Date(m.created_at).toLocaleString()}</MessageDate>
             </MessageHeader>
             <MessageEmail href={`mailto:${m.email}`}>{m.email}</MessageEmail>
+            {m.ref && <MessageDate>via tracked link: {m.ref}</MessageDate>}
             <MessageBody>{m.message}</MessageBody>
             <MessageActions>
               <GhostButton

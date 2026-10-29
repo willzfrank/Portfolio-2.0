@@ -71,9 +71,11 @@ const placeOf = (v: Pick<VisitInfo, 'city' | 'region' | 'country'>) =>
     .filter(Boolean)
     .join(', ')
 
-export const notifyForeignVisit = async (v: VisitInfo) => {
+/** Emails for a new visit from outside Nigeria, or from a tracked link anywhere (including Nigeria). */
+export const notifyNewVisit = async (v: VisitInfo) => {
   const country = v.country?.toUpperCase()
-  if (!country || country === HOME_COUNTRY) return
+  const tracked = v.utm_source
+  if (!tracked && (!country || country === HOME_COUNTRY)) return
 
   const place = placeOf(v)
   const rows: [string, string | null | undefined][] = [
@@ -89,7 +91,7 @@ export const notifyForeignVisit = async (v: VisitInfo) => {
     .map(([k, val]) => `<p><b>${k}:</b> ${esc(String(val))}</p>`)
     .join('')
 
-  await sendMail(`New visit from ${place || country}`, html)
+  await sendMail(tracked ? `Tracked link opened: ${tracked}${place ? ` (${place})` : ''}` : `New visit from ${place || country}`, html)
 }
 
 /** A contact-form message; replying to the email goes straight to the sender. */

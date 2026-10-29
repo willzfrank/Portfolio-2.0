@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { getServerClient, isSupabaseConfigured } from '@/lib/supabaseAdmin'
 import { rateLimited } from '@/lib/rateLimit'
 import { hostOf, parseUA } from '@/lib/ua'
-import { notifyForeignVisit, notifyResumeDownload } from '@/lib/notify'
+import { notifyNewVisit, notifyResumeDownload } from '@/lib/notify'
 
 /**
  * Anonymous analytics collector. One endpoint, three kinds of message
@@ -28,6 +28,9 @@ const decode = (v: string | string[] | undefined): string | null => {
     return s.slice(0, 80)
   }
 }
+
+// One resume email per visit, however many times the link is clicked (best effort per instance).
+const resumeNotified = new Set<string>()
 
 const EVENT_TYPES = new Set([
   'resume', 'email', 'social', 'outbound', 'form_start', 'form_submit', 'form_error',
@@ -94,7 +97,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           { onConflict: 'id', ignoreDuplicates: true }
         ).select('*')
         // Only a brand-new session is a new visit worth a notification.
-        if (created?.length) await notifyForeignVisit(created[0])
+        if (created?.length) await notifyNewVisit(created[0])
       }
 
       // If the visit's first request was lost, still record a basic session row.
@@ -115,7 +118,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           },
           { onConflict: 'id', ignoreDuplicates: true }
         ).select('*')
-        if (created?.length) await notifyForeignVisit(created[0])
+        if (created?.length) await notifyNewVisit(created[0])
       }
 
       await db.from('page_views').upsert(
@@ -168,7 +171,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         })
       if (rows.length) await db.from('events').insert(rows)
       const resume = b.evs.slice(0, 20).find((e: any) => e?.type === 'resume')
-      if (resume) {
+      if (resume && !resumeNotified.has(sid)) {
+        if (resumeNotified.size > 2000) resumeNotified.clear()
+        resumeNotified.add(sid)
         const { data: ses } = await db.from('sessions').select('utm_source').eq('id', sid).maybeSingle()
         await notifyResumeDownload({
           country: str(req.headers['x-vercel-ip-country'], 8),
