@@ -6,6 +6,7 @@ import {
   JourneyStep,
   ProjectStat,
   Report,
+  ReturningVisitor,
   SessionRow,
   SessionSummary,
   ViewRow,
@@ -184,6 +185,7 @@ export const buildReport = (
       os: s.os,
       source: sourceLabel(s),
       returning: s.is_returning,
+      visitNo: 1,
       pages: vs.length,
       seconds,
       score: Math.max(0, Math.min(100, score)),
@@ -193,6 +195,35 @@ export const buildReport = (
       projects,
     }
   })
+
+  /* ----- returning visitors ----- */
+  const byVisitor = new Map<string, { row: SessionRow; sum: SessionSummary }[]>()
+  sessions.forEach((row, i) => {
+    const list = byVisitor.get(row.visitor_id) ?? []
+    list.push({ row, sum: summaries[i] })
+    byVisitor.set(row.visitor_id, list)
+  })
+  const returningVisitors: ReturningVisitor[] = []
+  byVisitor.forEach((list) => {
+    list.sort((a, b) => a.row.started_at.localeCompare(b.row.started_at))
+    list.forEach((x, i) => (x.sum.visitNo = i + 1))
+    if (list.length < 2 && !list[0].row.is_returning) return
+    const last = list[list.length - 1]
+    const merged = (pick: (x: SessionSummary) => string[]) => Array.from(new Set(list.flatMap((x) => pick(x.sum))))
+    returningVisitors.push({
+      id: last.row.id,
+      place: [last.sum.city, last.sum.country].filter(Boolean).join(', ') || 'Unknown location',
+      device: last.sum.device,
+      source: list.find((x) => x.sum.source !== 'Direct')?.sum.source ?? 'Direct',
+      visits: list.length,
+      firstAt: list[0].row.started_at,
+      lastAt: last.row.last_seen_at || last.row.started_at,
+      seconds: list.reduce((a, x) => a + x.sum.seconds, 0),
+      projects: merged((x) => x.projects),
+      actions: merged((x) => x.actions),
+    })
+  })
+  returningVisitors.sort((a, b) => b.lastAt.localeCompare(a.lastAt))
 
   /* ----- overview ----- */
   const visitors = new Set(sessions.map((s) => s.visitor_id)).size
@@ -257,7 +288,7 @@ export const buildReport = (
     const linkClicks = evs.filter((e) => e.type === 'outbound').length
     const errors = evs.filter((e) => e.type === 'js_error' || e.type === 'resource_error').length
     const lcp = median(
-      evs.filter((e) => e.type === 'vitals' && Number(e.meta.lcp) > 0).map((e) => Number(e.meta.lcp))
+      evs.filter((e) => e.type === 'vitals' && Number(e.meta.lcp) > 0 && !e.meta.intro).map((e) => Number(e.meta.lcp))
     )
     const avgSeconds = a.views ? Math.round(a.secs / a.views) : 0
     const avgScroll = a.views ? Math.round(a.scroll / a.views) : 0
@@ -287,6 +318,21 @@ export const buildReport = (
 
   /* ----- audience ----- */
   const sources = countBy(sessions, (s) => sourceLabel(s))
+  const byCampaign = new Map<string, SessionSummary[]>()
+  sessions.forEach((s, i) => {
+    if (!s.utm_source) return
+    const list = byCampaign.get(s.utm_source) ?? []
+    list.push(summaries[i])
+    byCampaign.set(s.utm_source, list)
+  })
+  const campaigns = Array.from(byCampaign, ([name, list]) => ({
+    name,
+    visits: list.length,
+    avgSeconds: Math.round(list.reduce((a, x) => a + x.seconds, 0) / list.length),
+    projectReaders: list.filter((x) => x.projects.length).length,
+    resumes: list.filter((x) => x.actions.includes(ACTION_LABEL.resume)).length,
+    messages: list.filter((x) => x.actions.includes(ACTION_LABEL.form_submit)).length,
+  })).sort((a, b) => b.visits - a.visits)
   const countries = countBy(sessions, (s) => countryName(s.country), 10)
   const cities = countBy(sessions, (s) => (s.city ? `${s.city}${s.country ? `, ${s.country}` : ''}` : null), 10)
   const devices = countBy(sessions, (s) => s.device)
@@ -354,7 +400,8 @@ export const buildReport = (
       addIssue('rage_click', `${e.path}|${m.tag}|${m.text}`, `Rapid clicking on ${m.text ? `“${m.text}”` : `a <${m.tag}>`}`, e)
     else if (e.type === 'form_error') addIssue('form_error', 'form', 'Contact form failed to send', e)
     else if (e.type === 'not_found') addIssue('not_found', String(e.path), `Page not found: ${e.path}`, e)
-    else if (e.type === 'vitals' && Number(m.lcp) > SLOW_LCP_MS)
+    // A first visit plays the intro animation, which holds the page back by design.
+    else if (e.type === 'vitals' && Number(m.lcp) > SLOW_LCP_MS && !m.intro)
       addIssue('slow_page', String(e.path), `Slow first load (LCP ${(Number(m.lcp) / 1000).toFixed(1)}s)`, e)
   }
   const issues: IssueRow[] = Array.from(issueMap.values())
@@ -373,6 +420,8 @@ export const buildReport = (
     daily,
     projects,
     sources,
+    campaigns,
+    returningVisitors: returningVisitors.slice(0, 20),
     countries,
     cities,
     devices,

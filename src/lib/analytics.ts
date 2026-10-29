@@ -3,6 +3,9 @@ import { getVisitorId, isOwnerBrowser } from './presence'
 const SESSION_KEY = 'pf_sid'
 const SESSION_TS = 'pf_sid_ts'
 const SEEN_KEY = 'pf_seen'
+const REF_KEY = 'pf_ref'
+const SESSION_REF = 'pf_sref'
+const REF_TTL_MS = 30 * 24 * 60 * 60 * 1000
 const IDLE_SESSION_MS = 30 * 60 * 1000
 const ACTIVE_WINDOW_MS = 30 * 1000
 const FLUSH_EVERY_TICKS = 10
@@ -19,6 +22,40 @@ interface QueuedEvent {
   type: EventType
   path: string
   meta: Record<string, unknown>
+}
+
+/** A ?ref=<tag> on the landing URL, cleaned up so "Resend " and "resend" count as one. */
+const urlRef = (): string | null => {
+  const raw = new URLSearchParams(location.search).get('ref')
+  const ref = raw ? raw.trim().toLowerCase().replace(/[^a-z0-9._-]/g, '-').slice(0, 60) : ''
+  return ref || null
+}
+
+/** The last tracked link this browser used, for 30 days. Stored as "<ref>|<timestamp>". */
+const storedRef = (): string | null => {
+  try {
+    const [ref, at] = (localStorage.getItem(REF_KEY) || '').split('|')
+    return ref && Date.now() - Number(at) < REF_TTL_MS ? ref : null
+  } catch {
+    return null
+  }
+}
+
+const cameFromElsewhere = () => {
+  try {
+    return !!document.referrer && new URL(document.referrer).host !== location.host
+  } catch {
+    return false
+  }
+}
+
+/** The tracked link this visit is credited to, if any (sent along with contact messages). */
+export const currentRef = (): string | null => {
+  try {
+    return sessionStorage.getItem(SESSION_REF)
+  } catch {
+    return null
+  }
 }
 
 /** Visitors who opt out via Do Not Track (or the owner's own browser) are never measured. */
@@ -57,7 +94,9 @@ export const createTracker = () => {
       id = sessionStorage.getItem(SESSION_KEY)
       last = Number(sessionStorage.getItem(SESSION_TS) || 0)
     } catch {}
-    if (!id || now - last > IDLE_SESSION_MS) {
+    // Arriving through a different tracked link starts a fresh visit so it is credited to that link.
+    const fresh = urlRef()
+    if (!id || now - last > IDLE_SESSION_MS || (fresh && fresh !== currentRef())) {
       id = uuid()
       sessionIsNew = true
     }
@@ -135,7 +174,8 @@ export const createTracker = () => {
     try {
       last = Number(sessionStorage.getItem(SESSION_TS) || 0)
     } catch {}
-    if (!sid || (last && Date.now() - last > IDLE_SESSION_MS)) {
+    const fresh = urlRef()
+    if (!sid || (last && Date.now() - last > IDLE_SESSION_MS) || (fresh && fresh !== currentRef())) {
       ensureSession()
     }
     touchSession()
@@ -147,13 +187,22 @@ export const createTracker = () => {
     }
     if (sessionIsNew) {
       const q = new URLSearchParams(location.search)
+      // A fresh ?ref= wins. Otherwise a remembered one only counts for a direct return, so a
+      // later visit via Google or LinkedIn is credited to that site instead.
+      const ref = urlRef() || (cameFromElsewhere() ? null : storedRef())
+      try {
+        if (ref) {
+          localStorage.setItem(REF_KEY, `${ref}|${Date.now()}`)
+          sessionStorage.setItem(SESSION_REF, ref)
+        } else sessionStorage.removeItem(SESSION_REF)
+      } catch {}
       body.ses = {
         lang: navigator.language,
         tz: Intl.DateTimeFormat().resolvedOptions().timeZone,
         sw: window.innerWidth,
         ref: document.referrer || null,
         ret: returning,
-        utm_source: q.get('utm_source') || q.get('ref') || q.get('source'),
+        utm_source: q.get('utm_source') || ref || q.get('source'),
         utm_medium: q.get('utm_medium'),
         utm_campaign: q.get('utm_campaign'),
       }
@@ -292,6 +341,7 @@ export const createTracker = () => {
       cls: Math.round(cls * 1000) / 1000,
       fid: fid === null ? -1 : Math.round(fid),
       ttfb: nav ? Math.round(nav.responseStart) : -1,
+      intro: document.documentElement.dataset.intro === '1' ? 1 : 0,
     })
   }
 

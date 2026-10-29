@@ -59,6 +59,8 @@ export interface SessionSummary {
   os: string | null
   source: string
   returning: boolean
+  /** Which visit this is for the same browser within the report window (1 = first). */
+  visitNo: number
   pages: number
   seconds: number
   score: number
@@ -96,6 +98,29 @@ export interface IssueRow {
   lastSeen: string
 }
 
+/** A browser that came back: the warmest signal there is. */
+export interface ReturningVisitor {
+  id: string
+  place: string
+  device: string | null
+  source: string
+  visits: number
+  firstAt: string
+  lastAt: string
+  seconds: number
+  projects: string[]
+  actions: string[]
+}
+
+export interface CampaignStat {
+  name: string
+  visits: number
+  avgSeconds: number
+  projectReaders: number
+  resumes: number
+  messages: number
+}
+
 export interface Report {
   days: number
   generatedAt: string
@@ -111,6 +136,8 @@ export interface Report {
   daily: { date: string; sessions: number; views: number }[]
   projects: ProjectStat[]
   sources: Count[]
+  campaigns: CampaignStat[]
+  returningVisitors: ReturningVisitor[]
   countries: Count[]
   cities: Count[]
   devices: Count[]

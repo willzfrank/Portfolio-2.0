@@ -202,7 +202,12 @@ function Overview({
         <Stat label="Visits" value={o.sessions} hint={`${o.visitors} unique visitors`} />
         <Stat label="Avg time on site" value={fmtDuration(o.avgSeconds)} hint="active time, not an open tab" />
         <Stat label="Bounce rate" value={pct(o.bounceRate)} hint="left within seconds" />
-        <Stat label="Returning" value={pct(o.returningRate)} hint="have visited before" />
+        <Stat
+          label="Returning"
+          value={pct(o.returningRate)}
+          hint={r.returningVisitors.length ? `${r.returningVisitors.length} came back, see below` : 'have visited before'}
+          accent={r.returningVisitors.length > 0}
+        />
         <Stat label="Hot leads" value={o.hotLeads} hint="strong hiring signals" accent />
         <Stat label="Page views" value={o.pageViews} hint={`${(o.pageViews / Math.max(1, o.sessions)).toFixed(1)} per visit`} />
       </Grid>
@@ -216,6 +221,36 @@ function Overview({
             {best.linkClicks > 0 && ` · ${best.linkClicks} link click${best.linkClicks > 1 ? 's' : ''}`}
           </span>
         </Callout>
+      )}
+
+      {r.returningVisitors.length > 0 && (
+        <Panel>
+          <h3>Came back</h3>
+          <p className="sub">
+            People who returned. Coming back is the warmest signal there is: they thought about it and chose to look
+            again.
+          </p>
+          <div className="stack">
+            {r.returningVisitors.slice(0, 6).map((v) => (
+              <Session key={v.id} className="warm">
+                <div className="top">
+                  <span className="heat hot">{v.visits > 1 ? `${v.visits} visits` : 'Returning'}</span>
+                  <strong>{v.place}</strong>
+                  {v.device && <span className="muted">{v.device}</span>}
+                  <span className="when muted">last seen {ago(v.lastAt)}</span>
+                </div>
+                <div className="meta">
+                  <span>
+                    via <b>{v.source}</b>
+                  </span>
+                  <span>{fmtDuration(v.seconds)} active in total</span>
+                  {v.projects.length > 0 && <span>Read: {v.projects.map(name).join(', ')}</span>}
+                  {v.actions.length > 0 && <span>{v.actions.join(' · ')}</span>}
+                </div>
+              </Session>
+            ))}
+          </div>
+        </Panel>
       )}
 
       {hot.length > 0 && (
@@ -357,8 +392,10 @@ function Visitors({
   nicePath: (p: string) => string
   name: (s: string) => string
 }) {
-  const [filter, setFilter] = useState<Heat | 'all'>('all')
-  const shown = r.sessions.filter((s) => filter === 'all' || s.heat === filter)
+  const [filter, setFilter] = useState<Heat | 'all' | 'returning'>('all')
+  const shown = r.sessions.filter((s) =>
+    filter === 'all' ? true : filter === 'returning' ? s.returning || s.visitNo > 1 : s.heat === filter
+  )
   return (
     <Panel>
       <h3>Recent visits</h3>
@@ -367,9 +404,9 @@ function Visitors({
         combines time spent, projects read and actions like downloading your resume.
       </p>
       <Chips>
-        {(['all', 'hot', 'warm', 'casual', 'bounced'] as const).map((f) => (
+        {(['all', 'returning', 'hot', 'warm', 'casual', 'bounced'] as const).map((f) => (
           <button key={f} className={filter === f ? 'on' : ''} onClick={() => setFilter(f)}>
-            {f === 'all' ? 'All' : HEAT_LABEL[f]}
+            {f === 'all' ? 'All' : f === 'returning' ? 'Returning' : HEAT_LABEL[f]}
           </button>
         ))}
       </Chips>
@@ -409,7 +446,13 @@ function SessionCard({
         <span>
           via <b>{s.source}</b>
         </span>
-        {s.returning && <span>returning visitor</span>}
+        {s.visitNo > 1 ? (
+          <span>
+            <b>visit #{s.visitNo}</b> from this browser
+          </span>
+        ) : (
+          s.returning && <span>returning visitor</span>
+        )}
         <span>{fmtDuration(s.seconds)} active</span>
         <span>
           {s.pages} page{s.pages === 1 ? '' : 's'}
@@ -454,6 +497,24 @@ function Audience({ r }: { r: Report }) {
         <h3>Where they come from</h3>
         <List rows={r.sources} empty="No data yet" />
       </Panel>
+      {r.campaigns.length > 0 && (
+        <Panel>
+          <h3>Tracked links</h3>
+          <List
+            rows={r.campaigns.map((c) => ({
+              name: c.name,
+              count: c.visits,
+            }))}
+            empty="No tracked links yet"
+          />
+          {r.campaigns.map((c) => (
+            <p key={c.name} className="muted" style={{ margin: '0.5rem 0 0' }}>
+              <b>{c.name}</b>: {c.visits} visit{c.visits === 1 ? '' : 's'} · {fmtDuration(c.avgSeconds)} avg ·{' '}
+              {c.projectReaders} read a project · {c.resumes} resume · {c.messages} message
+            </p>
+          ))}
+        </Panel>
+      )}
       <Panel>
         <h3>Countries</h3>
         <List rows={r.countries} empty="Location appears once the site is live on Vercel" />

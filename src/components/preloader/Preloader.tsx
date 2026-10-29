@@ -88,6 +88,8 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete, onLeaving }) => {
   useEffect(() => {
     if (skip.current) return
     document.body.style.overflow = 'hidden'
+    // Lets the analytics tell a first load slowed by this intro from a genuinely slow page.
+    document.documentElement.dataset.intro = '1'
     return () => {
       document.body.style.overflow = ''
     }

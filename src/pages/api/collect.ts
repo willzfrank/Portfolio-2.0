@@ -169,6 +169,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       if (rows.length) await db.from('events').insert(rows)
       const resume = b.evs.slice(0, 20).find((e: any) => e?.type === 'resume')
       if (resume) {
+        const { data: ses } = await db.from('sessions').select('utm_source').eq('id', sid).maybeSingle()
         await notifyResumeDownload({
           country: str(req.headers['x-vercel-ip-country'], 8),
           region: decode(req.headers['x-vercel-ip-country-region']),
@@ -178,6 +179,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           os: ua.os,
           file: typeof resume.meta?.file === 'string' ? resume.meta.file.slice(0, 120) : null,
           path: str(resume.path, 200),
+          ref: ses?.utm_source ?? null,
         })
       }
     }
