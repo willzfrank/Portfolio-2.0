@@ -206,7 +206,7 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete, onLeaving }) => {
             animate={{ opacity: showName ? 0.7 : 0 }}
             transition={{ delay: showName ? 1.2 : 0, duration: 0.9 }}
           >
-            Software Developer
+            Software Engineer
           </Role>
         </Stage>
 

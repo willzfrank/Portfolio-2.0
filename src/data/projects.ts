@@ -17,6 +17,8 @@ export interface Project {
   highlights?: Highlights
   /** Short narrative for the case study: the problem, what was built, and what came out of it. */
   story?: Story
+  /** Platforms shown on the case study; derived from store and live links when left out. */
+  platforms?: string[]
   /** Shown instead of the buttons when there is nothing public to open (private platforms). */
   access?: string
   image: string
@@ -257,6 +259,8 @@ A consensus engine weighs the specialists' confidence against the objections and
 
 I built the whole system: the NestJS API with queued incident handling, the live Next.js dashboard that shows the agents thinking in real time, and the Slack and webhook integrations.`,
     liveUrl: '',
+    githubUrl: 'https://github.com/willzfrank/chimera',
+    platforms: ['Web', 'API'],
     highlights: {
       role: 'Designed and built the full system',
       stack: 'NestJS · TypeScript · BullMQ · Redis · PostgreSQL (pgvector) · Socket.IO · Next.js',
@@ -292,14 +296,15 @@ I built the whole system: the NestJS API with queued incident handling, the live
     timeline: '2026',
     description:
       'A wallet app that keeps working offline and never sends the same payment twice.',
-    longDescription: `NovaWallet is a Nigerian fintech wallet: check your balance, send money in three steps and save towards goals with NovaSave. It was built around one hard question: what happens to a payment when the network drops?
+    longDescription: `NovaWallet is a personal project: a wallet app in the style of a Nigerian fintech, where you check your balance, send money in three steps and save towards goals with NovaSave. I built it around one hard question: what happens to a payment when the network drops?
 
 Every action goes into a persistent queue with its own idempotency key, so it survives the app being killed and syncs when the connection returns without ever debiting twice. Money is held as whole kobo, never as a floating-point number.
 
 I built the whole app in Flutter, with English and Yoruba, a biometric lock and local notifications.`,
     liveUrl: '',
+    platforms: ['iOS', 'Android'],
     highlights: {
-      role: 'Designed and built the app',
+      role: 'Personal project: designed and built the app',
       stack: 'Flutter · Dart · Riverpod · Hive',
       outcomes: [
         'Offline queue with idempotency keys and crash recovery, so no payment is lost or sent twice',
@@ -332,14 +337,15 @@ I built the whole app in Flutter, with English and Yoruba, a biometric lock and 
     timeline: '2026',
     description:
       'A money-transfer API built to stay correct under retries, spikes and concurrent requests.',
-    longDescription: `Wallet System is a Spring Boot service for creating accounts and moving money between them. The interesting part is everything around the transfer: row locking in a fixed order so concurrent transfers cannot deadlock, idempotency keys so a retried request never debits twice, and an append-only audit log of every attempt.
+    longDescription: `Wallet System is a personal project: a Spring Boot service for creating accounts and moving money between them. The interesting part is everything around the transfer: row locking in a fixed order so concurrent transfers cannot deadlock, idempotency keys so a retried request never debits twice, and an append-only audit log of every attempt.
 
 It also protects itself under load with rate limiting, a cap on in-flight transfers and a circuit breaker that fails fast instead of piling up timeouts.
 
 I built the service and its integration tests.`,
     liveUrl: '',
+    platforms: ['API'],
     highlights: {
-      role: 'Designed and built the service',
+      role: 'Personal project: designed and built the service',
       stack: 'Java 17 · Spring Boot 3 · JPA · H2 · JUnit',
       outcomes: [
         'Row locking in a stable order, so simultaneous transfers cannot deadlock or overdraw an account',

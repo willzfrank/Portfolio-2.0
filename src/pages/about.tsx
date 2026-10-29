@@ -8,13 +8,13 @@ import { Section, SectionLabel, LinkOut } from '@/components/page/pageStyles'
 import { BioGrid, ExpList, SkillGrid } from '@/components/about/aboutPageStyles'
 
 const EXPERIENCE = [
-  { role: 'Senior Frontend Developer', company: 'Polar Frequency', when: 'Dec 2024 — Present' },
-  { role: 'Senior Frontend Developer', company: 'Sterling Bank', when: 'Jun 2023 — Aug 2025' },
-  { role: 'Senior Frontend Developer', company: 'Santoms', when: 'Dec 2022 — Present' },
+  { role: 'Senior Software Engineer', company: 'Polar Frequency', when: 'Dec 2024 — Present' },
+  { role: 'Senior Software Engineer', company: 'Sterling Bank', when: 'Jun 2023 — Aug 2025' },
+  { role: 'Senior Software Engineer', company: 'Santoms', when: 'Dec 2022 — Present' },
   { role: 'React Developer', company: 'Ullweb Technologies', when: 'Sep 2022 — Present' },
-  { role: 'Frontend Developer', company: 'Yetti Technologies', when: 'Dec 2021 — Aug 2022' },
-  { role: 'Frontend Developer', company: 'Vsonet Group', when: 'Jan 2020 — Feb 2021' },
-  { role: 'Frontend Developer Intern', company: 'Side Hustle', when: 'May 2020 — Jun 2020' },
+  { role: 'Software Engineer', company: 'Yetti Technologies', when: 'Dec 2021 — Aug 2022' },
+  { role: 'Software Engineer', company: 'Vsonet Group', when: 'Jan 2020 — Feb 2021' },
+  { role: 'Software Engineer Intern', company: 'Side Hustle', when: 'May 2020 — Jun 2020' },
 ]
 
 const SKILLS = [
@@ -23,7 +23,7 @@ const SKILLS = [
   'SCSS', 'CSS3', 'Docker', 'AWS', 'Azure DevOps', 'Circle CI',
   'Responsive Design', 'Performance Optimization', 'Agile Development',
   'REST', 'GraphQL', 'React Native', 'Flutter', 'Node.js', 'NestJS', 'Java',
-  'Spring Boot', 'PostgreSQL', 'Redis', 'WebSockets', 'System Design',
+  'Spring Boot', '.NET', 'Go', 'PostgreSQL', 'Redis', 'WebSockets', 'System Design',
 ]
 
 const About = () => {
@@ -65,7 +65,7 @@ const About = () => {
   return (
     <PageShell
       title="About"
-      description="Godswill Francis is a software developer in Lagos, Nigeria, building web, mobile, backend and cloud products."
+      description="Godswill Francis is a software engineer in Lagos, Nigeria, building web, mobile, backend and cloud products."
       footer="full"
     >
       <div ref={ref}>
@@ -93,10 +93,10 @@ const About = () => {
                 Unleash tech’s beauty with me, Godswill Francis — a software dev
                 who transforms user experiences into stunning works of art. With
                 5 years of experience merging tech and beauty, I’ve honed my
-                skills in UI development with a keen eye for detail, and I build
-                the back end too: APIs, queues, databases and money-safe
-                transaction logic. Skilled in React, TypeScript, Next.js,
-                Node.js, Java, Python, Docker, AWS and Azure DevOps, I’ve worked with companies across different industries,
+                skills in UI development with a keen eye for detail. I build
+                mobile apps in React Native and Flutter, and the back end too:
+                APIs, queues, databases and money-safe transaction logic. Skilled in React, TypeScript, Next.js,
+                Node.js, Java, .NET, Go, Python, Docker, AWS and Azure DevOps, I’ve worked with companies across different industries,
                 delivering scalable solutions while prioritizing user
                 experience. Let’s create something amazing together!
               </p>

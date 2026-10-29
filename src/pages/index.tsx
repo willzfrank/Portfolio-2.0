@@ -41,10 +41,10 @@ export default function Home({
       {(
         <>
           <Head>
-            <title>Godswill Francis &trade; | Home</title>
+            <title>Godswill Francis | Software Engineer: Web, Mobile & Backend, Lagos</title>
             <meta
               name="description"
-              content="Personal portfolio of Godswill Francis - Software Developer working across web, mobile, backend and cloud"
+              content="Personal portfolio of Godswill Francis - Software Engineer working across web, mobile, backend and cloud"
             />
             <meta
               name="viewport"
@@ -58,32 +58,33 @@ export default function Home({
               href="/favicon_io (2)/favicon-32x32.png"
             />
 
-            <meta property="og:title" content="Godswill Francis ™ | Home" />
+            <meta property="og:title" content="Godswill Francis | Software Engineer: Web, Mobile & Backend, Lagos" />
             <meta
               property="og:description"
-              content="Personal portfolio of Godswill Francis - Software Developer working across web, mobile, backend and cloud"
+              content="Personal portfolio of Godswill Francis - Software Engineer working across web, mobile, backend and cloud"
             />
-            <meta property="og:image" content={absoluteUrl('/profile.jpeg')} />
+            <meta property="og:image" content={absoluteUrl('/og.jpg')} />
             <meta property="og:url" content={SITE_URL} />
             <link rel="canonical" href={SITE_URL} />
             <meta property="og:type" content="website" />
 
             <meta name="twitter:card" content="summary_large_image" />
-            <meta name="twitter:title" content="Godswill Francis ™ | Home" />
+            <meta name="twitter:title" content="Godswill Francis | Software Engineer: Web, Mobile & Backend, Lagos" />
             <meta
               name="twitter:description"
-              content="Personal portfolio of Godswill Francis - Software Developer working across web, mobile, backend and cloud"
+              content="Personal portfolio of Godswill Francis - Software Engineer working across web, mobile, backend and cloud"
             />
-            <meta name="twitter:image" content={absoluteUrl('/profile.jpeg')} />
+            <meta name="twitter:image" content={absoluteUrl('/og.jpg')} />
           </Head>
 
+          <StructuredData type="WebSite" data={{ name: 'Godswill Francis', url: SITE_URL }} />
           <StructuredData
             type="Person"
             data={{
               name: 'Godswill Francis',
-              jobTitle: 'Software Developer',
+              jobTitle: 'Software Engineer',
               description:
-                'A software developer with 5 years of experience across web, mobile, backend and cloud',
+                'A software engineer with 5 years of experience across web, mobile, backend and cloud',
               url: SITE_URL,
               sameAs: [
                 'https://github.com/willzfrank',
@@ -98,6 +99,12 @@ export default function Home({
                 'CSS',
                 'HTML',
                 'Python',
+                'Node.js',
+                'Java',
+                '.NET',
+                'Go',
+                'React Native',
+                'Flutter',
                 'Docker',
                 'AWS',
                 'Azure DevOps',
