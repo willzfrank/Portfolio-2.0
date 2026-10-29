@@ -43,6 +43,7 @@ const Quick = styled.ul`
 const NotFound = () => (
   <PageShell
     title="Page not found"
+    noindex
     description="This page doesn't exist."
     footer="minimal"
   >

@@ -26,8 +26,8 @@ const ProjectsPage = ({ projects }: { projects: Project[] }) => {
 
   return (
     <PageShell
-      title="Projects"
-      description="Explore the portfolio of projects by Godswill Francis - web design, e-commerce and technology solutions."
+      title="Projects: web, mobile and backend work"
+      description="Selected projects by Godswill Francis, a software engineer in Lagos: mobile apps, web platforms, backend services and AI systems."
       footer="full"
     >
       <PageHero
