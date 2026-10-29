@@ -6,11 +6,13 @@ interface SeoProps {
   title: string
   description: string
   image?: string
+  /** Keep this page out of search results (e.g. the 404 page). */
+  noindex?: boolean
 }
 
 /** Shared <head> for inner pages. */
-const Seo = ({ title, description, image = '/profile.jpeg' }: SeoProps) => {
-  const full = `Godswill Francis ™ | ${title}`
+const Seo = ({ title, description, image = '/og.jpg', noindex }: SeoProps) => {
+  const full = `${title} | Godswill Francis`
   const { asPath } = useRouter()
   const url = `${SITE_URL}${asPath.split(/[?#]/)[0] === '/' ? '' : asPath.split(/[?#]/)[0]}`
   const img = absoluteUrl(image)
@@ -27,9 +29,11 @@ const Seo = ({ title, description, image = '/profile.jpeg' }: SeoProps) => {
       />
       <meta property="og:title" content={full} />
       <meta property="og:description" content={description} />
-      <link rel="canonical" href={url} />
+      {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={url} />}
       <meta property="og:url" content={url} />
       <meta property="og:image" content={img} />
+      {image === '/og.jpg' && <meta property="og:image:width" content="1200" />}
+      {image === '/og.jpg' && <meta property="og:image:height" content="630" />}
       <meta property="og:type" content="website" />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={full} />

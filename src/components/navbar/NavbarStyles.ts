@@ -30,7 +30,8 @@ export const NavbarContainer = styled.nav`
   }
 `;
 
-export const NavbarTitle = styled.h1`
+// A div, not an h1: each page already has its own single h1.
+export const NavbarTitle = styled.div`
   font-size: 1em;
   font-weight: normal;
   width: fit-content;

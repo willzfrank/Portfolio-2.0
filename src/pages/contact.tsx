@@ -73,7 +73,7 @@ const Contact = () => {
   return (
     <PageShell
       title="Contact"
-      description="Looking for a freelance software developer? Get in touch with Godswill Francis to discuss your project."
+      description="Looking for a freelance software engineer? Get in touch with Godswill Francis to discuss your project."
       footer="minimal"
     >
       <div ref={ref}>
@@ -82,7 +82,7 @@ const Contact = () => {
           meta="Open to new projects"
           lines={[{ text: 'Let’s work' }, { text: 'together.', out: true }]}
         >
-          Are you looking for a freelance software developer? Do you have a
+          Are you looking for a freelance software engineer? Do you have a
           project, an idea to realize? Send a message and let’s talk. I’m at
           your disposal.
         </PageHero>

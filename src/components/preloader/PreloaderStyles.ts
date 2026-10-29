@@ -51,7 +51,8 @@ export const Dot = styled.span`
   background: ${MINT};
 `
 
-export const NameLine = styled.h1`
+export const NameLine = styled.div`
+  margin: 0.67em 0;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
