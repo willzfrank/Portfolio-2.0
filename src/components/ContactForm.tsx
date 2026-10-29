@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-import { track } from '@/lib/analytics'
+import { currentRef, track } from '@/lib/analytics'
 import styled from 'styled-components'
 import { MINT, DIM, HAIR } from '@/components/home/homeStyles'
 
@@ -95,7 +95,7 @@ const ContactForm: React.FC = () => {
     const res = await fetch('/api/contact', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
+      body: JSON.stringify({ ...data, ref: currentRef() }),
     }).catch(() => null)
     if (res?.ok) {
       form.reset()

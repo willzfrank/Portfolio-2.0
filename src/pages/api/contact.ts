@@ -17,7 +17,7 @@ export default async function handler(
   if (rateLimited(req, 'contact', 5, 60 * 60 * 1000)) {
     return res.status(429).json({ error: 'Too many messages, try again later' })
   }
-  const { name, email, message, website } = req.body ?? {}
+  const { name, email, message, website, ref } = req.body ?? {}
   if (website) return res.status(200).json({ ok: true }) // honeypot
   if (
     typeof name !== 'string' ||
@@ -47,6 +47,7 @@ export default async function handler(
     name: name.trim(),
     email: email.trim(),
     message: message.trim(),
+    ref: typeof ref === 'string' ? ref.slice(0, 60) : null,
   })
   return res.status(201).json({ ok: true })
 }

@@ -20,6 +20,7 @@ export interface VisitInfo {
   referrer_host: string | null
   landing_path: string | null
   language?: string | null
+  utm_source?: string | null
 }
 
 const esc = (s: string) =>
@@ -78,6 +79,7 @@ export const notifyForeignVisit = async (v: VisitInfo) => {
   const rows: [string, string | null | undefined][] = [
     ['Where', place],
     ['Device', [v.device, v.browser, v.os].filter(Boolean).join(' · ')],
+    ['Tracked link', v.utm_source],
     ['Came from', v.referrer_host || 'Direct'],
     ['Landed on', v.landing_path],
     ['Language', v.language],
@@ -95,9 +97,11 @@ export const notifyContactMessage = async (m: {
   name: string
   email: string
   message: string
+  ref?: string | null
 }) => {
   const html =
     `<p><b>From:</b> ${esc(m.name)} &lt;${esc(m.email)}&gt;</p>` +
+    (m.ref ? `<p><b>Tracked link:</b> ${esc(m.ref)}</p>` : '') +
     `<p style="white-space:pre-wrap">${esc(m.message)}</p>`
   await sendMail(`New message from ${m.name}`, html, m.email)
 }
@@ -112,11 +116,13 @@ export const notifyResumeDownload = async (v: {
   os: string | null
   file?: string | null
   path?: string | null
+  ref?: string | null
 }) => {
   const place = placeOf(v)
   const rows: [string, string | null | undefined][] = [
     ['Where', place],
     ['Device', [v.device, v.browser, v.os].filter(Boolean).join(' · ')],
+    ['Tracked link', v.ref],
     ['File', v.file],
     ['Clicked on', v.path],
   ]
