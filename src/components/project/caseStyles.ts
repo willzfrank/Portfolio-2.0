@@ -315,3 +315,185 @@ export const NextProject = styled.section`
     transform: translate(0.5rem, -0.5rem);
   }
 `
+
+/* Same language as MetaGrid: hairline on top, small caps labels, no card. */
+export const Highlights = styled.aside`
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 2rem;
+  margin-top: clamp(2rem, 4vw, 3.5rem);
+  padding-top: 1.5rem;
+  border-top: 1px solid ${HAIR};
+
+  h2 {
+    margin: 0 0 0.6rem;
+    font-size: 0.7rem;
+    font-weight: 400;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: ${DIM};
+  }
+  p {
+    margin: 0;
+    font-size: 1.05rem;
+    line-height: 1.55;
+  }
+  .outcomes {
+    grid-column: 1 / -1;
+  }
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  li {
+    padding: 0.55rem 0;
+    border-bottom: 1px solid ${HAIR};
+    font-size: 1.05rem;
+    line-height: 1.5;
+  }
+  li:first-child {
+    padding-top: 0;
+  }
+  li:last-child {
+    border-bottom: 0;
+  }
+
+  @media (max-width: 900px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    .outcomes {
+      grid-column: 1 / -1;
+    }
+  }
+  @media (max-width: 520px) {
+    gap: 1.4rem 1rem;
+  }
+`
+
+export const HireStrip = styled.section`
+  padding: clamp(3rem, 7vw, 6rem) 0 0;
+
+  .box {
+    margin-top: clamp(1.5rem, 3vw, 2.5rem);
+    padding: clamp(1.5rem, 3vw, 2.5rem) 0;
+    border-top: 1px solid ${HAIR};
+    border-bottom: 1px solid ${HAIR};
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  h2 {
+    margin: 0;
+    font-family: 'Playfair Display SC', serif;
+    font-weight: 700;
+    font-size: clamp(2rem, 5vw, 4.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: ${MINT};
+  }
+  p {
+    margin: 0.8rem 0 0;
+    max-width: 34rem;
+    color: ${DIM};
+    line-height: 1.55;
+  }
+  .form-link {
+    display: inline-block;
+    margin-top: 1rem;
+    color: ${MINT};
+    font-size: 0.95rem;
+    text-decoration: underline;
+    text-underline-offset: 0.3em;
+    text-decoration-color: rgba(231, 250, 236, 0.4);
+  }
+  .quick {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: min(100%, 26rem);
+  }
+  .quick li {
+    border-top: 1px solid ${HAIR};
+  }
+  .quick li:last-child {
+    border-bottom: 1px solid ${HAIR};
+  }
+  .quick a {
+    display: grid;
+    grid-template-columns: 5.5rem 1fr auto;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 0.95rem 0;
+    color: ${MINT};
+    text-decoration: none;
+    font-size: 1.05rem;
+    transition: padding-left 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .quick small {
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: ${DIM};
+  }
+  .quick i {
+    font-style: normal;
+    transition: transform 0.4s;
+  }
+  .quick a:hover {
+    padding-left: 0.6rem;
+  }
+  .quick a:hover i {
+    transform: translate(2px, -2px);
+  }
+  @media (max-width: 700px) {
+    .quick {
+      width: 100%;
+    }
+  }
+`
+
+export const Process = styled.div`
+  margin-top: clamp(1.5rem, 3vw, 2.5rem);
+
+  .row {
+    display: grid;
+    grid-template-columns: minmax(8rem, 1fr) 3fr;
+    gap: clamp(1rem, 4vw, 4rem);
+    padding: clamp(1.2rem, 2.5vw, 2rem) 0;
+    border-top: 1px solid ${HAIR};
+  }
+  .row:last-child {
+    border-bottom: 1px solid ${HAIR};
+  }
+  h3 {
+    margin: 0;
+    font-size: 0.7rem;
+    font-weight: 400;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: ${DIM};
+  }
+  p {
+    margin: 0;
+    max-width: 52rem;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: rgba(231, 250, 236, 0.82);
+  }
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 1.1rem;
+    line-height: 1.7;
+  }
+
+  @media (max-width: 700px) {
+    .row {
+      grid-template-columns: 1fr;
+      gap: 0.6rem;
+    }
+  }
+`
