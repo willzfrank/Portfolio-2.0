@@ -12,11 +12,11 @@ const FLUSH_EVERY_TICKS = 10
 // Module-level so it survives a tracker being torn down and recreated.
 let lastPageView = { path: '', at: 0 }
 
-const IMMEDIATE = new Set(['resume', 'email', 'social', 'outbound', 'form_submit'])
+const IMMEDIATE = new Set(['resume', 'email', 'social', 'outbound', 'form_submit', 'ai_chat'])
 
 type EventType =
   | 'resume' | 'email' | 'social' | 'outbound' | 'form_start' | 'form_submit' | 'form_error'
-  | 'lens' | 'js_error' | 'resource_error' | 'rage_click' | 'not_found' | 'vitals'
+  | 'lens' | 'js_error' | 'resource_error' | 'rage_click' | 'not_found' | 'vitals' | 'ai_chat'
 
 interface QueuedEvent {
   type: EventType

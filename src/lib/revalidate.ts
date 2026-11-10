@@ -5,7 +5,7 @@ export const revalidateSite = async (
   res: NextApiResponse,
   slugs: (string | null | undefined)[] = []
 ) => {
-  const paths = new Set(['/', '/project'])
+  const paths = new Set(['/', '/project', '/about'])
   for (const s of slugs) if (s) paths.add(`/project/${s}`)
   await Promise.allSettled(Array.from(paths).map((p) => res.revalidate(p)))
 }

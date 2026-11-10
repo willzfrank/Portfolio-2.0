@@ -135,3 +135,37 @@ export const notifyResumeDownload = async (v: {
 
   await sendMail(`Resume downloaded${place ? ` from ${place}` : ''}`, html)
 }
+
+/** An inquiry or hiring lead submitted through the AI chat widget. */
+export const notifyAiLead = async (info: {
+  question: string
+  answer: string
+  visitorEmail?: string | null
+  isExplicitLead?: boolean
+  path?: string | null
+  country?: string | null
+  device?: string | null
+}) => {
+  const place = info.country ? countryName(info.country.toUpperCase()) : null
+  const rows: [string, string | null | undefined][] = [
+    ['Visitor Question', info.question],
+    ['Contact Provided', info.visitorEmail || 'None provided in prompt'],
+    ['Lead Intent', info.isExplicitLead ? 'High (Hiring / Contract / Contact)' : 'General Inquiry'],
+    ['AI Response Preview', info.answer.slice(0, 350) + (info.answer.length > 350 ? '…' : '')],
+    ['Where', place],
+    ['Landed On', info.path || '/'],
+    ['Device', info.device],
+  ]
+  const html = rows
+    .filter(([, val]) => val)
+    .map(([k, val]) => `<p><b>${k}:</b> ${esc(String(val))}</p>`)
+    .join('')
+
+  const subject = info.visitorEmail
+    ? `🎯 High-Intent AI Lead: ${info.visitorEmail}`
+    : info.isExplicitLead
+    ? `💼 Potential Client/Hiring Inquiry via AI Chat${place ? ` (${place})` : ''}`
+    : `🤖 New AI Chat Inquiry${place ? ` (${place})` : ''}`
+
+  await sendMail(subject, html, info.visitorEmail || undefined)
+}

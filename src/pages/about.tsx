@@ -1,13 +1,21 @@
 import React from 'react'
+import type { GetStaticProps } from 'next'
 import Image from 'next/image'
 import { gsap } from '@/lib/gsap'
 import { useReveal, scrollWords, fadeUp, drawRule } from '@/lib/useReveal'
 import PageShell from '@/components/page/PageShell'
 import PageHero from '@/components/page/PageHero'
 import { Section, SectionLabel, LinkOut } from '@/components/page/pageStyles'
+import { getSiteContent } from '@/lib/projectsRepo'
 import { BioGrid, ExpList, SkillGrid } from '@/components/about/aboutPageStyles'
 
-const EXPERIENCE = [
+export interface Role {
+  role: string
+  company: string
+  when: string
+}
+
+const DEFAULT_EXPERIENCE: Role[] = [
   { role: 'Senior Software Engineer', company: 'Polar Frequency', when: 'Dec 2024 — Present' },
   { role: 'Senior Software Engineer', company: 'Sterling Bank', when: 'Jun 2023 — Aug 2025' },
   { role: 'Senior Software Engineer', company: 'Santoms', when: 'Dec 2022 — Present' },
@@ -26,7 +34,9 @@ const SKILLS = [
   'Spring Boot', '.NET', 'Go', 'PostgreSQL', 'Redis', 'WebSockets', 'System Design',
 ]
 
-const About = () => {
+const About = ({ experience }: { experience: Role[] }) => {
+  const EXPERIENCE = experience.length ? experience : DEFAULT_EXPERIENCE
+
   const ref = useReveal<HTMLDivElement>(({ q, splits, reduce }) => {
     if (reduce) return
 
@@ -150,6 +160,15 @@ const About = () => {
       </div>
     </PageShell>
   )
+}
+
+export const getStaticProps: GetStaticProps = async () => {
+  const content = await getSiteContent('experience')
+  const raw = Array.isArray(content?.items) ? (content!.items as Partial<Role>[]) : []
+  const experience = raw
+    .filter((r) => r && typeof r.role === 'string' && typeof r.company === 'string')
+    .map((r) => ({ role: r.role!, company: r.company!, when: typeof r.when === 'string' ? r.when : '' }))
+  return { props: { experience }, revalidate: 60 }
 }
 
 export default About

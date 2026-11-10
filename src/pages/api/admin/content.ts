@@ -4,7 +4,7 @@ import { revalidateSite } from '@/lib/revalidate'
 import { removeUploaded } from '@/lib/storageCleanup'
 
 // Keys the admin is allowed to edit.
-const KEYS = ['about', 'hero', 'resume']
+const KEYS = ['about', 'hero', 'resume', 'experience']
 
 export default withAdmin(async (req, res) => {
   const db = getServerClient()

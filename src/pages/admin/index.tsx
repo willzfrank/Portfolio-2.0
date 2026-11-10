@@ -288,7 +288,7 @@ function Login() {
 }
 
 /* ---------- dashboard ---------- */
-type Tab = 'analytics' | 'projects' | 'content' | 'messages'
+type Tab = 'analytics' | 'projects' | 'content' | 'messages' | 'ai-chat'
 
 const IconAnalytics = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -297,11 +297,18 @@ const IconAnalytics = () => (
   </svg>
 )
 
+const IconAiChat = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M12 2L14.2 8.3L20.5 10.5L14.2 12.7L12 19L9.8 12.7L3.5 10.5L9.8 8.3L12 2Z" />
+  </svg>
+)
+
 const tabMeta: { key: Tab; label: string; icon: React.FC }[] = [
   { key: 'analytics', label: 'Analytics', icon: IconAnalytics },
   { key: 'projects', label: 'Projects', icon: IconProjects },
   { key: 'content', label: 'Content', icon: IconContent },
   { key: 'messages', label: 'Messages', icon: IconMessages },
+  { key: 'ai-chat', label: 'AI Inquiries', icon: IconAiChat },
 ]
 
 function Dashboard({ token, email }: { token: string; email?: string }) {
@@ -357,6 +364,7 @@ function Dashboard({ token, email }: { token: string; email?: string }) {
           {tab === 'projects' && <Projects token={token} />}
           {tab === 'content' && <Content token={token} />}
           {tab === 'messages' && <Messages token={token} />}
+          {tab === 'ai-chat' && <AiChatLogs token={token} />}
         </DashContent>
       </DashMain>
     </DashLayout>
@@ -650,16 +658,25 @@ function ProjectForm({
 }
 
 /* ---------- site content ---------- */
+interface ExperienceRole {
+  role: string
+  company: string
+  when: string
+}
+
 function Content({ token }: { token: string }) {
   const [about, setAbout] = useState('')
   const [status, setStatus] = useState('')
   const [resumeUrl, setResumeUrl] = useState('')
   const [resumeStatus, setResumeStatus] = useState('')
+  const [roles, setRoles] = useState<ExperienceRole[]>([])
+  const [expStatus, setExpStatus] = useState('')
 
   useEffect(() => {
     api(token, 'content').then(
-      (rows: { key: string; value: { text?: string; url?: string } }[]) => {
+      (rows: { key: string; value: { text?: string; url?: string; items?: ExperienceRole[] } }[]) => {
         setAbout(rows.find((r) => r.key === 'about')?.value.text ?? '')
+        setRoles(rows.find((r) => r.key === 'experience')?.value.items ?? [])
         setResumeUrl(rows.find((r) => r.key === 'resume')?.value.url ?? '')
       }
     )
@@ -678,6 +695,30 @@ function Content({ token }: { token: string }) {
       setResumeStatus('✓ Resume updated. The site uses it within a minute.')
     } catch (err) {
       setResumeStatus((err as Error).message)
+    }
+  }
+
+  const editRole = (i: number, field: keyof ExperienceRole, v: string) =>
+    setRoles((rs) => rs.map((r, j) => (j === i ? { ...r, [field]: v } : r)))
+  const moveRole = (i: number, d: number) =>
+    setRoles((rs) => {
+      const j = i + d
+      if (j < 0 || j >= rs.length) return rs
+      const next = [...rs]
+      ;[next[i], next[j]] = [next[j], next[i]]
+      return next
+    })
+  const saveExperience = async (e: React.FormEvent) => {
+    e.preventDefault()
+    const items = roles
+      .map((r) => ({ role: r.role.trim(), company: r.company.trim(), when: r.when.trim() }))
+      .filter((r) => r.role && r.company)
+    try {
+      await api(token, 'content', 'PUT', { key: 'experience', value: { items } })
+      setRoles(items)
+      setExpStatus('✓ Saved. The About page updates within a minute.')
+    } catch (err) {
+      setExpStatus((err as Error).message)
     }
   }
 
@@ -700,6 +741,33 @@ function Content({ token }: { token: string }) {
         </InputGroup>
         <PrimaryButton type="submit" style={{ alignSelf: 'flex-start' }}>Save</PrimaryButton>
         {status && <StatusText>{status}</StatusText>}
+      </FormCard>
+      <FormCard as="form" onSubmit={saveExperience} style={{ marginTop: '1.5rem' }}>
+        <SectionTitle>Experience (About page)</SectionTitle>
+        <StatusText>
+          {roles.length
+            ? 'Top row shows first. Rows missing a role or company are dropped on save.'
+            : 'Empty: the About page shows its built-in list. Add a role to take over.'}
+        </StatusText>
+        {roles.map((r, i) => (
+          <FormGrid key={i}>
+            <StyledInput placeholder="Role" value={r.role} onChange={(e) => editRole(i, 'role', e.target.value)} />
+            <StyledInput placeholder="Company" value={r.company} onChange={(e) => editRole(i, 'company', e.target.value)} />
+            <StyledInput placeholder="Dec 2024 — Present" value={r.when} onChange={(e) => editRole(i, 'when', e.target.value)} />
+            <ProjectActions>
+              <GhostButton type="button" onClick={() => moveRole(i, -1)} disabled={i === 0}>↑</GhostButton>
+              <GhostButton type="button" onClick={() => moveRole(i, 1)} disabled={i === roles.length - 1}>↓</GhostButton>
+              <DangerButton type="button" onClick={() => setRoles((rs) => rs.filter((_, j) => j !== i))}>Remove</DangerButton>
+            </ProjectActions>
+          </FormGrid>
+        ))}
+        <div style={{ display: 'flex', gap: '0.75rem' }}>
+          <GhostButton type="button" onClick={() => setRoles((rs) => [...rs, { role: '', company: '', when: '' }])}>
+            Add role
+          </GhostButton>
+          <PrimaryButton type="submit">Save experience</PrimaryButton>
+        </div>
+        {expStatus && <StatusText>{expStatus}</StatusText>}
       </FormCard>
       <FormCard style={{ marginTop: '1.5rem' }}>
         <SectionTitle>Resume (PDF)</SectionTitle>
@@ -777,6 +845,173 @@ function Messages({ token }: { token: string }) {
           </MessageCard>
         ))}
       </MessagesGrid>
+    </FadeIn>
+  )
+}
+
+/* ---------- AI chat logs ---------- */
+interface ChatLogRow {
+  id: string
+  question: string
+  answer: string
+  is_lead: boolean
+  visitor_email?: string | null
+  ip_country?: string | null
+  path?: string | null
+  created_at: string
+}
+
+function AiChatLogs({ token }: { token: string }) {
+  const [rows, setRows] = useState<ChatLogRow[]>([])
+  const [leadsOnly, setLeadsOnly] = useState(false)
+  const [needsMigration, setNeedsMigration] = useState(false)
+  const [loading, setLoading] = useState(true)
+
+  const load = useCallback(async () => {
+    setLoading(true)
+    try {
+      const res = await api(token, `chat-logs${leadsOnly ? '?leads_only=1' : ''}`)
+      setRows(res.logs || [])
+      setNeedsMigration(Boolean(res.needsMigration))
+    } catch {
+      setRows([])
+    } finally {
+      setLoading(false)
+    }
+  }, [token, leadsOnly])
+
+  useEffect(() => {
+    load()
+  }, [load])
+
+  return (
+    <FadeIn>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          marginBottom: '1.5rem',
+          flexWrap: 'wrap',
+          gap: '1rem',
+        }}
+      >
+        <SectionTitle style={{ margin: 0 }}>AI Concierge Inquiries</SectionTitle>
+        <div style={{ display: 'flex', gap: '0.6rem' }}>
+          <GhostButton
+            style={{
+              borderColor: leadsOnly ? '#3ddc84' : undefined,
+              color: leadsOnly ? '#3ddc84' : undefined,
+            }}
+            onClick={() => setLeadsOnly(!leadsOnly)}
+          >
+            {leadsOnly ? '★ Showing Leads Only' : '☆ Filter Leads'}
+          </GhostButton>
+          <GhostButton onClick={load}>Refresh ⟳</GhostButton>
+        </div>
+      </div>
+
+      {needsMigration && (
+        <div
+          style={{
+            padding: '1rem 1.2rem',
+            marginBottom: '1.5rem',
+            borderRadius: '10px',
+            background: 'rgba(255, 180, 0, 0.12)',
+            border: '1px solid rgba(255, 180, 0, 0.3)',
+            color: '#ffb400',
+            fontSize: '0.88rem',
+            lineHeight: 1.5,
+          }}
+        >
+          <strong>Notice:</strong> To enable persistent database logging in Supabase, run the script in{' '}
+          <code>supabase/ai-chat-logs.sql</code> inside your Supabase SQL Editor.
+        </div>
+      )}
+
+      {loading && rows.length === 0 ? (
+        <EmptyState>
+          <p>Loading AI inquiries…</p>
+        </EmptyState>
+      ) : rows.length === 0 ? (
+        <EmptyState>
+          <p>No AI chat records found{leadsOnly ? ' matching leads' : ''}.</p>
+        </EmptyState>
+      ) : (
+        <MessagesGrid>
+          {rows.map((r) => (
+            <MessageCard key={r.id}>
+              <MessageHeader>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                  <MessageSender>{r.question}</MessageSender>
+                  {r.is_lead && (
+                    <span
+                      style={{
+                        fontSize: '0.7rem',
+                        padding: '2px 8px',
+                        borderRadius: '999px',
+                        background: 'rgba(61, 220, 132, 0.2)',
+                        border: '1px solid #3ddc84',
+                        color: '#3ddc84',
+                        fontWeight: 600,
+                      }}
+                    >
+                      ★ Lead
+                    </span>
+                  )}
+                </div>
+                <MessageDate>{new Date(r.created_at).toLocaleString()}</MessageDate>
+              </MessageHeader>
+
+              {r.visitor_email && (
+                <MessageEmail href={`mailto:${r.visitor_email}`}>
+                  Contact: {r.visitor_email}
+                </MessageEmail>
+              )}
+
+              <MessageDate style={{ marginBottom: '0.6rem' }}>
+                {r.ip_country ? `From ${r.ip_country} · ` : ''}Page: {r.path || '/'}
+              </MessageDate>
+
+              <div
+                style={{
+                  fontSize: '0.88rem',
+                  lineHeight: '1.5',
+                  color: 'rgba(231, 250, 236, 0.85)',
+                  background: 'rgba(0, 0, 0, 0.25)',
+                  padding: '10px 14px',
+                  borderRadius: '8px',
+                  border: '1px solid rgba(255, 255, 255, 0.05)',
+                  whiteSpace: 'pre-wrap',
+                }}
+              >
+                <strong
+                  style={{
+                    display: 'block',
+                    marginBottom: '4px',
+                    fontSize: '0.78rem',
+                    color: 'rgba(231, 250, 236, 0.5)',
+                  }}
+                >
+                  AI RESPONSE
+                </strong>
+                {r.answer}
+              </div>
+
+              <MessageActions>
+                <DangerButton
+                  onClick={async () => {
+                    await api(token, `chat-logs?id=${r.id}`, 'DELETE')
+                    load()
+                  }}
+                >
+                  Delete
+                </DangerButton>
+              </MessageActions>
+            </MessageCard>
+          ))}
+        </MessagesGrid>
+      )}
     </FadeIn>
   )
 }

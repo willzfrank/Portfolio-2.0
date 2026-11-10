@@ -3,6 +3,7 @@ import RouteProgress from '@/components/scroll/RouteProgress';
 import SmoothScroll from '@/components/scroll/SmoothScroll';
 import PresenceToast from '@/components/presence/PresenceToast';
 import AnalyticsTracker from '@/components/analytics/AnalyticsTracker';
+import ChatWidget from '@/components/chat/Chat';
 import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
@@ -16,6 +17,7 @@ const App = ({ Component, pageProps }: AppProps) => {
       {!isAdmin && <Cursor />}
       {!isAdmin && <PresenceToast />}
       {!isAdmin && <AnalyticsTracker />}
+      {!isAdmin && <ChatWidget />}
       <RouteProgress />
       {!isAdmin && <SmoothScroll />}
       {!isAdmin && <div className="grain" aria-hidden />}
